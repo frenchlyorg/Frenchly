@@ -29,6 +29,13 @@
 **Goal:** Initialize the Next.js + Tailwind project with the full design system wired up. Both light and dark themes work. All design tokens from DESIGN.md are in Tailwind config. The site is deployable to Vercel with a home page skeleton — no auth, no lessons yet, just a working, themed, responsive shell.
 **Mode:** mvp
 **Requirements:** UX-01, UX-02, UX-07, UX-08, UX-09
+**Plans:** 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Scaffold Next.js, wire DESIGN.md tokens into Tailwind v4 globals.css, create ThemeProvider wrapper
+- [ ] 01-02-PLAN.md — Load three Google Fonts in layout.tsx, build Nav (hamburger + desktop) and ThemeToggle components
+- [ ] 01-03-PLAN.md — Build home page (cursor-reactive hero, feature callouts, disabled CTA), Mission stub, deploy to Vercel
+
 **Success Criteria:**
 1. `npm run dev` starts without errors
 2. Home page renders in light mode with correct warm palette and Literata/Be Vietnam Pro fonts loaded
