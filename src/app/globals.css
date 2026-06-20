@@ -1,26 +1,78 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* ── Light palette ─────────────────────────────────────────────────────── */
+  --color-background:               #fff8f5;
+  --color-surface:                  #fff8f5;
+  --color-surface-container-low:    #fbf2ed;
+  --color-surface-container:        #f5ece7;
+  --color-surface-container-high:   #efe6e2;
+  --color-surface-container-highest:#e9e1dc;
+  --color-on-surface:               #1e1b18;
+  --color-on-surface-variant:       #564241;
+  --color-outline:                  #897271;
+  --color-outline-variant:          #dcc0bf;
+  --color-primary:                  #a03e40;
+  --color-on-primary:               #ffffff;
+  --color-primary-container:        #e57373;
+  --color-on-primary-container:     #5e0c15;
+  --color-secondary:                #835500;
+  --color-secondary-container:      #feb64c;
+  --color-tertiary:                 #006c4a;
+  --color-on-tertiary:              #ffffff;
+  --color-error:                    #ba1a1a;
+  --color-on-error:                 #ffffff;
+
+  /* ── Typography ─────────────────────────────────────────────────────────── */
+  /* These resolve once layout.tsx applies font .variable classes to <html> */
+  --font-heading: var(--font-literata);
+  --font-body:    var(--font-be-vietnam-pro);
+  --font-label:   var(--font-work-sans);
+
+  /* ── Spacing ────────────────────────────────────────────────────────────── */
+  --spacing-container-max: 1040px;
+  --spacing-content-max:   720px;
+  --spacing-section-gap:   80px;
+  --spacing-gutter:        24px;
+  --spacing-margin-mobile: 20px;
+
+  /* ── Border radii ───────────────────────────────────────────────────────── */
+  --radius-sm:   0.25rem;
+  --radius:      0.5rem;
+  --radius-md:   0.75rem;
+  --radius-lg:   1rem;
+  --radius-xl:   1.5rem;
+  --radius-full: 9999px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ── Dark mode overrides (applied by next-themes via .dark on <html>) ──── */
+.dark {
+  --color-background:               #1a1715;
+  --color-surface:                  #1a1715;
+  --color-surface-container-low:    #221e1c;
+  --color-surface-container:        #262220;
+  --color-surface-container-high:   #312c29;
+  --color-surface-container-highest:#3c3633;
+  --color-on-surface:               #f0e7e2;
+  --color-on-surface-variant:       #d6c5c0;
+  --color-outline:                  #9c8580;
+  --color-outline-variant:          #534340;
+  --color-primary:                  #ffb866;
+  --color-on-primary:               #3a2400;
+  --color-primary-container:        #6b4a16;
+  --color-secondary:                #ffb3b1;
+  --color-secondary-container:      #80272b;
+  --color-tertiary:                 #63dca7;
+  --color-on-tertiary:              #003522;
+  --color-error:                    #ffb4ab;
+  --color-on-error:                 #690005;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ── Base body styles ───────────────────────────────────────────────────── */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-on-surface);
+  font-family: var(--font-body), sans-serif;
 }
