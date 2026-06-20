@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-06-20T16:33:22.289Z"
+last_updated: "2026-06-20T21:07:24.509Z"
 progress:
   total_phases: 12
   completed_phases: 0
   total_plans: 3
-  completed_plans: 0
+  completed_plans: 2
   percent: 0
 ---
 
@@ -27,8 +27,8 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Current Status
 
 **Milestone:** v1.0
-**Phases complete:** 0 / 12
-**Last action:** Project initialized — planning artifacts created
+**Phases complete:** 0 / 12 (Phase 1 in progress — 2/3 plans done)
+**Last action:** Plan 01-02 complete — three Google Fonts wired, ThemeToggle + Nav built; tsc + build exit 0
 
 ---
 
@@ -36,7 +36,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 | Phase | Name | Status | Plans |
 |-------|------|--------|-------|
-| 1 | Project Foundation | not_started | — |
+| 1 | Project Foundation | in_progress | 2/3 done |
 | 2 | Authentication & Accounts | not_started | — |
 | 3 | Lesson Framework | not_started | — |
 | 4 | Diagnostic System | not_started | — |
@@ -76,4 +76,4 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Next step:** `/gsd:discuss-phase 1` → then `/gsd:plan-phase 1`
+**Next step:** Execute 01-03-PLAN.md — home page hero, Mission stub, Vercel deploy

@@ -32,8 +32,8 @@
 **Plans:** 3 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Scaffold Next.js, wire DESIGN.md tokens into Tailwind v4 globals.css, create ThemeProvider wrapper
-- [ ] 01-02-PLAN.md — Load three Google Fonts in layout.tsx, build Nav (hamburger + desktop) and ThemeToggle components
+- [x] 01-01-PLAN.md — Scaffold Next.js, wire DESIGN.md tokens into Tailwind v4 globals.css, create ThemeProvider wrapper
+- [x] 01-02-PLAN.md — Load three Google Fonts in layout.tsx, build Nav (hamburger + desktop) and ThemeToggle components
 - [ ] 01-03-PLAN.md — Build home page (cursor-reactive hero, feature callouts, disabled CTA), Mission stub, deploy to Vercel
 
 **Success Criteria:**
