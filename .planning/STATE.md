@@ -1,3 +1,17 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: unknown
+last_updated: "2026-06-20T16:33:22.289Z"
+progress:
+  total_phases: 12
+  completed_phases: 0
+  total_plans: 3
+  completed_plans: 0
+  percent: 0
+---
+
 # Frenchly — Project State
 
 ## Project Reference
@@ -6,7 +20,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Core value:** Get a first-time visitor to create an account so they never lose their progress — then keep them coming back through adaptive lessons and honest motivation features.
 **Current milestone:** v1.0 — Foundation & Core Product
-**Current focus:** Phase 1 — Project Foundation (not started)
+**Current focus:** Phase 1 — Project Foundation
 
 ---
 
