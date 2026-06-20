@@ -2,7 +2,7 @@
 
 **Milestone:** v1.0 — Foundation & Core Product
 **Target:** ~August 2026
-**Status:** 0 / 12 phases complete
+**Status:** 1 / 12 phases complete
 
 ---
 
@@ -10,7 +10,7 @@
 
 | # | Phase | Goal | Requirements | Status |
 |---|-------|------|--------------|--------|
-| 1 | Project Foundation | Next.js + Tailwind + design system wired up, deployable skeleton | UX-01–10 (partial) | not_started |
+| 1 | Project Foundation | Next.js + Tailwind + design system wired up, deployable skeleton | UX-01–10 (partial) | complete ✓ 2026-06-20 |
 | 2 | Authentication & Accounts | Users can sign up, log in, log out, delete account | AUTH-01–05, SEC-01–04 | not_started |
 | 3 | Lesson Framework | Lessons with trackable sub-components; progress saved to DB | LESSON-01–04 | not_started |
 | 4 | Diagnostic System | Placement diagnostic + level-gating diagnostic | DIAG-01–03 | not_started |
@@ -34,7 +34,7 @@
 Plans:
 - [x] 01-01-PLAN.md — Scaffold Next.js, wire DESIGN.md tokens into Tailwind v4 globals.css, create ThemeProvider wrapper
 - [x] 01-02-PLAN.md — Load three Google Fonts in layout.tsx, build Nav (hamburger + desktop) and ThemeToggle components
-- [ ] 01-03-PLAN.md — Build home page (cursor-reactive hero, feature callouts, disabled CTA), Mission stub, deploy to Vercel
+- [x] 01-03-PLAN.md — Build home page (cursor-reactive hero, feature callouts, disabled CTA), Mission stub, deploy to Vercel
 
 **Success Criteria:**
 1. `npm run dev` starts without errors

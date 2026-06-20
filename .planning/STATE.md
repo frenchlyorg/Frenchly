@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: unknown
-last_updated: "2026-06-20T21:07:24.509Z"
+status: in_progress
+last_updated: "2026-06-20T23:00:00.000Z"
 progress:
   total_phases: 12
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 3
-  completed_plans: 2
-  percent: 0
+  completed_plans: 3
+  percent: 8
 ---
 
 # Frenchly — Project State
@@ -27,8 +27,8 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Current Status
 
 **Milestone:** v1.0
-**Phases complete:** 0 / 12 (Phase 1 in progress — 2/3 plans done)
-**Last action:** Plan 01-02 complete — three Google Fonts wired, ThemeToggle + Nav built; tsc + build exit 0
+**Phases complete:** 1 / 12
+**Last action:** Phase 1 complete — walking skeleton deployed to Vercel, human-verified 2026-06-20
 
 ---
 
@@ -36,7 +36,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 | Phase | Name | Status | Plans |
 |-------|------|--------|-------|
-| 1 | Project Foundation | in_progress | 2/3 done |
+| 1 | Project Foundation | complete ✓ | 3/3 done |
 | 2 | Authentication & Accounts | not_started | — |
 | 3 | Lesson Framework | not_started | — |
 | 4 | Diagnostic System | not_started | — |
@@ -64,7 +64,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 ## Open Items
 
-- [ ] Purchase frenchly.org domain (~$24/yr)
+- [x] Purchase frenchly.org domain — purchased on GoDaddy, DNS not yet pointed to Vercel
 - [ ] Lesson content for French 1 and French 2 (user to supply)
 - [ ] Verify WCAG AA contrast ratios on coral button fill (#a03e40) before Phase 9
 - [ ] Confirm "active user" thresholds for leaderboard (v2) — e.g., 20 min/day or 5 lessons/week
@@ -76,4 +76,4 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Next step:** Execute 01-03-PLAN.md — home page hero, Mission stub, Vercel deploy
+**Next step:** `/gsd:discuss-phase 2` — Authentication & Accounts (Supabase auth, sign up, log in, RLS)
