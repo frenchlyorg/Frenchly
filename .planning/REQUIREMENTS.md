@@ -6,8 +6,8 @@
 
 - [ ] **AUTH-01**: User can create an account with email, username, and password
 - [ ] **AUTH-02**: User can log in and remain logged in across sessions (persistent session)
-- [ ] **AUTH-03**: User can log out from any page
-- [ ] **AUTH-04**: User can delete their account and all associated data from settings
+- [x] **AUTH-03**: User can log out from any page
+- [x] **AUTH-04**: User can delete their account and all associated data from settings
 - [x] **AUTH-05**: Admin/editor role exists with ability to manage lesson content via database
 
 ### Lesson Framework

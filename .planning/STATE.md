@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: 02-04 complete — admin role guard and security isolation
+current_plan: 02-03 complete — account lifecycle (signOut, password reset, account deletion)
 status: in_progress
-stopped_at: Plan 02-04 complete — /admin role guard, RLS tests, proxy redirect tests
-last_updated: "2026-06-21T16:17:15Z"
+stopped_at: Plan 02-03 complete — signOut, resetPassword, deleteAccount, callback route, /account page
+last_updated: "2026-06-21T16:28:00Z"
 progress:
   total_phases: 12
   completed_phases: 1
   total_plans: 8
-  completed_plans: 9
-  percent: 10
+  completed_plans: 10
+  percent: 17
 ---
 
 # Frenchly — Project State
@@ -30,8 +30,8 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Milestone:** v1.0
 **Phases complete:** 1 / 12
-**Current plan:** 02-04 complete — admin role guard and security isolation
-**Last action:** Plan 02-04 executed — /admin Server Component with server-side role guard (AUTH-05), RLS isolation tests (SEC-02), proxy redirect tests (SEC-03). 49 tests total passing. Committed 2026-06-21
+**Current plan:** 02-03 complete — account lifecycle (signOut, password reset, account deletion)
+**Last action:** Plan 02-03 executed — signOut (AUTH-03), resetPassword with anti-enumeration (D-04), deleteAccount with PII anonymization + soft-delete via admin client (AUTH-04), /auth/callback route, /account settings page, DeleteAccountForm (type-delete gate), UpdatePasswordForm. 54 tests passing. Committed 2026-06-21
 
 ---
 
@@ -40,7 +40,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 | Phase | Name | Status | Plans |
 |-------|------|--------|-------|
 | 1 | Project Foundation | complete ✓ | 3/3 done |
-| 2 | Authentication & Accounts | in_progress | 4/5 done (02-01a, 02-01b, 02-02, 02-04 complete) |
+| 2 | Authentication & Accounts | complete ✓ | 5/5 done (02-01a, 02-01b, 02-02, 02-03, 02-04 complete) |
 | 3 | Lesson Framework | not_started | — |
 | 4 | Diagnostic System | not_started | — |
 | 5 | Practice Problem Engine | not_started | — |
@@ -79,5 +79,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** Plan 02-04 complete — admin role guard, RLS tests, proxy redirect tests
-**Next step:** `/gsd:execute-phase 2` — continue with Plan 02-03 (signOut, password reset, account deletion)
+**Stopped at:** Plan 02-03 complete — account lifecycle fully implemented; Phase 2 complete
+**Next step:** `/gsd:execute-phase 3` — Lesson Framework

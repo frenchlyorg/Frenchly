@@ -2,7 +2,7 @@
 
 **Milestone:** v1.0 — Foundation & Core Product
 **Target:** ~August 2026
-**Status:** 1 / 12 phases complete (Phase 2 in progress — 4/5 plans done)
+**Status:** 2 / 12 phases complete (Phase 3 next)
 
 ---
 
@@ -11,7 +11,7 @@
 | # | Phase | Goal | Requirements | Status |
 |---|-------|------|--------------|--------|
 | 1 | Project Foundation | Next.js + Tailwind + design system wired up, deployable skeleton | UX-01–10 (partial) | complete ✓ 2026-06-20 |
-| 2 | Authentication & Accounts | Users can sign up, log in, log out, delete account | AUTH-01–05, SEC-01–04 | in_progress (4/5 plans done) |
+| 2 | Authentication & Accounts | Users can sign up, log in, log out, delete account | AUTH-01–05, SEC-01–04 | complete ✓ 2026-06-21 |
 | 3 | Lesson Framework | Lessons with trackable sub-components; progress saved to DB | LESSON-01–04 | not_started |
 | 4 | Diagnostic System | Placement diagnostic + level-gating diagnostic | DIAG-01–03 | not_started |
 | 5 | Practice Problem Engine | All four auto-graded problem types working | PROB-01–05 | not_started |
@@ -55,7 +55,7 @@ Plans:
 - [x] 02-01a-PLAN.md — Foundation (static): Supabase env + client/server/admin factories, profiles/login_attempts migration SQL (RLS + trigger)
 - [x] 02-01b-PLAN.md — Foundation (live): schema db push, proxy.ts session refresh + route protection, Jest Wave 0 scaffolds
 - [x] 02-02-PLAN.md — Sign-up + login + session slice: signUp/signIn actions (rate limit, vague errors), forms, pages, nav/dashboard auth state
-- [ ] 02-03-PLAN.md — Logout + password reset + account deletion slice: signOut/resetPassword/deleteAccount, callback route, /account settings
+- [x] 02-03-PLAN.md — Logout + password reset + account deletion slice: signOut/resetPassword/deleteAccount, callback route, /account settings
 - [x] 02-04-PLAN.md — Admin role + RLS verification slice: protected /admin stub, RLS isolation test, proxy redirect test
 
 **Success Criteria:**
