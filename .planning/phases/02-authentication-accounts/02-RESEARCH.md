@@ -738,12 +738,13 @@ export function createAdminClient() {
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **`proxy.ts` vs page-level auth check for admin redirect**
    - What we know: The proxy can call `getUser()` but would need an extra DB query to check `profiles.role` on every request (slow).
    - What's unclear: Is it better to redirect admin users in proxy.ts (add a DB lookup per request) or in the login Server Action (one lookup at login time, then route)?
    - Recommendation: Redirect in the login Server Action (Pattern — `signIn` above). The proxy only handles "is authenticated" checks. Admin role check happens once at login, not on every request.
+   - RESOLVED: Use signIn Server Action for admin redirect per Plan 02-02 Task 1.
 
 2. **Supabase email service for password reset (INFRA-03)**
    - What we know: Supabase requires a configured email provider for password reset emails. The free plan uses a shared Supabase SMTP with low limits.

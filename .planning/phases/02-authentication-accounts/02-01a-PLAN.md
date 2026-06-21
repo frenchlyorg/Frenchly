@@ -1,6 +1,6 @@
 ---
 phase: 02-authentication-accounts
-plan: 01
+plan: 01a
 type: execute
 wave: 1
 depends_on: []
@@ -8,23 +8,12 @@ files_modified:
   - .env.local
   - .env.example
   - package.json
-  - supabase/migrations/20260620_phase2_auth.sql
   - src/lib/supabase/client.ts
   - src/lib/supabase/server.ts
   - src/lib/supabase/admin.ts
-  - src/app/proxy.ts
-  - jest.config.ts
-  - jest.setup.ts
-  - __tests__/auth/signup.test.ts
-  - __tests__/auth/login.test.ts
-  - __tests__/auth/errors.test.ts
-  - __tests__/auth/logout.test.ts
-  - __tests__/auth/delete.test.ts
-  - __tests__/auth/ratelimit.test.ts
-  - __tests__/middleware.test.ts
-  - __tests__/rls.test.ts
+  - supabase/migrations/20260620_phase2_auth.sql
 autonomous: false
-requirements: [SEC-01, SEC-02, SEC-03, SEC-04]
+requirements: [SEC-01, SEC-02, SEC-03]
 user_setup:
   - service: supabase
     why: "Auth backend + Postgres database for profiles, RLS, and session management"
@@ -46,11 +35,8 @@ user_setup:
 must_haves:
   truths:
     - "Supabase env vars are present and the dev server boots without missing-env errors"
-    - "The profiles table exists in the live database with RLS enabled and a select/update policy scoped to auth.uid()"
-    - "A new auth.users row automatically produces a public.profiles row via the handle_new_user trigger"
-    - "The login_attempts table exists with RLS enabled and no policies (service-role-only access)"
-    - "proxy.ts refreshes the session on every request and redirects unauthenticated users away from /dashboard, /admin, /account"
-    - "Jest runs and the auth test scaffolds exist (failing or skipped, not absent)"
+    - "Three Supabase client factories (client/server/admin) exist, typecheck, and enforce the publishable/secret key split"
+    - "The migration SQL file defines profiles + login_attempts with RLS, the two auth.uid()-scoped profiles policies, no login_attempts policy, and the handle_new_user trigger"
   artifacts:
     - path: "supabase/migrations/20260620_phase2_auth.sql"
       provides: "profiles + login_attempts tables, RLS policies, handle_new_user trigger, indexes"
@@ -64,28 +50,23 @@ must_haves:
     - path: "src/lib/supabase/admin.ts"
       provides: "service-role admin client (server-only)"
       exports: ["createAdminClient"]
-    - path: "src/app/proxy.ts"
-      provides: "session refresh + protected-route redirect"
-      exports: ["proxy", "config"]
-    - path: "jest.config.ts"
-      provides: "Jest test runner configuration"
   key_links:
-    - from: "src/app/proxy.ts"
-      to: "supabase.auth.getUser"
-      via: "createServerClient + getUser (NOT getSession)"
-      pattern: "auth\\.getUser"
     - from: "supabase/migrations/20260620_phase2_auth.sql"
       to: "auth.users"
       via: "on_auth_user_created trigger calling handle_new_user"
       pattern: "on_auth_user_created"
+    - from: "src/lib/supabase/admin.ts"
+      to: "SUPABASE_SECRET_KEY"
+      via: "createServerClient with secret key, server-only, no-op cookies"
+      pattern: "SUPABASE_SECRET_KEY"
 ---
 
 <objective>
-Lay the complete authentication foundation as a single vertical slice: Supabase project wiring, the database schema (profiles + login_attempts + RLS + signup trigger) pushed live, the three Supabase client factories, the Next.js 16 proxy.ts for session refresh and route protection, and the Jest test scaffolds every later plan verifies against.
+Lay the static half of the authentication foundation: Supabase project wiring (env), the three Supabase client factories (client/server/admin), and the database migration SQL (profiles + login_attempts + RLS + signup trigger) authored as a file. This plan produces everything that can be created and typechecked WITHOUT touching the live database — Plan 02-01b then pushes the schema live, adds the proxy, and stands up the Jest harness.
 
-Purpose: Every other Phase 2 slice (signup/login, logout/delete/reset, admin/RLS) is unusable until the database tables exist, the clients can read/write them, and the proxy refreshes sessions. This plan delivers the shared spine so the feature slices can be thin.
+Purpose: Splitting the foundation into a static-artifacts half (01a) and a live-wiring half (01b) keeps each plan at or under the 3-task / ~50% context target. 01a is the prerequisite spine: the migration must be authored and the clients must exist before they can be pushed or exercised.
 
-Output: A bootable app with Supabase configured, schema pushed to the live DB, client/server/admin factories, a working proxy, and a green-or-failing (never-absent) test harness.
+Output: A bootable app with Supabase env configured, three client factories that typecheck and enforce the secret/publishable split, and a complete migration SQL file ready to push.
 </objective>
 
 <execution_context>
@@ -104,7 +85,7 @@ Output: A bootable app with Supabase configured, schema pushed to the live DB, c
 @.planning/phases/02-authentication-accounts/02-VALIDATION.md
 
 <interfaces>
-<!-- Contracts this plan CREATES — downstream plans 02/03/04 consume these. -->
+<!-- Contracts this plan CREATES — Plan 01b and downstream plans 02/03/04 consume these. -->
 
 src/lib/supabase/server.ts:
   export async function createClient(): Promise<SupabaseClient>   // cookie-bound, for Server Components + Server Actions
@@ -115,7 +96,7 @@ src/lib/supabase/client.ts:
 src/lib/supabase/admin.ts:
   export function createAdminClient(): SupabaseClient             // SUPABASE_SECRET_KEY, server-only, bypasses RLS
 
-DB schema (live after db push):
+DB schema (authored here, pushed live in Plan 01b):
   public.profiles(id uuid PK -> auth.users, username text unique, role text 'student'|'admin' default 'student', deleted_at timestamptz, created_at, updated_at)
   public.login_attempts(id bigserial PK, email text, attempted_at timestamptz default now(), ip_address text)
   trigger on_auth_user_created on auth.users -> handle_new_user() inserts profiles row from raw_user_meta_data->>'username'
@@ -132,7 +113,7 @@ DB schema (live after db push):
     - CLAUDE.md (SEC-01: no secrets in client code; only NEXT_PUBLIC_* keys are client-safe)
   </read_first>
   <what-built>
-    This is a human-action gate because Supabase secret values cannot be generated by Claude — they come from the user's Supabase dashboard. Claude will create `.env.example` (committed, no secrets) and `.env.local` (gitignored) with placeholder structure, but the human must paste real values and confirm the project is linked for `supabase db push`.
+    This is a human-action gate because Supabase secret values cannot be generated by Claude — they come from the user's Supabase dashboard. Claude will create `.env.example` (committed, no secrets) and `.env.local` (gitignored) with placeholder structure, but the human must paste real values and confirm the project is linked for `supabase db push` (which runs in Plan 02-01b).
   </what-built>
   <how-to-verify>
     1. Create a Supabase project at supabase.com if one does not exist.
@@ -142,7 +123,7 @@ DB schema (live after db push):
        - SUPABASE_SECRET_KEY (Project Settings -> API Keys -> Secret key)
        - NEXT_PUBLIC_SITE_URL=http://localhost:3000
     3. In the Supabase dashboard, set the password policy to minimum 12 characters and require a digit (Authentication -> Sign In / Up -> Password settings) per D-03.
-    4. Link the CLI to the remote project: `npx supabase link --project-ref <your-project-ref>` (needed for Task 4's db push).
+    4. Link the CLI to the remote project: `npx supabase link --project-ref <your-project-ref>` (needed for Plan 02-01b's db push).
     5. Confirm `.env.local` is present and `git status` does NOT list it (it is gitignored).
   </how-to-verify>
   <action>
@@ -209,73 +190,6 @@ DB schema (live after db push):
   </acceptance_criteria>
 </task>
 
-<task type="auto" gate="blocking">
-  <name>Task 4: [BLOCKING] Push schema to the live Supabase database</name>
-  <read_first>
-    - supabase/migrations/20260620_phase2_auth.sql (the migration produced in Task 3 — must exist and be complete first)
-    - .planning/phases/02-authentication-accounts/02-RESEARCH.md (Supabase project must be configured/linked — Environment Availability)
-  </read_first>
-  <action>
-    Run `supabase db push` (fall back to `npx supabase db push` if the CLI is not globally installed) to apply `20260620_phase2_auth.sql` to the linked remote database. This MUST run after Task 3 (migration written) and before any verification that depends on live tables. The phase cannot pass verification without it — build and tsc pass without the push because types come from config, not the live DB, producing a false-positive. If the push requires an interactive confirmation prompt that cannot be suppressed, stop and surface it for manual run (this task's plan is autonomous:false to allow that).
-  </action>
-  <verify>
-    <automated>npx supabase migration list 2>/dev/null | grep -q 20260620_phase2_auth && echo PUSHED || echo "MANUAL: run 'supabase db push' and confirm profiles + login_attempts exist in the dashboard"</automated>
-  </verify>
-  <done>The migration appears as applied in `supabase migration list`; profiles and login_attempts tables are visible in the Supabase dashboard Table Editor</done>
-  <acceptance_criteria>
-    - `supabase db push` (or npx equivalent) completed without error
-    - `supabase migration list` shows 20260620_phase2_auth as applied to remote
-    - profiles and login_attempts tables exist in the live database (visible in dashboard)
-  </acceptance_criteria>
-</task>
-
-<task type="auto">
-  <name>Task 5: Create proxy.ts (session refresh + route protection)</name>
-  <read_first>
-    - .planning/phases/02-authentication-accounts/02-PATTERNS.md (proxy.ts section — full pattern, the two-forEach setAll requirement, anti-patterns table)
-    - .planning/phases/02-authentication-accounts/02-RESEARCH.md (Pattern 1 proxy.ts lines 210-273; Pitfalls 1, 2, 3 about middleware rename, getUser, setAll)
-    - .planning/phases/02-authentication-accounts/02-CONTEXT.md (D-09: unauthenticated -> /login?next=<original>)
-  </read_first>
-  <action>
-    Create `src/app/proxy.ts` (NOT src/middleware.ts) exporting an async function named `proxy` (NOT middleware) and a `config` with the matcher excluding _next/static, _next/image, favicon.ico, and image extensions. Inside: build a mutable supabaseResponse via NextResponse.next({ request }); construct createServerClient with NEXT_PUBLIC_SUPABASE_URL + NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY and a cookies object implementing getAll (returns request.cookies.getAll()) and setAll (TWO forEach passes — first request.cookies.set for each, then reassign supabaseResponse = NextResponse.next({ request }), then supabaseResponse.cookies.set with options for each; missing either pass breaks refresh silently). Call `await supabase.auth.getUser()` (NEVER getSession). Define protectedPaths = ['/dashboard','/admin','/account']; if no user and pathname startsWith any protected path, redirect to a /login URL with searchParam next set to the original pathname (D-09). Return supabaseResponse otherwise. Do not put the admin-role DB lookup here (that happens in the signIn action per RESEARCH Open Question 1).
-  </action>
-  <verify>
-    <automated>grep -q "export async function proxy" src/app/proxy.ts && grep -q "auth.getUser" src/app/proxy.ts && ! grep -q "getSession\|export function middleware\|export async function middleware" src/app/proxy.ts && test ! -f src/middleware.ts && npx tsc --noEmit && echo OK</automated>
-  </verify>
-  <done>proxy.ts exports proxy + config, uses getUser, protects the three paths with next-param redirect, typechecks; no middleware.ts exists</done>
-  <acceptance_criteria>
-    - `src/app/proxy.ts` exists; `src/middleware.ts` does not
-    - Exports `proxy` (async) and `config` with a matcher
-    - Calls `auth.getUser()`; never calls `getSession()`
-    - setAll has two forEach passes (request.cookies + supabaseResponse.cookies)
-    - Unauthenticated request to a protected path redirects to /login with a `next` search param
-    - `npx tsc --noEmit` exits 0
-  </acceptance_criteria>
-</task>
-
-<task type="auto">
-  <name>Task 6: Install Jest and create the auth test scaffolds (Nyquist Wave 0)</name>
-  <read_first>
-    - .planning/phases/02-authentication-accounts/02-VALIDATION.md (Test Infrastructure, Wave 0 Requirements, Per-Task Verification Map — the exact test file paths and run commands every later task uses)
-    - package.json (devDeps — confirm jest not yet present)
-    - tsconfig.json (TS config the ts-jest transform must respect)
-  </read_first>
-  <action>
-    Install devDeps `jest@29`, `ts-jest`, `@types/jest`, `@testing-library/react`, `@testing-library/jest-dom`, `jest-environment-jsdom`. Create `jest.config.ts` using the ts-jest preset with testEnvironment jsdom, a setupFilesAfterEnv pointing at `jest.setup.ts`, and moduleNameMapper for the `@/` -> `src/` alias. Create `jest.setup.ts` importing `@testing-library/jest-dom`. Add an npm script `"test": "jest"`. Create the eight scaffold test files exactly as named in 02-VALIDATION.md: `__tests__/auth/signup.test.ts`, `__tests__/auth/login.test.ts`, `__tests__/auth/errors.test.ts`, `__tests__/auth/logout.test.ts`, `__tests__/auth/delete.test.ts`, `__tests__/auth/ratelimit.test.ts`, `__tests__/middleware.test.ts`, `__tests__/rls.test.ts`. Each scaffold uses `test.todo(...)` describing the requirement it will cover (e.g. signup.test.ts -> `test.todo('signUp creates a profiles row with username and student role (AUTH-01)')`) so the file is present and the suite passes without false greens. Do NOT use watch-mode flags anywhere.
-  </action>
-  <verify>
-    <automated>npx jest --passWithNoTests 2>&1 | tail -5 && test -f __tests__/rls.test.ts && test -f __tests__/auth/ratelimit.test.ts && grep -q '"test"' package.json && echo OK</automated>
-  </verify>
-  <done>Jest runs green via `npx jest`; all eight scaffold files exist with test.todo placeholders; @/ alias resolves; no watch flags</done>
-  <acceptance_criteria>
-    - `npx jest --passWithNoTests` exits 0
-    - All eight files from 02-VALIDATION.md Wave 0 exist
-    - `jest.config.ts` maps `@/` to `src/` and uses jsdom environment
-    - `package.json` has a `test` script with no `--watch` flag
-    - Each scaffold contains at least one `test.todo` naming its requirement ID
-  </acceptance_criteria>
-</task>
-
 </tasks>
 
 <threat_model>
@@ -283,7 +197,6 @@ DB schema (live after db push):
 
 | Boundary | Description |
 |----------|-------------|
-| browser -> Server Action/proxy | Untrusted form input and cookies cross into server code |
 | application -> Supabase Postgres | Queries cross into the database; RLS is the isolation guard |
 | env (.env.local) -> client bundle | Secret key must never cross into NEXT_PUBLIC / client code |
 
@@ -293,29 +206,26 @@ DB schema (live after db push):
 |-----------|----------|-----------|-------------|-----------------|
 | T-02-01 | Information Disclosure | SUPABASE_SECRET_KEY in .env.local | mitigate | Secret used only in admin.ts (server-only); .env* gitignored; client factories use only NEXT_PUBLIC_* publishable key (SEC-01) |
 | T-02-02 | Elevation of Privilege | profiles table cross-user reads | mitigate | RLS enabled with select/update policies scoped to `(select auth.uid()) = id`; no insert policy (trigger-only) (SEC-02) |
-| T-02-03 | Spoofing | Forged session cookie in proxy.ts | mitigate | proxy calls `getUser()` (server round-trip verification), never `getSession()` (unverified cookie read) |
 | T-02-04 | Tampering | Raw SQL string building | accept/mitigate | Only the migration file contains SQL (static DDL, no interpolation); application code uses Supabase SDK parameterized queries exclusively (SEC-03) |
-| T-02-05 | Information Disclosure | login_attempts table readable by clients | mitigate | RLS enabled with zero policies → accessible only via service_role admin client (SEC-04) |
-| T-02-SC | Tampering | npm installs (@supabase/ssr, supabase-js, bad-words, zod, jest) | mitigate | RESEARCH Package Legitimacy Audit rated all packages [OK] with no postinstall network scripts; versions pinned and verified against npm registry 2026-06-20 |
+| T-02-05 | Information Disclosure | login_attempts table readable by clients | mitigate | RLS enabled with zero policies → accessible only via service_role admin client (SEC-04, enforced live in Plan 01b) |
+| T-02-SC | Tampering | npm installs (@supabase/ssr, supabase-js, bad-words, zod) | mitigate | RESEARCH Package Legitimacy Audit rated all packages [OK] with no postinstall network scripts; versions pinned and verified against npm registry 2026-06-20 |
 </threat_model>
 
 <verification>
 - `npx tsc --noEmit` exits 0
-- `npx jest --passWithNoTests` exits 0
-- `supabase migration list` shows 20260620_phase2_auth applied
-- profiles + login_attempts visible in Supabase dashboard
-- No NEXT_PUBLIC_SUPABASE_ANON_KEY, getSession, or auth-helpers anywhere in src/
-- `src/middleware.ts` does not exist; `src/app/proxy.ts` exports `proxy`
+- Three client factories exist and enforce the secret/publishable split
+- Migration SQL file authored with both tables, RLS, two profiles policies, no login_attempts policy, and the trigger
+- No NEXT_PUBLIC_SUPABASE_ANON_KEY, getSession, or auth-helpers anywhere in src/lib/supabase
 </verification>
 
 <success_criteria>
 - Supabase env configured; dev server boots
-- Schema pushed live with RLS on both tables and the signup trigger active
 - Three client factories typecheck and enforce the secret/publishable split
-- proxy.ts refreshes sessions via getUser and guards /dashboard, /admin, /account
-- Jest harness green with all eight scaffold files present
+- Migration SQL authored (profiles + login_attempts + RLS + trigger), ready for Plan 01b to push live
 </success_criteria>
 
 <output>
-Create `.planning/phases/02-authentication-accounts/02-01-SUMMARY.md` when done
+Create `.planning/phases/02-authentication-accounts/02-01a-SUMMARY.md` when done
 </output>
+</content>
+</invoke>

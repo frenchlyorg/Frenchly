@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-last_updated: "2026-06-20T23:00:00.000Z"
+last_updated: "2026-06-21T07:05:00.000Z"
 progress:
   total_phases: 12
   completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
+  total_plans: 8
+  completed_plans: 4
   percent: 8
 ---
 
@@ -20,7 +20,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Core value:** Get a first-time visitor to create an account so they never lose their progress — then keep them coming back through adaptive lessons and honest motivation features.
 **Current milestone:** v1.0 — Foundation & Core Product
-**Current focus:** Phase 1 — Project Foundation
+**Current focus:** Phase 02 — authentication-accounts
 
 ---
 
@@ -28,7 +28,8 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Milestone:** v1.0
 **Phases complete:** 1 / 12
-**Last action:** Phase 1 complete — walking skeleton deployed to Vercel, human-verified 2026-06-20
+**Current plan:** 02-01a complete — auth foundation static artifacts (client factories + migration)
+**Last action:** Plan 02-01a executed — packages installed, 3 client factories created, migration authored, SUMMARY committed 2026-06-21
 
 ---
 
@@ -37,7 +38,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 | Phase | Name | Status | Plans |
 |-------|------|--------|-------|
 | 1 | Project Foundation | complete ✓ | 3/3 done |
-| 2 | Authentication & Accounts | not_started | — |
+| 2 | Authentication & Accounts | in_progress | 1/5 done (02-01a complete) |
 | 3 | Lesson Framework | not_started | — |
 | 4 | Diagnostic System | not_started | — |
 | 5 | Practice Problem Engine | not_started | — |
@@ -76,4 +77,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Next step:** `/gsd:discuss-phase 2` — Authentication & Accounts (Supabase auth, sign up, log in, RLS)
+**Stopped at:** Plan 02-01a complete — next is Plan 02-01b (db push, proxy, Jest harness)
+**Next step:** `/gsd:execute-phase 2` — continue with Plan 02-01b
