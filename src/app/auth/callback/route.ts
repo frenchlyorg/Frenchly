@@ -9,7 +9,17 @@ import { createClient } from '@/lib/supabase/server'
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
-  const next = searchParams.get('next') ?? '/account/update-password'
+  const requestedNext = searchParams.get('next') ?? '/account/update-password'
+
+  // Open-redirect guard (T-02-18): only allow same-origin absolute paths.
+  // Reject protocol-relative ("//host"), backslash ("/\\host"), and userinfo
+  // ("@host") tricks that would otherwise navigate off-origin via `${origin}${next}`.
+  const next =
+    requestedNext.startsWith('/') &&
+    !requestedNext.startsWith('//') &&
+    !requestedNext.startsWith('/\\')
+      ? requestedNext
+      : '/account/update-password'
 
   if (code) {
     const supabase = await createClient()
