@@ -51,15 +51,14 @@ Exceptions:
 
 ## Typography
 
+Exactly 4 sizes, exactly 2 weights.
+
 | Role | Font | Size | Weight | Line Height | Usage in Phase 2 |
 |------|------|------|--------|-------------|-----------------|
-| Page heading | Literata | 28px | 600 | 1.29 (36px) | "Create your account", "Welcome back", "Account settings" |
-| Body / form description | Be Vietnam Pro | 16px | 400 | 1.75 (28px) | Helper text, sub-descriptions below page heading |
-| Input label | Work Sans | 13px | 500 | 1.23 (16px) | "Email", "Username", "Password", "Confirm password" |
-| Input value / placeholder | Be Vietnam Pro | 16px | 400 | 1.5 | Text typed into fields; placeholder matches but at lower opacity |
-| Inline error | Be Vietnam Pro | 14px | 400 | 1.43 (20px) | Inline field-level errors (below each field) |
-| Button label | Work Sans | 14px | 500 | 1 | "Create account", "Log in", "Log out", "Delete account" |
-| Small hint / rate limit | Be Vietnam Pro | 13px | 400 | 1.38 | Password hint, rate limit lockout message |
+| Page heading | Literata | 28px | 600 | 1.29 (36px) | "Create your account", "Welcome back", "Account settings", "Welcome back, [username]." (dashboard) |
+| Body / form description | Be Vietnam Pro | 16px | 400 | 1.75 (28px) | Helper text, sub-descriptions below page heading, input values, placeholder text, dashboard stub body |
+| Input label / button label | Work Sans | 14px | 400 | 1.23 (16px) | "Email", "Username", "Password", "Confirm password"; "Create account", "Log in to Frenchly", "Log out", "Delete account" |
+| Inline error / small hint | Be Vietnam Pro | 13px | 400 | 1.38 | Inline field-level errors (below each field), password hint, rate limit lockout message |
 
 Source: DESIGN.md typography tokens (headline-lg-mobile, body-md, label-sm), confirmed via globals.css font vars.
 
@@ -118,18 +117,18 @@ All inputs follow the "lightly boxed" pattern (CLAUDE.md rule 5, DESIGN.md compo
 
 - **Resting:** 1px border `--color-outline-variant`, background `--color-surface-container-low`, radius `--radius` (8px)
 - **Focus:** bottom border widens to 3px solid `--color-primary`; top/left/right borders remain 1px `--color-outline-variant`; no glow/box-shadow
-- **Error state:** all 4 borders become 1px solid `--color-error`; error text appears immediately below the field in Be Vietnam Pro 14px `--color-error`
+- **Error state:** all 4 borders become 1px solid `--color-error`; error text appears immediately below the field in Be Vietnam Pro 13px `--color-error`
 - **Disabled:** background `--color-surface-container`, border `--color-outline-variant`, text `--color-on-surface-variant`, cursor not-allowed
 - **Placeholder text:** `--color-on-surface-variant` at 70% opacity
-- **Height:** 44px minimum (WCAG touch target)
-- **Padding:** 12px horizontal, 10px vertical
+- **Container min-height:** 44px (WCAG touch target)
+- **Padding:** 12px horizontal, 8px vertical (sm token)
 
-Password inputs include a show/hide toggle button (eye icon or "show"/"hide" text link in Work Sans 13px) aligned to the right edge of the input, using `--color-on-surface-variant`. Revealing password briefly to verify before submit is standard accessibility.
+Password inputs include a show/hide toggle button (eye icon or "show"/"hide" text link in Work Sans 14px) aligned to the right edge of the input, using `--color-on-surface-variant`. Revealing password briefly to verify before submit is standard accessibility.
 
 ### Primary Button
 
 - **Fill:** `--color-primary` (#a03e40 light / #ffb866 dark)
-- **Text:** `--color-on-primary` (#ffffff light / #3a2400 dark), Work Sans 14px weight 500
+- **Text:** `--color-on-primary` (#ffffff light / #3a2400 dark), Work Sans 14px weight 400
 - **Height:** 44px, full width of form container (480px max)
 - **Radius:** `--radius` (8px)
 - **Hover:** background darkens 10% (light: ~#8a3436; dark: ~#e6a55a) — no shadow
@@ -167,6 +166,8 @@ Used for "Forgot password?", "Already have an account? Log in", "Cancel" in acco
 
 ### /signup — Sign-up page
 
+**Primary focal point:** The form card, specifically the primary CTA button ("Create account") at its base.
+
 **Layout:** Single centered column. Form card max-width 480px, vertically centered with top offset ~80px from nav.
 
 **Elements (top to bottom):**
@@ -199,7 +200,7 @@ Source: CONTEXT.md D-11, D-12.
    - Field: Email address
    - Field: Password (show/hide toggle)
    - "Forgot password?" — ghost button, right-aligned under password field
-   - Primary button: "Log in"
+   - Primary button: "Log in to Frenchly"
 3. Below card: "New to Frenchly? [Create an account]" — Be Vietnam Pro 14px + inline ghost link
 
 **Error messages:**
@@ -208,7 +209,7 @@ Source: CONTEXT.md D-11, D-12.
 
 Source: CONTEXT.md D-11, D-12, D-13, D-19.
 
-**Lockout message styling:** Amber/warm info treatment (Be Vietnam Pro 14px, `--color-secondary-container` background tint at 20%, `--color-on-surface` text) — distinct from red error styling. Placed above the email field inside the form card.
+**Lockout message styling:** Amber/warm info treatment (Be Vietnam Pro 13px, `--color-secondary-container` background tint at 20%, `--color-on-surface` text) — distinct from red error styling. Placed above the email field inside the form card.
 
 ### /account — Account settings page
 
@@ -222,7 +223,7 @@ Source: CONTEXT.md D-11, D-12, D-13, D-19.
    - Field: Confirm new password
    - Primary button: "Update password"
 3. **Danger zone section** (card, subtle error-tinted border: 1px solid `--color-error` at 30% opacity):
-   - Section label: "Delete account" — Work Sans 13px/500 `--color-error`
+   - Section label: "Delete account" — Work Sans 14px/400 `--color-error`
    - Description: "This will permanently remove your account. Your learning progress cannot be recovered." — Be Vietnam Pro 14px `--color-on-surface-variant`
    - Confirmation input (label: "Type delete to confirm"):
      - Placeholder: "delete"
@@ -236,7 +237,7 @@ Source: CONTEXT.md D-14, D-15.
 **Layout:** 1040px container. Top section only (stub state).
 
 **Elements:**
-1. Welcome message: "Welcome back, [username]." — Literata 24px/500
+1. Welcome message: "Welcome back, [username]." — Literata 28px/600
 2. Placeholder card: "Your lessons are coming soon." with sub-copy "Level 1 content launches in a future update." — Be Vietnam Pro 16px, `--color-on-surface-variant`, inside a surface-container card with dashed `--color-outline-variant` border.
 3. No green colors, no confetti, no celebration — warm neutral stub. Source: DESIGN.md (green = correct-answer only).
 
@@ -269,7 +270,7 @@ Transition: instant state change on auth status change (no animation needed for 
 |-------|---------|-----------------|
 | Resting | Input | 1px `--color-outline-variant` border, `--color-surface-container-low` bg |
 | Focused | Input | 3px bottom border `--color-primary`; other borders 1px `--color-outline-variant` |
-| Error | Input | All 4 borders 1px `--color-error`; error text below in 14px `--color-error` |
+| Error | Input | All 4 borders 1px `--color-error`; error text below in 13px `--color-error` |
 | Disabled | Input | `--color-surface-container` bg, `--color-outline-variant` border, 70% opacity text |
 | Resting | Primary button | `--color-primary` fill, `--color-on-primary` text |
 | Hover | Primary button | 10% darker fill, no shadow |
@@ -285,7 +286,7 @@ Transition: instant state change on auth status change (no animation needed for 
 | Element | Copy | Source |
 |---------|------|--------|
 | Sign-up CTA | "Create account" | D-06, sentence case rule |
-| Login CTA | "Log in" | D-07, sentence case rule |
+| Login CTA | "Log in to Frenchly" | D-07, sentence case rule |
 | Password reset CTA | "Send reset link" | Standard; vague to prevent enumeration |
 | Update password CTA | "Update password" | Account settings |
 | Delete CTA | "Delete my account" | D-14, sentence case |
