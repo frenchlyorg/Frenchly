@@ -49,6 +49,14 @@ Plans:
 **Goal:** Users can create accounts, log in, stay logged in, log out, and delete their data. Student vs admin roles defined. Supabase RLS ensures per-student data isolation. No secrets in client code.
 **Mode:** mvp
 **Requirements:** AUTH-01, AUTH-02, AUTH-03, AUTH-04, AUTH-05, SEC-01, SEC-02, SEC-03, SEC-04
+**Plans:** 4 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Foundation: Supabase env + clients, profiles/login_attempts migration + RLS + trigger, schema push, proxy.ts, Jest scaffolds
+- [ ] 02-02-PLAN.md — Sign-up + login + session slice: signUp/signIn actions (rate limit, vague errors), forms, pages, nav/dashboard auth state
+- [ ] 02-03-PLAN.md — Logout + password reset + account deletion slice: signOut/resetPassword/deleteAccount, callback route, /account settings
+- [ ] 02-04-PLAN.md — Admin role + RLS verification slice: protected /admin stub, RLS isolation test, proxy redirect test
+
 **Success Criteria:**
 1. New user can sign up with email + username + password and is redirected to dashboard
 2. Returning user can log in; session persists across browser close/reopen
