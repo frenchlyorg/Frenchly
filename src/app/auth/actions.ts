@@ -185,10 +185,70 @@ export async function signIn(
 }
 
 // ────────────────────────────────────────────────────────────────────────────
-// signOut stub — AUTH-03 — full implementation in Plan 03 Task 1
-// Exported here so nav.tsx can import it at compile time before Plan 03 runs.
+// signOut — AUTH-03, D-08
 // ────────────────────────────────────────────────────────────────────────────
 
 export async function signOut(): Promise<void> {
-  // stub — implemented in Plan 03 Task 1
+  const supabase = await createClient()
+  await supabase.auth.signOut()
+  redirect('/')
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// resetPassword — D-04 — always returns same message (no email enumeration, T-02-16)
+// ────────────────────────────────────────────────────────────────────────────
+
+export async function resetPassword(
+  formData: FormData
+): Promise<{ success: boolean; message: string }> {
+  const email = (formData.get('email') as string | null)?.trim() ?? ''
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+  const redirectTo = `${siteUrl}/auth/callback?next=/account/update-password`
+
+  const supabase = await createClient()
+  // Fire-and-forget — never reveal whether the email is registered (T-02-16)
+  await supabase.auth.resetPasswordForEmail(email, { redirectTo })
+
+  return {
+    success: true,
+    message: "If that email is registered, you'll receive a reset link.",
+  }
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// deleteAccount — AUTH-04, D-14, D-15
+// Resolves user server-side via getUser — never accepts a client-supplied id (T-02-15)
+// PII anonymization + soft-delete MUST use admin client (column grant is service_role only)
+// ────────────────────────────────────────────────────────────────────────────
+
+export async function deleteAccount(): Promise<void> {
+  const supabase = await createClient()
+
+  // Resolve the authenticated user id server-side (T-02-15 — never trust client input)
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    redirect('/login')
+  }
+
+  const id = user.id
+  const supabaseAdmin = createAdminClient()
+
+  // 1. Anonymize PII in profiles (service_role required — column grant blocks user context)
+  await supabaseAdmin
+    .from('profiles')
+    .update({
+      username: 'deleted_' + id.slice(0, 8),
+      deleted_at: new Date().toISOString(),
+    })
+    .eq('id', id)
+
+  // 2. Soft-delete the auth user — marks auth.users.deleted_at so login is rejected (Pitfall 6 / T-02-17)
+  await supabaseAdmin.auth.admin.deleteUser(id, true)
+
+  // 3. Clear the session cookie then return to home
+  await supabase.auth.signOut()
+  redirect('/')
 }
