@@ -4,8 +4,13 @@ import { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
+import { signOut } from "@/app/auth/actions";
 
-export function Nav() {
+interface NavProps {
+  username: string | null;
+}
+
+export function Nav({ username }: NavProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -30,12 +35,30 @@ export function Nav() {
           >
             Mission
           </Link>
-          <Link
-            href="/login"
-            className="text-on-surface-variant hover:text-on-surface text-sm transition-colors"
-          >
-            Log in
-          </Link>
+
+          {username ? (
+            <>
+              <span className="text-on-surface-variant text-sm">
+                {username}
+              </span>
+              <form action={signOut}>
+                <button
+                  type="submit"
+                  className="text-on-surface-variant hover:text-on-surface text-sm transition-colors"
+                >
+                  Log out
+                </button>
+              </form>
+            </>
+          ) : (
+            <Link
+              href="/login"
+              className="text-on-surface-variant hover:text-on-surface text-sm transition-colors"
+            >
+              Log in
+            </Link>
+          )}
+
           <ThemeToggle />
         </div>
 
@@ -66,13 +89,32 @@ export function Nav() {
           >
             Mission
           </Link>
-          <Link
-            href="/login"
-            className="block px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container text-sm"
-            onClick={() => setIsOpen(false)}
-          >
-            Log in
-          </Link>
+
+          {username ? (
+            <>
+              <span className="block px-6 py-3 text-on-surface-variant text-sm">
+                {username}
+              </span>
+              <form action={signOut}>
+                <button
+                  type="submit"
+                  className="block w-full text-left px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container text-sm"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Log out
+                </button>
+              </form>
+            </>
+          ) : (
+            <Link
+              href="/login"
+              className="block px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container text-sm"
+              onClick={() => setIsOpen(false)}
+            >
+              Log in
+            </Link>
+          )}
+
           <div className="px-4 py-3">
             <ThemeToggle />
           </div>

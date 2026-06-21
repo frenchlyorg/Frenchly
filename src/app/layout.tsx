@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Literata, Be_Vietnam_Pro, Work_Sans } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Nav } from "@/components/nav";
+import { createClient } from "@/lib/supabase/server";
 import "./globals.css";
 
 const literata = Literata({
@@ -29,11 +30,28 @@ export const metadata: Metadata = {
   description: "Adaptive French learning for high school students",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Fetch auth state server-side to pass to Nav (Pattern 7 from RESEARCH.md)
+  // Uses getUser() — verifies against auth server (T-02-10 mitigation)
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  let username: string | null = null;
+  if (user) {
+    const { data } = await supabase
+      .from("profiles")
+      .select("username")
+      .eq("id", user.id)
+      .single();
+    username = data?.username ?? null;
+  }
+
   return (
     <html
       lang="en"
@@ -47,7 +65,7 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <Nav />
+          <Nav username={username} />
           <main>{children}</main>
         </ThemeProvider>
       </body>
