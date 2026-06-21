@@ -8,7 +8,7 @@
 - [ ] **AUTH-02**: User can log in and remain logged in across sessions (persistent session)
 - [ ] **AUTH-03**: User can log out from any page
 - [ ] **AUTH-04**: User can delete their account and all associated data from settings
-- [ ] **AUTH-05**: Admin/editor role exists with ability to manage lesson content via database
+- [x] **AUTH-05**: Admin/editor role exists with ability to manage lesson content via database
 
 ### Lesson Framework
 
@@ -71,8 +71,8 @@
 ### Security & Quality
 
 - [ ] **SEC-01**: No API keys, tokens, or secrets appear in front-end code — server-side env vars only
-- [ ] **SEC-02**: Supabase Row-Level Security ensures students can only read/write their own data
-- [ ] **SEC-03**: All user input is sanitized; parameterized queries used throughout (no raw SQL string building)
+- [x] **SEC-02**: Supabase Row-Level Security ensures students can only read/write their own data
+- [x] **SEC-03**: All user input is sanitized; parameterized queries used throughout (no raw SQL string building)
 - [ ] **SEC-04**: Rate limiting on authentication attempts (prevents brute-force attacks)
 - [ ] **SEC-05**: Basic automated test suite covers the three highest-stakes paths: login, save-progress, diagnostic unlock
 - [ ] **SEC-06**: All pages meet WCAG AA contrast ratios (verify coral button fill #a03e40 with tool)

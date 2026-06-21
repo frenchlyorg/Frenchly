@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: 02-02 complete — core auth loop vertical slice
+current_plan: 02-04 complete — admin role guard and security isolation
 status: in_progress
-stopped_at: Plan 02-02 complete — next is Plan 02-03 (signOut, password reset, account deletion)
-last_updated: "2026-06-21T16:09:00Z"
+stopped_at: Plan 02-04 complete — /admin role guard, RLS tests, proxy redirect tests
+last_updated: "2026-06-21T16:17:15Z"
 progress:
   total_phases: 12
   completed_phases: 1
   total_plans: 8
-  completed_plans: 7
-  percent: 12
+  completed_plans: 9
+  percent: 10
 ---
 
 # Frenchly — Project State
@@ -30,8 +30,8 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Milestone:** v1.0
 **Phases complete:** 1 / 12
-**Current plan:** 02-02 complete — core auth loop vertical slice
-**Last action:** Plan 02-02 executed — signUp/signIn Server Actions, SignupForm/LoginForm, /signup /login pages, /dashboard stub, nav/layout auth state, 30 unit tests. Committed 2026-06-21
+**Current plan:** 02-04 complete — admin role guard and security isolation
+**Last action:** Plan 02-04 executed — /admin Server Component with server-side role guard (AUTH-05), RLS isolation tests (SEC-02), proxy redirect tests (SEC-03). 49 tests total passing. Committed 2026-06-21
 
 ---
 
@@ -40,7 +40,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 | Phase | Name | Status | Plans |
 |-------|------|--------|-------|
 | 1 | Project Foundation | complete ✓ | 3/3 done |
-| 2 | Authentication & Accounts | in_progress | 3/5 done (02-01a, 02-01b, 02-02 complete) |
+| 2 | Authentication & Accounts | in_progress | 4/5 done (02-01a, 02-01b, 02-02, 02-04 complete) |
 | 3 | Lesson Framework | not_started | — |
 | 4 | Diagnostic System | not_started | — |
 | 5 | Practice Problem Engine | not_started | — |
@@ -79,5 +79,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** Plan 02-02 complete — core auth loop shipped (signUp/signIn/forms/dashboard/nav)
-**Next step:** `/gsd:execute-phase 2` — continue with Plan 02-03 (signOut, password reset, account deletion, admin stub)
+**Stopped at:** Plan 02-04 complete — admin role guard, RLS tests, proxy redirect tests
+**Next step:** `/gsd:execute-phase 2` — continue with Plan 02-03 (signOut, password reset, account deletion)
