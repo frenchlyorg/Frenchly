@@ -68,11 +68,11 @@ created: 2026-06-20
 
 ## Manual-Only Verifications
 
-| Behavior | Requirement | Why Manual | Test Instructions |
-|----------|-------------|------------|-------------------|
-| No API keys in browser network tab | SEC-04 | Bundle scanning not in Jest scope | Open DevTools → Network → XHR; confirm no `SUPABASE_SECRET_KEY` or Anthropic key in request headers or payloads |
-| Session persists across browser close/reopen | AUTH-02 | Requires real browser session | Log in → close tab → reopen → confirm still authenticated |
-| Admin role redirect after login | AUTH-05 | Requires seeded admin user | Log in as admin → confirm redirect to /admin (not /dashboard) |
+| Behavior | Requirement | Why Manual | Test Instructions | Result |
+|----------|-------------|------------|-------------------|--------|
+| No API keys in browser network tab | SEC-04 | Bundle scanning not in Jest scope | Open DevTools → Network → XHR; confirm no `SUPABASE_SECRET_KEY` or Anthropic key in request headers or payloads | ✅ PASS (2026-06-21) — Network search for `sb_secret`, `service_role`, `sk-ant` all no results |
+| Session persists across browser close/reopen | AUTH-02 | Requires real browser session | Log in → close tab → reopen → confirm still authenticated | ✅ PASS (2026-06-21) |
+| Admin role redirect after login | AUTH-05 | Requires seeded admin user | Log in as admin → confirm redirect to /admin (not /dashboard) | ✅ PASS (2026-06-21) — FrenchlyAdmin → /admin |
 
 ---
 
@@ -85,4 +85,4 @@ created: 2026-06-20
 - [ ] Feedback latency < 30s
 - [ ] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** ✅ approved 2026-06-21 — all 3 manual UAT checks (SEC-04, AUTH-02, AUTH-05) verified live against Supabase project `wywqrezffihbosyyzkvd`
