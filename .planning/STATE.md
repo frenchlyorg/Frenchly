@@ -2,14 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
+current_plan: 02-01b complete — proxy.ts + Jest harness + 8 test scaffolds
 status: in_progress
-last_updated: "2026-06-21T07:05:00.000Z"
+stopped_at: Plan 02-01b complete — next is Plan 02-02 (login/signup actions + forms)
+last_updated: "2026-06-21T15:42:47Z"
 progress:
   total_phases: 12
   completed_phases: 1
   total_plans: 8
-  completed_plans: 4
-  percent: 8
+  completed_plans: 6
+  percent: 10
 ---
 
 # Frenchly — Project State
@@ -28,8 +30,8 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Milestone:** v1.0
 **Phases complete:** 1 / 12
-**Current plan:** 02-01a complete — auth foundation static artifacts (client factories + migration)
-**Last action:** Plan 02-01a executed — packages installed, 3 client factories created, migration authored, SUMMARY committed 2026-06-21
+**Current plan:** 02-01b complete — proxy.ts + Jest harness + 8 test scaffolds
+**Last action:** Plan 02-01b executed — proxy.ts session refresh/route protection created, Jest 29 + ts-jest installed, 8 Wave 0 test scaffolds committed 2026-06-21
 
 ---
 
@@ -38,7 +40,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 | Phase | Name | Status | Plans |
 |-------|------|--------|-------|
 | 1 | Project Foundation | complete ✓ | 3/3 done |
-| 2 | Authentication & Accounts | in_progress | 1/5 done (02-01a complete) |
+| 2 | Authentication & Accounts | in_progress | 2/5 done (02-01a, 02-01b complete) |
 | 3 | Lesson Framework | not_started | — |
 | 4 | Diagnostic System | not_started | — |
 | 5 | Practice Problem Engine | not_started | — |
@@ -77,5 +79,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** Plan 02-01a complete — next is Plan 02-01b (db push, proxy, Jest harness)
-**Next step:** `/gsd:execute-phase 2` — continue with Plan 02-01b
+**Stopped at:** Plan 02-01b complete — proxy.ts + Jest Wave 0 harness shipped
+**Next step:** `/gsd:execute-phase 2` — continue with Plan 02-02 (login/signup server actions + forms)
