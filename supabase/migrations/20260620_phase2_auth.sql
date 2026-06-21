@@ -19,7 +19,14 @@ create table public.profiles (
 
 -- Grants
 grant select on public.profiles to anon;
-grant select, insert, update on public.profiles to authenticated;
+grant select, insert on public.profiles to authenticated;
+-- Column-scoped UPDATE (SEC-02 privilege-escalation guard): authenticated may change
+-- only username/updated_at. `role` and `deleted_at` are privileged columns — granting
+-- table-wide UPDATE would let a student run `update profiles set role='admin'` against
+-- their own row (the RLS policy below scopes rows, not columns), self-escalating past the
+-- admin gate (AUTH-05). Role promotion and soft-delete run through the service_role admin
+-- client only.
+grant update (username, updated_at) on public.profiles to authenticated;
 grant all on public.profiles to service_role;
 
 -- Indexes
