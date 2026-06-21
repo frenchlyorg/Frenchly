@@ -4,13 +4,13 @@ milestone: v1.0
 milestone_name: milestone
 current_plan: 02-03 complete — account lifecycle (signOut, password reset, account deletion)
 status: in_progress
-stopped_at: Plan 02-03 complete — signOut, resetPassword, deleteAccount, callback route, /account page
-last_updated: "2026-06-21T16:28:00Z"
+stopped_at: Phase 3 context gathered
+last_updated: "2026-06-21T21:55:29.085Z"
 progress:
   total_phases: 12
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 8
-  completed_plans: 10
+  completed_plans: 8
   percent: 17
 ---
 
@@ -58,7 +58,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 - **Stack:** Next.js + Tailwind CSS + Supabase + Vercel + Claude Haiku 4.5 (AI checker)
 - **Design system:** "Warm Scholastic Minimalist" — fully defined in DESIGN.md (project root). Light + dark palettes, typography tokens, spacing, components all locked.
-- **Domain:** frenchly.org (to purchase)
+- **Domain:** frenchly.org — purchased via **IONOS**; DNS not yet pointed to Vercel (deploy = Phase 12)
 - **Support email:** frenchlyorg@gmail.com (Gmail, 2FA enabled)
 - **Target:** ~Aug 2026 for v1 launch; 1,000 accounts within 3 months of launch
 - **Repo:** C:\Users\Ericc\frenchly
@@ -67,7 +67,12 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 ## Open Items
 
-- [x] Purchase frenchly.org domain — purchased on GoDaddy, DNS not yet pointed to Vercel
+- [x] Purchase frenchly.org domain — purchased via **IONOS**, DNS not yet pointed to Vercel
+- [ ] **Phase 12 deploy — frenchly.org wiring** (do at deployment, not before):
+  1. Vercel env: `NEXT_PUBLIC_SITE_URL=https://frenchly.org`
+  2. Supabase → Auth → URL Configuration: Site URL `https://frenchly.org` + add redirect `https://frenchly.org/auth/callback` (keep localhost entries)
+  3. IONOS DNS → point to Vercel (use exact records Vercel shows when adding the domain)
+  4. Re-enable email confirm + real SMTP sender (currently off for dev)
 - [ ] Lesson content for French 1 and French 2 (user to supply)
 - [ ] Verify WCAG AA contrast ratios on coral button fill (#a03e40) before Phase 9
 - [ ] Confirm "active user" thresholds for leaderboard (v2) — e.g., 20 min/day or 5 lessons/week
@@ -79,5 +84,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** Plan 02-03 complete — account lifecycle fully implemented; Phase 2 complete
+**Stopped at:** Phase 3 context gathered
 **Next step:** `/gsd:execute-phase 3` — Lesson Framework
