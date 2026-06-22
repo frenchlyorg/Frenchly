@@ -63,7 +63,15 @@ export async function markSubComponentComplete(subComponentId: string): Promise<
   // 6. Invalidate lesson page so Server Component re-fetches ground-truth progress
   //    Route shape: /levels/[levelSlug]/lessons/[lessonId] (Pitfall 2 guard)
   if (lesson) {
-    const levelSlug = (lesson.level as { slug: string } | null)?.slug ?? ''
+    // Supabase returns joined data as an array or object depending on the relation cardinality.
+    // levels is a many-to-one join so the type can be array-like; normalise defensively.
+    const levelData = lesson.level
+    let levelSlug = ''
+    if (Array.isArray(levelData) && levelData.length > 0) {
+      levelSlug = (levelData[0] as { slug: string }).slug
+    } else if (levelData && !Array.isArray(levelData)) {
+      levelSlug = (levelData as unknown as { slug: string }).slug
+    }
     revalidatePath(`/levels/${levelSlug}/lessons/${lesson.id}`)
   }
 }
