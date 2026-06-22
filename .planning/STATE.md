@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: 03-02 complete — Level page vertical slice (LESSON-04)
+current_plan: 03-03 complete — Lesson view + real-time progress save (LESSON-02, LESSON-03)
 status: in_progress
-stopped_at: 03-02 complete — level page, LevelCard, LockBadge, locking helper done
-last_updated: "2026-06-22T07:05:00.000Z"
+stopped_at: 03-03 complete — lesson view vertical slice done
+last_updated: "2026-06-22T08:00:00.000Z"
 progress:
   total_phases: 12
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 11
-  completed_plans: 10
-  percent: 18
+  completed_plans: 11
+  percent: 25
 ---
 
 # Frenchly — Project State
@@ -30,8 +30,8 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Milestone:** v1.0
 **Phases complete:** 2 / 12
-**Current plan:** 03-02 complete — Level page vertical slice (LESSON-04)
-**Last action:** Plan 03-02 complete — locking.ts pure helper (3 tests green), LockBadge + LevelCard components (warm tokens, guillemet marker, locked cards non-interactive), /levels/[levelSlug] Server Component (getUser guard, nested Supabase select, deriveIsLevelLocked, 2-col grid). TypeScript clean. 72 tests passing. Commits a87da3b, 48732ff, 9bc27a1. 2026-06-22
+**Current plan:** 03-03 complete — Lesson view + real-time progress save (LESSON-02, LESSON-03)
+**Last action:** Plan 03-03 complete — markSubComponentComplete Server Action (zod validate, getUser server-side, existence check, idempotent upsert, revalidatePath), SubComponentItem + SubComponentList (useOptimistic inside startTransition, 4px progress bar, no green, aria-pressed), lesson view Server Component (720px col, two-query pattern, getUser guard). TypeScript clean. 77 tests passing. Commits 04fc786, 0b74d6d, 7ae6a46. 2026-06-22
 
 ---
 
@@ -41,7 +41,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 |-------|------|--------|-------|
 | 1 | Project Foundation | complete ✓ | 3/3 done |
 | 2 | Authentication & Accounts | complete ✓ | 5/5 done (02-01a, 02-01b, 02-02, 02-03, 02-04 complete) |
-| 3 | Lesson Framework | in_progress | 2/3 done (03-01 ✓, 03-02 ✓); 03-03 next |
+| 3 | Lesson Framework | complete ✓ | 3/3 done (03-01 ✓, 03-02 ✓, 03-03 ✓) |
 | 4 | Diagnostic System | not_started | — |
 | 5 | Practice Problem Engine | not_started | — |
 | 6 | AI Writing Checker | not_started | — |
@@ -84,5 +84,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** 03-02 complete — level page vertical slice done
-**Next step:** Execute 03-03 — lesson view + sub-component progress Server Action
+**Stopped at:** 03-03 complete — Phase 3 lesson framework complete
+**Next step:** Execute Phase 4 — Diagnostic System
