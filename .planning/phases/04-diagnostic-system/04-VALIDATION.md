@@ -57,9 +57,9 @@ created: 2026-06-22
 | `deriveIsLevelLocked()` numeric watermark: L2 locked when watermark=1 | 0 | DIAG-03 | — | N/A | unit | `npx jest --testPathPattern="lessons/level"` | extend | ⬜ pending |
 | `deriveIsLevelLocked()` null watermark falls back gracefully | 0 | DIAG-03 | — | N/A | unit | `npx jest --testPathPattern="lessons/level"` | extend | ⬜ pending |
 | `deriveAllLessonsComplete()` true only when all sub-components present | 0 | DIAG-03 | — | N/A | unit | `npx jest --testPathPattern="diagnostic/gating"` | ❌ W0 | ⬜ pending |
-| Unlock Server Action rejects client-reported scores | 0 | DIAG-02 / SEC-05 | T-Tampering | Score recomputed from DB answers, never trusted from client | unit (mock) | `npx jest --testPathPattern="diagnostic/actions"` | ❌ W0 | ⬜ pending |
-| Unlock Server Action uses admin client for profile write | 0 | DIAG-03 / SEC-05 | T-EoP | `unlocked_through_level_number` written via service_role only | unit (mock) | `npx jest --testPathPattern="diagnostic/actions"` | ❌ W0 | ⬜ pending |
-| Placement Server Action blocks retake when completed attempt exists | 1 | DIAG-01 | T-EoP | One-time placement (D-P02) | unit (mock) | `npx jest --testPathPattern="diagnostic/actions"` | ❌ W0 | ⬜ pending |
+| Unlock Server Action rejects client-reported scores | 2 | DIAG-02 / SEC-05 | T-Tampering | Score recomputed from DB answers, never trusted from client | unit (mock) | `npx jest --testPathPattern="diagnostic/actions"` | ❌ W2 | ⬜ pending |
+| Unlock Server Action uses admin client for profile write | 2 | DIAG-03 / SEC-05 | T-EoP | `unlocked_through_level_number` written via service_role only | unit (mock) | `npx jest --testPathPattern="diagnostic/actions"` | ❌ W2 | ⬜ pending |
+| Placement Server Action blocks retake when completed attempt exists | 2 | DIAG-01 | T-EoP | One-time placement (D-P02) | unit (mock) | `npx jest --testPathPattern="diagnostic/actions"` | ❌ W2 | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -69,8 +69,9 @@ created: 2026-06-22
 
 - [ ] `__tests__/diagnostic/scoring.test.ts` — `computeScore`, `derivePlacement`, `derivePassFail`, `gradeAnswer`, `normalizeFillin`, `drawQuestions`
 - [ ] `__tests__/diagnostic/gating.test.ts` — `computeCooldownUntil`, `isCooldownActive`, `formatCooldownRemaining`, `deriveAllLessonsComplete`
-- [ ] `__tests__/diagnostic/actions.test.ts` — unlock + placement Server Action security contract (reuse mock pattern from `__tests__/lessons/actions.test.ts`)
-- [ ] Extend `__tests__/lessons/level.test.ts` — add numeric-watermark cases to `deriveIsLevelLocked`
+- [ ] Extend `__tests__/lessons/level.test.ts` — add numeric-watermark cases to `deriveIsLevelLocked` (Wave 1, plan 04-04)
+
+> **Wave 2 (not Wave 0):** `__tests__/diagnostic/actions.test.ts` — unlock + placement Server Action security contract — is created alongside its implementation in plan 04-03 (Wave 2) and extended in 04-05 (Wave 3), reusing the mock pattern from `__tests__/lessons/actions.test.ts`. It is NOT a pre-existing Wave 0 stub; `wave_0_complete` covers only the scoring/gating/level test files above.
 
 ---
 
