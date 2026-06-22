@@ -16,6 +16,7 @@ interface SubComponentData {
   id: string
   title: string
   kind: 'explainer' | 'practice' | 'writing'
+  content: string | null
   position: number
 }
 
@@ -107,6 +108,7 @@ export default function SubComponentList({
               id={sc.id}
               title={sc.title}
               kind={sc.kind}
+              content={sc.content}
               isCompleted={completedIds.has(sc.id)}
               onComplete={handleComplete}
             />

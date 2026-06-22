@@ -28,6 +28,7 @@ interface SubComponentRow {
   id: string
   title: string
   kind: 'explainer' | 'practice' | 'writing'
+  content: string | null
   position: number
 }
 
@@ -63,7 +64,7 @@ export default async function LessonPage({
   const { data: lesson } = await supabase
     .from('lessons')
     .select(
-      'id, slug, title, estimated_minutes, sub_components ( id, title, kind, position )'
+      'id, slug, title, estimated_minutes, sub_components ( id, title, kind, content, position )'
     )
     .eq('id', lessonId)
     .order('position', { referencedTable: 'sub_components' })

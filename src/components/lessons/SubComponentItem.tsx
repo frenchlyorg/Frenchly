@@ -8,10 +8,13 @@
  * completed = muted (text-on-surface-variant), not struck through.
  */
 
+import LessonMarkdown from './LessonMarkdown'
+
 interface SubComponentItemProps {
   id: string
   title: string
   kind: 'explainer' | 'practice' | 'writing'
+  content: string | null
   isCompleted: boolean
   onComplete: (id: string) => void
 }
@@ -34,11 +37,13 @@ export default function SubComponentItem({
   id,
   title,
   kind,
+  content,
   isCompleted,
   onComplete,
 }: SubComponentItemProps) {
   return (
-    <div className="flex items-center gap-3 py-2">
+    <div className="py-2">
+    <div className="flex items-center gap-3">
       {/* Completion toggle button — 48px min touch target (UI-SPEC §Spacing) */}
       <button
         type="button"
@@ -126,6 +131,16 @@ export default function SubComponentItem({
       >
         {isCompleted ? 'Done' : 'Mark complete'}
       </span>
+    </div>
+
+      {/* Explainer body — markdown content rendered below the toggle row,
+          indented to align past the 48px button + 12px gap. Only explainers
+          carry content in Phase 3; practice/writing are title-only placeholders. */}
+      {content && (
+        <div className="mt-3 sm:ml-[60px]">
+          <LessonMarkdown markdown={content} />
+        </div>
+      )}
     </div>
   )
 }
