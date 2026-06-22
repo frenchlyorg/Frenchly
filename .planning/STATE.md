@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: Phase 3 code-complete — verified 5/5, pending human UAT
+current_plan: Phase 3 complete — lesson framework signed off (UAT passed)
 status: in_progress
-stopped_at: Phase 3 verified — 6 browser UAT items pending human sign-off
-last_updated: "2026-06-22T07:21:00.000Z"
+stopped_at: Phase 3 complete — ready for Phase 4 (Diagnostic System)
+last_updated: "2026-06-22T07:55:00.000Z"
 progress:
   total_phases: 12
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 11
   completed_plans: 11
-  percent: 21
+  percent: 25
 ---
 
 # Frenchly — Project State
@@ -30,8 +30,8 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Milestone:** v1.0
 **Phases complete:** 2 / 12
-**Current plan:** Phase 3 code-complete — all 3 plans done, verified 5/5, pending human UAT
-**Last action:** Phase 3 verified via gsd-verifier — LESSON-01..04 all PASS, security + design checks pass, build + 77 tests green (03-VERIFICATION.md). Status HUMAN_NEEDED: 6 browser UAT items pending sign-off before phase is marked complete. Non-blocking note: phantom sub-component test path uncovered. Deferred (acceptable): LevelCard isActive marker (Phase 9 UX scope).
+**Current plan:** Phase 3 complete — lesson framework signed off (all 6 UAT items passed)
+**Last action:** Phase 3 complete. gsd-verifier 5/5 + human browser UAT all green. Fixed during UAT: hero hydration mismatch (05ff960, pre-existing) and explainer content not rendering in lesson view (608a6cd — added react-markdown/remark-gfm + LessonMarkdown, UI-SPEC alignment). Build + 77 tests green. Open follow-ups (non-blocking): phantom-sub-component test path uncovered; LevelCard isActive marker deferred to Phase 9.
 
 ---
 
@@ -41,7 +41,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 |-------|------|--------|-------|
 | 1 | Project Foundation | complete ✓ | 3/3 done |
 | 2 | Authentication & Accounts | complete ✓ | 5/5 done (02-01a, 02-01b, 02-02, 02-03, 02-04 complete) |
-| 3 | Lesson Framework | verified — UAT pending | 3/3 done (03-01 ✓, 03-02 ✓, 03-03 ✓); 6 browser checks pending |
+| 3 | Lesson Framework | complete ✓ | 3/3 done (03-01 ✓, 03-02 ✓, 03-03 ✓); UAT passed |
 | 4 | Diagnostic System | not_started | — |
 | 5 | Practice Problem Engine | not_started | — |
 | 6 | AI Writing Checker | not_started | — |
@@ -84,5 +84,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** Phase 3 code-complete and verified (5/5); 6 browser UAT items pending human sign-off
-**Next step:** Run the Phase 3 browser UAT (see 03-VERIFICATION.md). On sign-off, mark Phase 3 complete, then `/gsd:discuss-phase 4` — Diagnostic System
+**Stopped at:** Phase 3 complete — lesson framework signed off (verifier 5/5 + UAT all green)
+**Next step:** `/gsd:discuss-phase 4` — Diagnostic System
