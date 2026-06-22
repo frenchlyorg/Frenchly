@@ -12,7 +12,7 @@
 |---|-------|------|--------------|--------|
 | 1 | Project Foundation | Next.js + Tailwind + design system wired up, deployable skeleton | UX-01–10 (partial) | complete ✓ 2026-06-20 |
 | 2 | Authentication & Accounts | Users can sign up, log in, log out, delete account | AUTH-01–05, SEC-01–04 | complete ✓ 2026-06-21 |
-| 3 | Lesson Framework | Lessons with trackable sub-components; progress saved to DB | LESSON-01–04 | not_started |
+| 3 | Lesson Framework | 1/3 | In Progress|  |
 | 4 | Diagnostic System | Placement diagnostic + level-gating diagnostic | DIAG-01–03 | not_started |
 | 5 | Practice Problem Engine | All four auto-graded problem types working | PROB-01–05 | not_started |
 | 6 | AI Writing Checker | Haiku integration, caching, rate limits, graceful fallback | AI-01–05 | not_started |
@@ -80,12 +80,12 @@ Plans:
 **Goal:** The lesson data model exists in Supabase. Students can open a lesson, complete sub-components, and have their progress saved. Level pages show the correct locked/unlocked state and sub-component list per lesson.
 **Mode:** mvp
 **Requirements:** LESSON-01, LESSON-02, LESSON-03, LESSON-04
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 
 Plans:
 **Wave 1**
 
-- [ ] 03-01-PLAN.md — Schema migration (4 tables + RLS + current_level_id + trigger), Wave 0 tests, [BLOCKING] live push + French 1 seed
+- [x] 03-01-PLAN.md — Schema migration (4 tables + RLS + current_level_id + trigger), Wave 0 tests, [BLOCKING] live push + French 1 seed
 
 **Wave 2** *(blocked on Wave 1 completion)*
 

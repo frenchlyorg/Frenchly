@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: 02-03 complete — account lifecycle (signOut, password reset, account deletion)
+current_plan: 03-01 complete — Phase 3 lesson schema live (4 tables, RLS, seed)
 status: in_progress
-stopped_at: Phase 3 UI-SPEC approved
-last_updated: "2026-06-22T02:21:30.120Z"
+stopped_at: 03-01 complete — Wave 2 (level page + lesson view) next
+last_updated: "2026-06-22T06:51:19.340Z"
 progress:
   total_phases: 12
   completed_phases: 2
@@ -22,16 +22,16 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Core value:** Get a first-time visitor to create an account so they never lose their progress — then keep them coming back through adaptive lessons and honest motivation features.
 **Current milestone:** v1.0 — Foundation & Core Product
-**Current focus:** Phase 02 — authentication-accounts
+**Current focus:** Phase 03 — lesson-framework
 
 ---
 
 ## Current Status
 
 **Milestone:** v1.0
-**Phases complete:** 1 / 12
-**Current plan:** 02-03 complete — account lifecycle (signOut, password reset, account deletion)
-**Last action:** Plan 02-03 executed — signOut (AUTH-03), resetPassword with anti-enumeration (D-04), deleteAccount with PII anonymization + soft-delete via admin client (AUTH-04), /auth/callback route, /account settings page, DeleteAccountForm (type-delete gate), UpdatePasswordForm. 54 tests passing. Committed 2026-06-21
+**Phases complete:** 2 / 12
+**Current plan:** 03-01 complete — Phase 3 lesson schema live
+**Last action:** Plan 03-01 complete — migration 20260622_phase3_lessons.sql (4 tables, RLS, current_level_id guard, French 1 seed) verified live in Supabase (user-confirmed: 2 levels / 2 lessons / 5 sub-components, current_level_id + trigger present). rls-phase3.test.ts 18/18; Wave 0 scaffolds for actions/level. 80 tests (69 pass, 8 todo, 3 skip). Commits dafb838, 8b8b398, 92c03be. 2026-06-22
 
 ---
 
@@ -41,7 +41,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 |-------|------|--------|-------|
 | 1 | Project Foundation | complete ✓ | 3/3 done |
 | 2 | Authentication & Accounts | complete ✓ | 5/5 done (02-01a, 02-01b, 02-02, 02-03, 02-04 complete) |
-| 3 | Lesson Framework | not_started | — |
+| 3 | Lesson Framework | in_progress | 1/3 done (03-01 ✓); Wave 2 next |
 | 4 | Diagnostic System | not_started | — |
 | 5 | Practice Problem Engine | not_started | — |
 | 6 | AI Writing Checker | not_started | — |
@@ -84,5 +84,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** Phase 3 UI-SPEC approved
-**Next step:** `/gsd:execute-phase 3` — Lesson Framework
+**Stopped at:** 03-01 complete — schema live and verified
+**Next step:** Execute Wave 2 — 03-02 (level page) + 03-03 (lesson view), parallel
