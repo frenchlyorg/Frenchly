@@ -232,7 +232,7 @@ begin
       '|---------|--------|---------|' || chr(10) ||
       '| **le** | masculine singular | le livre (the book) |' || chr(10) ||
       '| **la** | feminine singular | la table (the table) |' || chr(10) ||
-      '| **l''''** | before vowel/h | l''''école (the school) |' || chr(10) ||
+      '| **l''** | before vowel/h | l''école (the school) |' || chr(10) ||
       '| **les** | all plural | les amis (the friends) |',
       1
     ),
