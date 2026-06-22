@@ -2,7 +2,7 @@
 
 **Milestone:** v1.0 — Foundation & Core Product
 **Target:** ~August 2026
-**Status:** 2 / 12 phases complete (Phase 3 next)
+**Status:** 2 / 12 phases complete (Phase 3 code-complete — pending human UAT)
 
 ---
 
@@ -81,6 +81,7 @@ Plans:
 **Mode:** mvp
 **Requirements:** LESSON-01, LESSON-02, LESSON-03, LESSON-04
 **Plans:** 3/3 plans complete
+**Verification:** 5/5 must-haves verified (03-VERIFICATION.md); build + 77 tests green; 6 browser UAT items pending human sign-off
 
 Plans:
 **Wave 1**
