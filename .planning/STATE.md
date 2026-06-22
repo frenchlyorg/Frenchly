@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: 03-01 complete — Phase 3 lesson schema live (4 tables, RLS, seed)
+current_plan: 03-02 complete — Level page vertical slice (LESSON-04)
 status: in_progress
-stopped_at: 03-01 complete — Wave 2 (level page + lesson view) next
-last_updated: "2026-06-22T06:51:19.340Z"
+stopped_at: 03-02 complete — level page, LevelCard, LockBadge, locking helper done
+last_updated: "2026-06-22T07:05:00.000Z"
 progress:
   total_phases: 12
   completed_phases: 2
   total_plans: 11
-  completed_plans: 8
-  percent: 17
+  completed_plans: 10
+  percent: 18
 ---
 
 # Frenchly — Project State
@@ -30,8 +30,8 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Milestone:** v1.0
 **Phases complete:** 2 / 12
-**Current plan:** 03-01 complete — Phase 3 lesson schema live
-**Last action:** Plan 03-01 complete — migration 20260622_phase3_lessons.sql (4 tables, RLS, current_level_id guard, French 1 seed) verified live in Supabase (user-confirmed: 2 levels / 2 lessons / 5 sub-components, current_level_id + trigger present). rls-phase3.test.ts 18/18; Wave 0 scaffolds for actions/level. 80 tests (69 pass, 8 todo, 3 skip). Commits dafb838, 8b8b398, 92c03be. 2026-06-22
+**Current plan:** 03-02 complete — Level page vertical slice (LESSON-04)
+**Last action:** Plan 03-02 complete — locking.ts pure helper (3 tests green), LockBadge + LevelCard components (warm tokens, guillemet marker, locked cards non-interactive), /levels/[levelSlug] Server Component (getUser guard, nested Supabase select, deriveIsLevelLocked, 2-col grid). TypeScript clean. 72 tests passing. Commits a87da3b, 48732ff, 9bc27a1. 2026-06-22
 
 ---
 
@@ -41,7 +41,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 |-------|------|--------|-------|
 | 1 | Project Foundation | complete ✓ | 3/3 done |
 | 2 | Authentication & Accounts | complete ✓ | 5/5 done (02-01a, 02-01b, 02-02, 02-03, 02-04 complete) |
-| 3 | Lesson Framework | in_progress | 1/3 done (03-01 ✓); Wave 2 next |
+| 3 | Lesson Framework | in_progress | 2/3 done (03-01 ✓, 03-02 ✓); 03-03 next |
 | 4 | Diagnostic System | not_started | — |
 | 5 | Practice Problem Engine | not_started | — |
 | 6 | AI Writing Checker | not_started | — |
@@ -84,5 +84,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** 03-01 complete — schema live and verified
-**Next step:** Execute Wave 2 — 03-02 (level page) + 03-03 (lesson view), parallel
+**Stopped at:** 03-02 complete — level page vertical slice done
+**Next step:** Execute 03-03 — lesson view + sub-component progress Server Action

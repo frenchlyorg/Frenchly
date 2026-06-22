@@ -12,10 +12,10 @@
 
 ### Lesson Framework
 
-- [ ] **LESSON-01**: Lessons are organized into levels (French 1, French 2 for v1)
+- [x] **LESSON-01**: Lessons are organized into levels (French 1, French 2 for v1)
 - [ ] **LESSON-02**: Each lesson contains multiple trackable sub-components (granular progress)
 - [ ] **LESSON-03**: Student progress per sub-component is saved to the database in real time
-- [ ] **LESSON-04**: Level pages display: time estimate per lesson, locked/unlocked state, sub-component list
+- [x] **LESSON-04**: Level pages display: time estimate per lesson, locked/unlocked state, sub-component list
 
 ### Diagnostic & Adaptive System
 
