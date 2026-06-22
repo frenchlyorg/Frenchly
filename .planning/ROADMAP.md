@@ -73,6 +73,12 @@ Plans:
 **Goal:** The lesson data model exists in Supabase. Students can open a lesson, complete sub-components, and have their progress saved. Level pages show the correct locked/unlocked state and sub-component list per lesson.
 **Mode:** mvp
 **Requirements:** LESSON-01, LESSON-02, LESSON-03, LESSON-04
+**Plans:** 3 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Schema migration (4 tables + RLS + current_level_id + trigger), Wave 0 tests, [BLOCKING] live push + French 1 seed
+- [ ] 03-02-PLAN.md — Level page slice: /levels/french-1 with time estimates, parts counts, locked/unlocked cards (LESSON-04)
+- [ ] 03-03-PLAN.md — Lesson view + mark-complete slice: optimistic save via Server Action, progress restore (LESSON-02, LESSON-03)
 **Success Criteria:**
 1. Lesson and sub-component schema is seeded in Supabase with sample French 1 data
 2. Student can open a lesson and see its sub-components listed
