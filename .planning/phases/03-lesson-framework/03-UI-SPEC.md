@@ -42,7 +42,7 @@ Declared values (multiples of 4, drawn from DESIGN.md spacing tokens):
 | 3xl | 80px | Major section gaps (`--spacing-section-gap`) |
 
 Exceptions:
-- Touch targets for the "Mark complete" button: minimum 44px height (WCAG 2.5.8 touch target size)
+- Touch targets for the "Mark complete" button: minimum 48px height (exceeds WCAG 2.5.8 44px minimum while staying on the 4px grid: 48 = 4 × 12)
 - Lesson content column: `max-width: 720px` (`--spacing-content-max`)
 - Level page outer container: `max-width: 1040px` (`--spacing-container-max`)
 - Mobile side margins: 20px (`--spacing-margin-mobile`)
@@ -65,6 +65,9 @@ All roles map directly to DESIGN.md scale. No new sizes introduced.
 | Guillemet decoration | Literata | 24px | 400 | 24px | `quote-decoration` |
 
 Active sizes in this phase: 13, 16, 24, 28/32, 48 (5 sizes — justified by distinct semantic roles: metadata, body, sub-heading, lesson heading, level display).
+Weights in use: 400, 500, 600, 700 (4 weights, per DESIGN.md).
+
+> **DESIGN.md override (deliberate):** The generic UI-quality gate caps sizes at 4 and weights at 2. This spec intentionally exceeds both because the type scale and weight ramp are **locked in DESIGN.md** (project source of truth per CLAUDE.md). Every size/weight here maps 1:1 to an existing DESIGN.md token — no ad-hoc values are introduced. The locked design system wins over the generic heuristic.
 
 Source: DESIGN.md typography section
 
