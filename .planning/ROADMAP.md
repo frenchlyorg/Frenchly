@@ -13,7 +13,7 @@
 | 1 | Project Foundation | Next.js + Tailwind + design system wired up, deployable skeleton | UX-01–10 (partial) | complete ✓ 2026-06-20 |
 | 2 | Authentication & Accounts | Users can sign up, log in, log out, delete account | AUTH-01–05, SEC-01–04 | complete ✓ 2026-06-21 |
 | 3 | Lesson Framework | 3/3 | Complete   | 2026-06-22 |
-| 4 | Diagnostic System | Placement diagnostic + level-gating diagnostic | DIAG-01–03 | not_started |
+| 4 | Diagnostic System | Placement diagnostic + level-gating diagnostic | DIAG-01–03 | planned (5 plans) |
 | 5 | Practice Problem Engine | All four auto-graded problem types working | PROB-01–05 | not_started |
 | 6 | AI Writing Checker | Haiku integration, caching, rate limits, graceful fallback | AI-01–05 | not_started |
 | 7 | French 1 Content | French 1 lessons + practice problems fully built | CONTENT-01, CONTENT-03 | not_started |
@@ -108,6 +108,23 @@ Plans:
 **Goal:** First-time students take a placement diagnostic and are placed at the correct level. After completing a level, students take an end-of-level diagnostic; passing it unlocks the next level.
 **Mode:** mvp
 **Requirements:** DIAG-01, DIAG-02, DIAG-03
+**Plans:** 5 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 04-01-PLAN.md — Diagnostic domain types + pure scoring/gating functions + Wave 0 tests (DIAG-01, DIAG-02)
+- [ ] 04-02-PLAN.md — Schema migration (3 tables + watermark + RLS + concurrency index) + [BLOCKING] live push + seed pools (DIAG-01/02/03)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 04-03-PLAN.md — Placement diagnostic slice: Server Actions (draw/grade/score/place/admin-unlock) + flow + UI components (DIAG-01)
+- [ ] 04-04-PLAN.md — Watermark lock model + placement gate guards + DiagnosticGate (DIAG-01 gate, DIAG-03)
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [ ] 04-05-PLAN.md — End-of-level diagnostic slice: pass→unlock, fail→review+cooldown, retry re-draw, live countdown (DIAG-02)
+
 **Success Criteria:**
 
 1. First-time user is prompted to take the placement diagnostic before accessing any lesson
