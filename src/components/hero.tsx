@@ -16,16 +16,15 @@ function useMouse() {
 
 export function HeroBackground() {
   const { x, y } = useMouse();
+  const [mounted, setMounted] = useState(false);
 
+  useEffect(() => setMounted(true), []);
+
+  // ponytail: offset stays 0 until after mount so server HTML and the first
+  // client render agree — reading window during render caused a hydration mismatch.
   const factor = 0.015;
-  const dx =
-    typeof window !== "undefined"
-      ? (x - window.innerWidth / 2) * factor
-      : 0;
-  const dy =
-    typeof window !== "undefined"
-      ? (y - window.innerHeight / 2) * factor
-      : 0;
+  const dx = mounted ? (x - window.innerWidth / 2) * factor : 0;
+  const dy = mounted ? (y - window.innerHeight / 2) * factor : 0;
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
