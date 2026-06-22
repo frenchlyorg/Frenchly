@@ -115,6 +115,7 @@ New components to build for this phase. All use existing design tokens.
 ### DiagnosticQuestionCard
 - Container: `bg-surface-container-low border border-outline-variant rounded-[16px] p-6`
 - Question stem: `font-body text-[18px] text-on-surface leading-8`
+- Primary visual anchor: the question stem — largest body text (18px) on the surface, full-width, top of card; answer options sit below in the type scale.
 - No shadow (tonal depth only, per DESIGN.md elevation rules)
 
 ### MCOptionButton (multiple choice answer)
@@ -131,7 +132,7 @@ States and token mapping:
 
 - Height: min 44px, padding px-4 py-3, rounded-[8px] (radius DEFAULT)
 - Icon: Lucide `Check` (16px, text-tertiary) on correct; Lucide `X` (16px, text-error) on incorrect
-- Full-width stacked list with `gap-3` between options
+- Full-width stacked list with `gap-4` between options
 
 ### FillInInput (fill-in-the-blank)
 - Inherits existing input pattern from LoginForm: `border border-outline rounded px-3 py-2 bg-surface-container-low text-on-surface font-body text-sm min-h-[44px] focus:outline-none focus:border-b-[3px] focus:border-primary transition-all`
@@ -147,9 +148,9 @@ States and token mapping:
 
 ### DiagnosticResultFail (end-of-level fail screen)
 - Score line: `font-label text-[13px] text-on-surface-variant` — "You scored X of 10" (percentage not shown, only correct count)
-- Weak-area section: labeled `« Review these topics »` header in `font-heading text-[24px]`; bulleted list of linked lesson titles using `font-body text-[16px] text-primary hover:underline`
+- Weak-area section: labeled `« Review these topics »` header in `font-heading text-[18px] font-semibold text-on-surface`; bulleted list of linked lesson titles using `font-body text-[16px] text-primary hover:underline`
 - Cooldown block: `bg-surface-container border border-outline-variant rounded-[8px] p-6`
-  - Copy: "Retry available in" + live countdown `font-heading text-[24px] text-on-surface`
+  - Copy: "Retry available in" + live countdown `font-heading text-[28px] text-on-surface`
   - Retry button: disabled state with `opacity-40 cursor-not-allowed` while cooldown active; enabled state is standard primary button
 
 ### CooldownCountdown (live timer)
