@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: Phase 3 complete — lesson framework signed off (all 6 UAT items passed)
+current_plan: Phase 4 planned — 5 vertical-slice plans across 3 waves (plan-checker PASS)
 status: in_progress
-stopped_at: Phase 4 context gathered
-last_updated: "2026-06-22T16:41:08.635Z"
+stopped_at: Phase 4 planned
+last_updated: "2026-06-22T21:42:00.000Z"
 progress:
   total_phases: 12
   completed_phases: 3
@@ -42,7 +42,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 | 1 | Project Foundation | complete ✓ | 3/3 done |
 | 2 | Authentication & Accounts | complete ✓ | 5/5 done (02-01a, 02-01b, 02-02, 02-03, 02-04 complete) |
 | 3 | Lesson Framework | complete ✓ | 3/3 done (03-01 ✓, 03-02 ✓, 03-03 ✓); UAT passed |
-| 4 | Diagnostic System | not_started | — |
+| 4 | Diagnostic System | planned | 0/5 (04-01..05; W1: 01,02 · W2: 03,04 · W3: 05) |
 | 5 | Practice Problem Engine | not_started | — |
 | 6 | AI Writing Checker | not_started | — |
 | 7 | French 1 Content | not_started | — |
@@ -84,5 +84,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** Phase 4 context gathered
-**Next step:** `/gsd:discuss-phase 4` — Diagnostic System
+**Stopped at:** Phase 4 planned (5 plans, plan-checker PASS)
+**Next step:** `/gsd:execute-phase 4` — Diagnostic System (`/clear` first for fresh context)
