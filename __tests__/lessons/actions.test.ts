@@ -1,13 +1,6 @@
-// LESSON-03: markSubComponentComplete — Wave 0 scaffold
+// LESSON-03: markSubComponentComplete — completed test suite
 //
-// This file contains the mock infrastructure and test.todo stubs for Plan 03.
-// Plan 03 will create '@/app/lessons/actions' and flip these todos to real tests.
-//
-// All five LESSON-03 behaviors are documented here as test.todo so:
-//   - npm test stays green (todos count, not fail)
-//   - The action is NOT imported at module top level (import-safe — file doesn't fail
-//     before the module exists)
-//   - Plan 03 can import and fill in test bodies without restructuring mocks
+// Plan 03-03: flipped all five test.todo stubs to real passing tests.
 
 // ─── Mock next/navigation ────────────────────────────────────────────────────
 const mockRedirect = jest.fn()
@@ -27,29 +20,31 @@ jest.mock('next/cache', () => ({
 // ─── Shared mock state ───────────────────────────────────────────────────────
 let mockGetUserResult: { data: { user: { id: string } | null }; error: null }
 
+// Track which table is being queried so we can return different data per call
+let mockFromTable = ''
+
+const mockSingle = jest.fn()
+const mockEq = jest.fn()
+const mockSelect = jest.fn()
+const mockUpsert = jest.fn()
+
 jest.mock('@/lib/supabase/server', () => ({
   createClient: jest.fn().mockImplementation(async () => ({
     auth: {
       getUser: jest.fn().mockImplementation(async () => mockGetUserResult),
     },
-    from: jest.fn().mockReturnValue({
-      select: jest.fn().mockReturnValue({
-        eq: jest.fn().mockReturnValue({
-          single: jest.fn().mockResolvedValue({
-            data: { id: 'sc-uuid-1234', lesson_id: 'lesson-uuid-5678' },
-            error: null,
-          }),
-        }),
-      }),
-      upsert: jest.fn().mockResolvedValue({ error: null }),
+    from: jest.fn().mockImplementation((table: string) => {
+      mockFromTable = table
+      return {
+        select: mockSelect,
+        upsert: mockUpsert,
+      }
     }),
   })),
 }))
 
-// NOTE: markSubComponentComplete is NOT imported at top level here.
-// Import it inside each real test body once Plan 03 creates '@/app/lessons/actions'.
-// Doing a top-level import before the module exists causes a module-not-found error
-// that fails the entire test suite.
+// NOTE: markSubComponentComplete is imported inside each test to ensure
+// jest.mock() calls above are hoisted and processed first.
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -57,18 +52,101 @@ beforeEach(() => {
     data: { user: { id: 'test-user-uuid-abcdef' } },
     error: null,
   }
+
+  // Default select chain: sub_components existence check returns a valid sub-component,
+  // lessons lookup returns lesson + level slug for revalidatePath
+  mockEq.mockImplementation((col: string, val: string) => ({
+    single: mockSingle,
+  }))
+
+  mockSelect.mockImplementation(() => ({
+    eq: mockEq,
+  }))
+
+  // Default: sub_components check succeeds, lessons check succeeds
+  mockSingle
+    .mockResolvedValueOnce({
+      data: { id: 'sc-uuid-1234', lesson_id: 'lesson-uuid-5678' },
+      error: null,
+    })
+    .mockResolvedValueOnce({
+      data: { id: 'lesson-uuid-5678', slug: 'greetings', level: { slug: 'french-1' } },
+      error: null,
+    })
+
+  mockUpsert.mockResolvedValue({ error: null })
 })
 
-// ─── LESSON-03 test stubs (Plan 03 will flip these to real tests) ─────────────
+// ─── LESSON-03 tests ──────────────────────────────────────────────────────────
 
 describe('markSubComponentComplete (LESSON-03)', () => {
-  test.todo('upserts a progress row for authenticated user')
+  test('upserts a progress row for authenticated user', async () => {
+    const { markSubComponentComplete } = await import('@/app/lessons/actions')
 
-  test.todo('redirects to /login when unauthenticated')
+    await markSubComponentComplete('a1b2c3d4-e5f6-7890-abcd-ef1234567890')
 
-  test.todo('throws on invalid UUID input')
+    expect(mockUpsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        user_id: 'test-user-uuid-abcdef',
+        sub_component_id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
+        completed_at: expect.any(String),
+      }),
+      expect.objectContaining({ onConflict: 'user_id,sub_component_id' })
+    )
+  })
 
-  test.todo('calls revalidatePath after successful upsert')
+  test('redirects to /login when unauthenticated', async () => {
+    mockGetUserResult = { data: { user: null }, error: null }
 
-  test.todo('never accepts user_id from caller — resolves via getUser()')
+    const { markSubComponentComplete } = await import('@/app/lessons/actions')
+
+    await expect(
+      markSubComponentComplete('a1b2c3d4-e5f6-7890-abcd-ef1234567890')
+    ).rejects.toThrow('NEXT_REDIRECT:/login')
+
+    expect(mockRedirect).toHaveBeenCalledWith('/login')
+  })
+
+  test('throws on invalid UUID input', async () => {
+    const { markSubComponentComplete } = await import('@/app/lessons/actions')
+
+    await expect(
+      markSubComponentComplete('not-a-valid-uuid')
+    ).rejects.toThrow('Invalid sub-component ID')
+
+    // No DB call should be made for invalid input
+    expect(mockUpsert).not.toHaveBeenCalled()
+    expect(mockSelect).not.toHaveBeenCalled()
+  })
+
+  test('calls revalidatePath after successful upsert', async () => {
+    const { markSubComponentComplete } = await import('@/app/lessons/actions')
+
+    await markSubComponentComplete('a1b2c3d4-e5f6-7890-abcd-ef1234567890')
+
+    expect(mockRevalidatePath).toHaveBeenCalledWith(
+      expect.stringMatching(/^\/levels\/.+\/lessons\/.+/)
+    )
+  })
+
+  test('never accepts user_id from caller — resolves via getUser()', async () => {
+    const { markSubComponentComplete } = await import('@/app/lessons/actions')
+
+    // Provide a valid UUID — the only argument a caller can supply
+    await markSubComponentComplete('a1b2c3d4-e5f6-7890-abcd-ef1234567890')
+
+    // The upserted user_id must equal the getUser() result, not something the caller provided
+    expect(mockUpsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        user_id: 'test-user-uuid-abcdef', // from mockGetUserResult — never from caller
+      }),
+      expect.anything()
+    )
+
+    // The action signature only accepts subComponentId — user_id is never a parameter
+    // Confirm user_id is server-derived: it must equal what getUser() returned
+    const upsertPayload = mockUpsert.mock.calls[0][0]
+    expect(upsertPayload.user_id).toBe('test-user-uuid-abcdef')
+    expect(upsertPayload.user_id).not.toBe('a1b2c3d4-e5f6-7890-abcd-ef1234567890') // not the subComponentId
+  })
 })
