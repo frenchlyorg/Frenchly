@@ -14,6 +14,8 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { deriveIsLevelLocked } from '@/lib/lessons/locking'
+import { deriveAllLessonsComplete } from '@/lib/diagnostics/gating'
+import { startEndOfLevelDiagnostic } from '@/actions/diagnostic'
 import LevelCard from '@/components/lessons/LevelCard'
 import LockBadge from '@/components/ui/LockBadge'
 import DiagnosticGate from '@/components/diagnostic/DiagnosticGate'
@@ -129,6 +131,19 @@ export default async function LevelPage({
 
   const lessons = level.lessons ?? []
 
+  // End-of-level CTA gating (Pitfall 7): show only when the level is unlocked AND
+  // every sub-component is complete. Driven by the watermark-derived isLocked + progress.
+  const allSubComponentIds = lessons.flatMap((l) => (l.sub_components ?? []).map((s) => s.id))
+  const { data: progressRows } = await supabase
+    .from('sub_component_progress')
+    .select('sub_component_id')
+    .eq('user_id', user.id)
+    .in('sub_component_id', allSubComponentIds.length > 0 ? allSubComponentIds : ['__none__'])
+  const completedSet = new Set((progressRows ?? []).map((r) => r.sub_component_id))
+  const allSubComponentsComplete = deriveAllLessonsComplete(allSubComponentIds, completedSet)
+  const showEndOfLevelCta = !isLocked && allSubComponentsComplete
+  const startEndOfLevel = startEndOfLevelDiagnostic.bind(null, { levelId: level.id })
+
   return (
     <main className="min-h-screen bg-background">
       <div className="max-w-[1040px] mx-auto px-5 md:px-6 py-20">
@@ -176,6 +191,18 @@ export default async function LevelPage({
               />
             ))}
           </div>
+        )}
+
+        {/* End-of-level diagnostic CTA — only when unlocked and all lessons complete (Pitfall 7) */}
+        {showEndOfLevelCta && (
+          <form action={startEndOfLevel} className="mt-10">
+            <button
+              type="submit"
+              className="min-h-[44px] rounded-[8px] bg-primary px-6 py-3 font-label font-semibold text-white hover:bg-primary/90"
+            >
+              Take the end-of-level diagnostic
+            </button>
+          </form>
         )}
       </div>
     </main>
