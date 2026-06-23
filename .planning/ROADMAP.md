@@ -13,7 +13,7 @@
 | 1 | Project Foundation | Next.js + Tailwind + design system wired up, deployable skeleton | UX-01–10 (partial) | complete ✓ 2026-06-20 |
 | 2 | Authentication & Accounts | Users can sign up, log in, log out, delete account | AUTH-01–05, SEC-01–04 | complete ✓ 2026-06-21 |
 | 3 | Lesson Framework | 3/3 | Complete   | 2026-06-22 |
-| 4 | Diagnostic System | 1/5 | In Progress|  |
+| 4 | Diagnostic System | 2/5 | In Progress|  |
 | 5 | Practice Problem Engine | All four auto-graded problem types working | PROB-01–05 | not_started |
 | 6 | AI Writing Checker | Haiku integration, caching, rate limits, graceful fallback | AI-01–05 | not_started |
 | 7 | French 1 Content | French 1 lessons + practice problems fully built | CONTENT-01, CONTENT-03 | not_started |
@@ -108,13 +108,13 @@ Plans:
 **Goal:** First-time students take a placement diagnostic and are placed at the correct level. After completing a level, students take an end-of-level diagnostic; passing it unlocks the next level.
 **Mode:** mvp
 **Requirements:** DIAG-01, DIAG-02, DIAG-03
-**Plans:** 1/5 plans executed
+**Plans:** 2/5 plans executed
 
 Plans:
 **Wave 1**
 
 - [x] 04-01-PLAN.md — Diagnostic domain types + pure scoring/gating functions + Wave 0 tests (DIAG-01, DIAG-02)
-- [ ] 04-02-PLAN.md — Schema migration (3 tables + watermark + RLS + concurrency index) + [BLOCKING] live push + seed pools (DIAG-01/02/03)
+- [x] 04-02-PLAN.md — Schema migration (3 tables + watermark + RLS + concurrency index) + [BLOCKING] live push + seed pools (DIAG-01/02/03)
 
 **Wave 2** *(blocked on Wave 1)*
 
