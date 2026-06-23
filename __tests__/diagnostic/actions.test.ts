@@ -180,3 +180,74 @@ describe('startPlacementDiagnostic — one-time guard', () => {
     expect(mockRedirect).toHaveBeenCalledWith('/login')
   })
 })
+
+const LEVEL_ID = 'c1d2e3f4-a5b6-7890-abcd-ef1234567890'
+
+describe('startEndOfLevelDiagnostic + end-of-level grading (DIAG-02)', () => {
+  test('blocks a retry while a prior failed attempt cooldown is active', async () => {
+    mockServerQueues = {
+      levels: [{ data: { slug: 'french-1' } }],
+      diagnostic_attempts: [
+        { data: { id: 'old', status: 'failed', cooldown_until: new Date(Date.now() + 3_600_000).toISOString() } },
+      ],
+    }
+    const { startEndOfLevelDiagnostic } = await import('@/actions/diagnostic')
+    await expect(startEndOfLevelDiagnostic({ levelId: LEVEL_ID })).rejects.toThrow('Cooldown active')
+  })
+
+  test('re-draws and starts when no active cooldown (redirects to the end-of-level page)', async () => {
+    mockServerQueues = {
+      levels: [{ data: { slug: 'french-1' } }],
+      diagnostic_attempts: [{ data: null }, { error: null }], // latest=none, insert
+      diagnostic_questions: [{ data: [{ id: 'q1' }, { id: 'q2' }, { id: 'q3' }] }], // pool
+    }
+    const { startEndOfLevelDiagnostic } = await import('@/actions/diagnostic')
+    await expect(startEndOfLevelDiagnostic({ levelId: LEVEL_ID })).rejects.toThrow(
+      'NEXT_REDIRECT:/diagnostic/end-of-level/french-1'
+    )
+    expect(mockRevalidatePath).toHaveBeenCalledWith('/diagnostic/end-of-level/french-1')
+  })
+
+  test('redirects to /login when unauthenticated', async () => {
+    mockGetUserResult = { data: { user: null } }
+    const { startEndOfLevelDiagnostic } = await import('@/actions/diagnostic')
+    await expect(startEndOfLevelDiagnostic({ levelId: LEVEL_ID })).rejects.toThrow('NEXT_REDIRECT:/login')
+    expect(mockRedirect).toHaveBeenCalledWith('/login')
+  })
+
+  test('passing advances the watermark to level_number + 1 via the ADMIN client', async () => {
+    mockServerQueues = {
+      diagnostic_attempts: [
+        {
+          data: {
+            id: ATTEMPT_ID,
+            user_id: 'test-user-uuid',
+            level_id: 'lvl1',
+            status: 'in_progress',
+            drawn_question_ids: [QUESTION_ID],
+            diagnostic_type: 'end_of_level',
+            started_at: new Date().toISOString(),
+          },
+        },
+        { error: null }, // attempts.update
+      ],
+      diagnostic_answers: [
+        { error: null }, // upsert
+        { data: [{ question_id: QUESTION_ID, is_correct: true }] }, // all answers
+      ],
+      levels: [
+        { data: { level_number: 1, slug: 'french-1' } }, // this level (by id)
+        { data: { id: 'level-2-uuid' } }, // next level (by level_number)
+      ],
+    }
+
+    const { submitDiagnosticAnswer } = await import('@/actions/diagnostic')
+    await expect(
+      submitDiagnosticAnswer({ attemptId: ATTEMPT_ID, questionId: QUESTION_ID, answer: 'le' })
+    ).rejects.toThrow('NEXT_REDIRECT:/diagnostic/end-of-level/french-1')
+
+    expect(mockAdminUpdate).toHaveBeenCalledWith(
+      expect.objectContaining({ unlocked_through_level_number: 2, current_level_id: 'level-2-uuid' })
+    )
+  })
+})
