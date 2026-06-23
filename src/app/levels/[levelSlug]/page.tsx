@@ -16,6 +16,7 @@ import { createClient } from '@/lib/supabase/server'
 import { deriveIsLevelLocked } from '@/lib/lessons/locking'
 import LevelCard from '@/components/lessons/LevelCard'
 import LockBadge from '@/components/ui/LockBadge'
+import DiagnosticGate from '@/components/diagnostic/DiagnosticGate'
 
 export const metadata = {
   title: 'Levels — Frenchly',
@@ -66,6 +67,27 @@ export default async function LevelPage({
     redirect(`/login?next=/levels/${levelSlug}`)
   }
 
+  // Placement gate (D-P01 / T-04-EoP-04): force first-time students through the
+  // diagnostic before any level content. Server Component guard, not middleware (Pitfall 4).
+  const { data: completedPlacement } = await supabase
+    .from('diagnostic_attempts')
+    .select('id, status')
+    .eq('user_id', user.id)
+    .eq('diagnostic_type', 'placement')
+    .eq('status', 'completed')
+    .maybeSingle()
+
+  if (!completedPlacement) {
+    const { data: inProgress } = await supabase
+      .from('diagnostic_attempts')
+      .select('id')
+      .eq('user_id', user.id)
+      .eq('diagnostic_type', 'placement')
+      .eq('status', 'in_progress')
+      .maybeSingle()
+    return <DiagnosticGate hasInProgress={!!inProgress} />
+  }
+
   // Fetch level with nested lessons + sub_components (Pitfall 5: nested shape)
   const { data: level } = await supabase
     .from('levels')
@@ -76,19 +98,21 @@ export default async function LevelPage({
     .order('position', { referencedTable: 'lessons' })
     .single<LevelRow>()
 
-  // Fetch student's current level for lock derivation (T-03-07)
+  // Fetch student's watermark (+ legacy current_level_id) for lock derivation (T-03-07, D-S02)
   const { data: profile } = await supabase
     .from('profiles')
-    .select('current_level_id')
+    .select('current_level_id, unlocked_through_level_number')
     .eq('id', user.id)
     .single()
 
-  // Derive lock state from profiles.current_level_id (server-side, not client)
+  // Derive lock state server-side from the numeric watermark (falls back to the
+  // Phase 3 current_level_id rule when the watermark is null).
   const isLocked = level
     ? deriveIsLevelLocked({
         levelId: level.id,
         levelNumber: level.level_number,
         currentLevelId: profile?.current_level_id ?? null,
+        unlockedThroughLevelNumber: profile?.unlocked_through_level_number ?? null,
       })
     : false
 

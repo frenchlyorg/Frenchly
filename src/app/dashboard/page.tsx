@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import DiagnosticGate from "@/components/diagnostic/DiagnosticGate";
 
 export const metadata = {
   title: "Dashboard — Frenchly",
@@ -16,9 +17,31 @@ export default async function DashboardPage() {
     redirect("/login?next=/dashboard");
   }
 
+  // Placement gate (D-P01 / T-04-EoP-04): a first-time student with no completed
+  // placement is forced through the diagnostic before any content. This is a
+  // Server Component guard, NOT middleware — middleware cannot do the RLS read (Pitfall 4).
+  const { data: completedPlacement } = await supabase
+    .from("diagnostic_attempts")
+    .select("id, status")
+    .eq("user_id", user.id)
+    .eq("diagnostic_type", "placement")
+    .eq("status", "completed")
+    .maybeSingle();
+
+  if (!completedPlacement) {
+    const { data: inProgress } = await supabase
+      .from("diagnostic_attempts")
+      .select("id")
+      .eq("user_id", user.id)
+      .eq("diagnostic_type", "placement")
+      .eq("status", "in_progress")
+      .maybeSingle();
+    return <DiagnosticGate hasInProgress={!!inProgress} />;
+  }
+
   const { data: profile } = await supabase
     .from("profiles")
-    .select("username")
+    .select("username, unlocked_through_level_number")
     .eq("id", user.id)
     .single();
 
