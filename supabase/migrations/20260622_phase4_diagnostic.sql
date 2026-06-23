@@ -22,11 +22,16 @@ create table public.diagnostic_questions (
 
 create index idx_dq_level_id on public.diagnostic_questions (level_id);
 
--- Security note (Pitfall 1 / T-04-ID-01): correct_answer is NOT protected by RLS column
--- masking — RLS cannot mask columns. It is protected by application-level column-projection
--- discipline: Plans 04-03/04-05 select only (id, level_id, type, question_text, options,
--- lesson_tag, position) into client-facing queries and never project correct_answer.
-grant select on public.diagnostic_questions to authenticated;
+-- Security (Pitfall 1 / T-04-ID-01): correct_answer is the answer key and must never reach a
+-- non-service client. RLS cannot mask columns, so the boundary is enforced at the GRANT level:
+-- authenticated gets column-scoped SELECT on the non-secret columns ONLY. correct_answer is
+-- readable solely by service_role (the server-side grading path in Plans 04-03/04-05).
+-- A raw client `select correct_answer from diagnostic_questions` is rejected by PostgreSQL,
+-- and PostgREST honors column privileges. App-level projection discipline in 04-03/04-05 is
+-- then defense in depth, not the only line.
+grant select (id, level_id, type, question_text, options, lesson_tag, position)
+  on public.diagnostic_questions to authenticated;
+grant select on public.diagnostic_questions to service_role;
 
 alter table public.diagnostic_questions enable row level security;
 
