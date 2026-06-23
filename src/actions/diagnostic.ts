@@ -149,8 +149,8 @@ export async function submitDiagnosticAnswer(raw: {
     .select('question_id, is_correct')
     .eq('attempt_id', attemptId)
   const answered = answers ?? []
-  const isComplete = attempt.drawn_question_ids.every((id) =>
-    answered.some((a) => a.question_id === id)
+  const isComplete = attempt.drawn_question_ids.every((id: string) =>
+    answered.some((a: { question_id: string }) => a.question_id === id)
   )
 
   if (!isComplete) {
@@ -198,8 +198,11 @@ export async function submitDiagnosticAnswer(raw: {
     })
     .eq('id', user.id)
 
-  revalidatePath('/diagnostic/placement')
   revalidatePath('/dashboard')
   revalidatePath('/levels/french-1')
   revalidatePath('/levels/french-2')
+
+  // Surface the result screen once. A later bare visit to /diagnostic/placement
+  // hits the completed-attempt guard and redirects to /dashboard (D-P02).
+  redirect('/diagnostic/placement?result=1')
 }

@@ -1,3 +1,5 @@
+export {} // module scope — isolate top-level test mocks from other test files
+
 // DIAG-01: diagnostic Server Action security-contract tests.
 //
 // Asserts the security boundary: client score never trusted (score recomputed from
@@ -147,7 +149,10 @@ describe('submitDiagnosticAnswer — security contract', () => {
     }
 
     const { submitDiagnosticAnswer } = await import('@/actions/diagnostic')
-    await submitDiagnosticAnswer({ attemptId: ATTEMPT_ID, questionId: QUESTION_ID, answer: 'le' })
+    // On completion the action redirects to the result screen (after the unlock write).
+    await expect(
+      submitDiagnosticAnswer({ attemptId: ATTEMPT_ID, questionId: QUESTION_ID, answer: 'le' })
+    ).rejects.toThrow('NEXT_REDIRECT:/diagnostic/placement?result=1')
 
     // Unlock went through the admin client, scored 100% → French 2 (watermark 2).
     expect(mockAdminUpdate).toHaveBeenCalledWith(
