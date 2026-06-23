@@ -12,20 +12,29 @@
  *   If current_level_id is null or undefined the student is new (or has no
  *   level assigned yet). Treat as French 1 → unlocked.
  *
- * Phase 4 note:
- *   levelNumber is carried in the signature but unused here. Phase 4 will
- *   generalise the rule to `levelNumber > unlockedThroughNumber` once the
- *   diagnostic system introduces an `unlocked_through` watermark. Keep the
- *   signature stable so callers need no change.
+ * Phase 4 watermark rule (D-S02 / DIAG-03):
+ *   When `unlockedThroughLevelNumber` is provided, a level is locked iff its
+ *   `levelNumber` exceeds the watermark: `levelNumber > unlockedThroughLevelNumber`.
+ *   This has no hard-coded level ceiling — it extends to any number of levels, and
+ *   a higher placement (e.g. French 2) keeps lower levels accessible (D-P04).
+ *
+ * Graceful fallback (A3):
+ *   When `unlockedThroughLevelNumber` is null/undefined (e.g. a profile predating
+ *   the watermark backfill), fall back to the Phase 3 UUID-equality behaviour so
+ *   nothing regresses: null currentLevelId → unlocked; else locked when the ids differ.
  */
 export function deriveIsLevelLocked(args: {
   levelId: string
-  /** Unused in Phase 3 — reserved for Phase 4 generalisation. */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   levelNumber: number
   currentLevelId: string | null | undefined
+  unlockedThroughLevelNumber?: number | null
 }): boolean {
-  // Null/undefined → treat as French 1 default → not locked
+  // Phase 4: numeric watermark takes precedence when present.
+  if (args.unlockedThroughLevelNumber != null) {
+    return args.levelNumber > args.unlockedThroughLevelNumber
+  }
+
+  // Phase 3 fallback — null/undefined currentLevelId → treat as French 1 → not locked
   if (args.currentLevelId == null) {
     return false
   }
