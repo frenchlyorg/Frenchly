@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: Phase 4 planned — 5 vertical-slice plans across 3 waves (plan-checker PASS)
+current_plan: 1
 status: in_progress
-stopped_at: Phase 4 planned
-last_updated: "2026-06-22T21:42:00.000Z"
+stopped_at: Phase 4 planned (5 plans, plan-checker PASS)
+last_updated: "2026-06-22T22:43:17.826Z"
 progress:
   total_phases: 12
   completed_phases: 3
-  total_plans: 11
+  total_plans: 16
   completed_plans: 11
   percent: 25
 ---
@@ -22,7 +22,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Core value:** Get a first-time visitor to create an account so they never lose their progress — then keep them coming back through adaptive lessons and honest motivation features.
 **Current milestone:** v1.0 — Foundation & Core Product
-**Current focus:** Phase 03 — lesson-framework
+**Current focus:** Phase 04 — diagnostic-system
 
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Milestone:** v1.0
 **Phases complete:** 2 / 12
-**Current plan:** Phase 3 complete — lesson framework signed off (all 6 UAT items passed)
+**Current plan:** 1
 **Last action:** Phase 3 complete. gsd-verifier 5/5 + human browser UAT all green. Fixed during UAT: hero hydration mismatch (05ff960, pre-existing) and explainer content not rendering in lesson view (608a6cd — added react-markdown/remark-gfm + LessonMarkdown, UI-SPEC alignment). Build + 77 tests green. Open follow-ups (non-blocking): phantom-sub-component test path uncovered; LevelCard isActive marker deferred to Phase 9.
 
 ---
