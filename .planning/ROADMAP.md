@@ -13,7 +13,7 @@
 | 1 | Project Foundation | Next.js + Tailwind + design system wired up, deployable skeleton | UX-01–10 (partial) | complete ✓ 2026-06-20 |
 | 2 | Authentication & Accounts | Users can sign up, log in, log out, delete account | AUTH-01–05, SEC-01–04 | complete ✓ 2026-06-21 |
 | 3 | Lesson Framework | 3/3 | Complete   | 2026-06-22 |
-| 4 | Diagnostic System | 4/5 | In Progress|  |
+| 4 | Diagnostic System | 5/5 | Complete   | 2026-06-23 |
 | 5 | Practice Problem Engine | All four auto-graded problem types working | PROB-01–05 | not_started |
 | 6 | AI Writing Checker | Haiku integration, caching, rate limits, graceful fallback | AI-01–05 | not_started |
 | 7 | French 1 Content | French 1 lessons + practice problems fully built | CONTENT-01, CONTENT-03 | not_started |
@@ -108,7 +108,7 @@ Plans:
 **Goal:** First-time students take a placement diagnostic and are placed at the correct level. After completing a level, students take an end-of-level diagnostic; passing it unlocks the next level.
 **Mode:** mvp
 **Requirements:** DIAG-01, DIAG-02, DIAG-03
-**Plans:** 4/5 plans executed
+**Plans:** 5/5 plans complete
 
 Plans:
 **Wave 1**
@@ -123,7 +123,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2)*
 
-- [ ] 04-05-PLAN.md — End-of-level diagnostic slice: pass→unlock, fail→review+cooldown, retry re-draw, live countdown (DIAG-02)
+- [x] 04-05-PLAN.md — End-of-level diagnostic slice: pass→unlock, fail→review+cooldown, retry re-draw, live countdown (DIAG-02)
 
 **Success Criteria:**
 
