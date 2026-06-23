@@ -22,17 +22,11 @@ export default function DiagnosticGate({ hasInProgress }: DiagnosticGateProps) {
   const cta = hasInProgress ? 'Continue diagnostic' : 'Start placement diagnostic'
 
   return (
-    <main className="min-h-screen bg-background">
-      <div className="mx-auto max-w-[720px] px-5 py-20">
-        <div className="mx-auto max-w-[480px] rounded-[16px] bg-surface-container-low p-8 text-center">
+    <main className="min-h-screen w-full overflow-x-hidden bg-background">
+      <div className="mx-auto max-w-[480px] px-5 py-20">
+        <div className="rounded-[16px] bg-surface-container-low p-8 text-center">
           <h1 className="font-heading text-[28px] font-semibold text-on-surface">
-            <span className="text-primary" aria-hidden="true">
-              «{' '}
-            </span>
             Before you begin
-            <span className="text-primary" aria-hidden="true">
-              {' '}»
-            </span>
           </h1>
 
           <p className="mt-4 font-body text-[16px] leading-7 text-on-surface-variant">{body}</p>
