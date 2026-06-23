@@ -1,0 +1,177 @@
+// DIAG-01: diagnostic Server Action security-contract tests.
+//
+// Asserts the security boundary: client score never trusted (score recomputed from
+// DB-stored answers), the watermark unlock uses the ADMIN client, retake is blocked,
+// unauthenticated callers redirect, and invalid input throws before any DB call.
+
+// ─── Mock next/navigation ────────────────────────────────────────────────────
+const mockRedirect = jest.fn()
+jest.mock('next/navigation', () => ({
+  redirect: (url: string) => {
+    mockRedirect(url)
+    throw new Error(`NEXT_REDIRECT:${url}`)
+  },
+}))
+
+// ─── Mock next/cache ─────────────────────────────────────────────────────────
+const mockRevalidatePath = jest.fn()
+jest.mock('next/cache', () => ({
+  revalidatePath: (path: string) => mockRevalidatePath(path),
+}))
+
+// ─── Shared mock state (mock-prefixed so jest.mock factories may reference) ────
+let mockGetUserResult: { data: { user: { id: string } | null } }
+let mockServerQueues: Record<string, unknown[]>
+
+// ─── Mock authenticated server client (per-table FIFO result queues) ──────────
+jest.mock('@/lib/supabase/server', () => ({
+  createClient: jest.fn(async () => ({
+    auth: { getUser: jest.fn(async () => mockGetUserResult) },
+    from: jest.fn((table: string) => {
+      const shift = () => {
+        const q = mockServerQueues[table] || []
+        if (q.length === 0) throw new Error(`mock: no queued result for "${table}"`)
+        return q.shift()
+      }
+      const chain: Record<string, unknown> = {
+        select: () => chain,
+        insert: () => chain,
+        update: () => chain,
+        upsert: () => chain,
+        eq: () => chain,
+        in: () => chain,
+        order: () => chain,
+        limit: () => chain,
+        single: () => Promise.resolve(shift()),
+        maybeSingle: () => Promise.resolve(shift()),
+        then: (res: (v: unknown) => unknown, rej: (e: unknown) => unknown) =>
+          Promise.resolve(shift()).then(res, rej),
+      }
+      return chain
+    }),
+  })),
+}))
+
+// ─── Mock admin client (answer-key read + watermark write) ────────────────────
+const mockAdminUpdate = jest.fn()
+const mockAdminProfilesEq = jest.fn()
+let mockAdminQuestion: unknown
+
+jest.mock('@/lib/supabase/admin', () => ({
+  createAdminClient: jest.fn(() => ({
+    from: (table: string) => {
+      if (table === 'profiles') {
+        return {
+          update: (payload: unknown) => {
+            mockAdminUpdate(payload)
+            return {
+              eq: (col: string, val: string) => {
+                mockAdminProfilesEq(col, val)
+                return Promise.resolve({ error: null })
+              },
+            }
+          },
+        }
+      }
+      // diagnostic_questions — answer key read
+      return {
+        select: () => ({
+          eq: () => ({ single: () => Promise.resolve(mockAdminQuestion) }),
+        }),
+      }
+    },
+  })),
+}))
+
+const ATTEMPT_ID = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
+const QUESTION_ID = 'f1e2d3c4-b5a6-7890-abcd-ef1234567890'
+
+beforeEach(() => {
+  jest.clearAllMocks()
+  mockGetUserResult = { data: { user: { id: 'test-user-uuid' } } }
+  mockServerQueues = {}
+  mockAdminQuestion = {
+    data: {
+      id: QUESTION_ID,
+      level_id: 'lvl1',
+      type: 'mc',
+      question_text: 'Definite article for "livre"?',
+      options: ['le', 'la', 'les'],
+      correct_answer: 'le',
+      lesson_tag: 'definite-articles',
+      position: 1,
+    },
+  }
+})
+
+describe('submitDiagnosticAnswer — security contract', () => {
+  test('throws "Invalid input" before any DB call on non-UUID ids', async () => {
+    const { submitDiagnosticAnswer } = await import('@/actions/diagnostic')
+    await expect(
+      submitDiagnosticAnswer({ attemptId: 'nope', questionId: 'nope', answer: 'x' })
+    ).rejects.toThrow('Invalid input')
+    expect(mockAdminUpdate).not.toHaveBeenCalled()
+  })
+
+  test('redirects to /login when unauthenticated', async () => {
+    mockGetUserResult = { data: { user: null } }
+    const { submitDiagnosticAnswer } = await import('@/actions/diagnostic')
+    await expect(
+      submitDiagnosticAnswer({ attemptId: ATTEMPT_ID, questionId: QUESTION_ID, answer: 'le' })
+    ).rejects.toThrow('NEXT_REDIRECT:/login')
+    expect(mockRedirect).toHaveBeenCalledWith('/login')
+    expect(mockAdminUpdate).not.toHaveBeenCalled()
+  })
+
+  test('on completion: scores from DB answers and unlocks via the ADMIN client with server-derived user_id', async () => {
+    mockServerQueues = {
+      diagnostic_attempts: [
+        {
+          data: {
+            id: ATTEMPT_ID,
+            user_id: 'test-user-uuid',
+            level_id: 'lvl1',
+            status: 'in_progress',
+            drawn_question_ids: [QUESTION_ID],
+            diagnostic_type: 'placement',
+            started_at: new Date().toISOString(),
+          },
+        },
+        { error: null }, // attempts.update
+      ],
+      diagnostic_answers: [
+        { error: null }, // upsert
+        { data: [{ question_id: QUESTION_ID, is_correct: true }] }, // select all answers
+      ],
+      levels: [{ data: { id: 'level-2-uuid' } }],
+    }
+
+    const { submitDiagnosticAnswer } = await import('@/actions/diagnostic')
+    await submitDiagnosticAnswer({ attemptId: ATTEMPT_ID, questionId: QUESTION_ID, answer: 'le' })
+
+    // Unlock went through the admin client, scored 100% → French 2 (watermark 2).
+    expect(mockAdminUpdate).toHaveBeenCalledWith(
+      expect.objectContaining({ unlocked_through_level_number: 2, current_level_id: 'level-2-uuid' })
+    )
+    // user_id is server-derived (getUser), never from the caller.
+    expect(mockAdminProfilesEq).toHaveBeenCalledWith('id', 'test-user-uuid')
+  })
+})
+
+describe('startPlacementDiagnostic — one-time guard', () => {
+  test('blocks a retake when a completed placement exists (redirects to /dashboard)', async () => {
+    mockServerQueues = {
+      diagnostic_attempts: [{ data: [{ id: 'old', status: 'completed' }] }],
+    }
+    const { startPlacementDiagnostic } = await import('@/actions/diagnostic')
+    await expect(startPlacementDiagnostic()).rejects.toThrow('NEXT_REDIRECT:/dashboard')
+    expect(mockRedirect).toHaveBeenCalledWith('/dashboard')
+  })
+
+  test('redirects to /login when unauthenticated', async () => {
+    mockGetUserResult = { data: { user: null } }
+    const { startPlacementDiagnostic } = await import('@/actions/diagnostic')
+    await expect(startPlacementDiagnostic()).rejects.toThrow('NEXT_REDIRECT:/login')
+    expect(mockRedirect).toHaveBeenCalledWith('/login')
+  })
+})
