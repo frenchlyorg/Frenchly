@@ -25,11 +25,11 @@
 
 ### Practice Problem Engine
 
-- [ ] **PROB-01**: Multiple choice problems are checked instantly by code (no AI, no cost)
-- [ ] **PROB-02**: Fill-in-the-blank problems are checked instantly by code
-- [ ] **PROB-03**: Conjugation problems are checked instantly by code
-- [ ] **PROB-04**: Matching problems are checked instantly by code
-- [ ] **PROB-05**: All auto-gradable problems show immediate right/wrong feedback with correct answer
+- [x] **PROB-01**: Multiple choice problems are checked instantly by code (no AI, no cost)
+- [x] **PROB-02**: Fill-in-the-blank problems are checked instantly by code
+- [x] **PROB-03**: Conjugation problems are checked instantly by code
+- [x] **PROB-04**: Matching problems are checked instantly by code
+- [x] **PROB-05**: All auto-gradable problems show immediate right/wrong feedback with correct answer
 
 ### AI Writing Checker
 

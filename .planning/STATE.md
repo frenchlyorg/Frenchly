@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: 1
+current_plan: 2
 status: in_progress
-stopped_at: Phase 4 planned (5 plans, plan-checker PASS)
-last_updated: "2026-06-23T17:17:14.830Z"
+stopped_at: Phase 5 Plan 01 complete (Wave 1 foundation — types, grading, schema, migration)
+last_updated: "2026-06-24T03:35:00.000Z"
 progress:
   total_phases: 12
-  completed_phases: 3
-  total_plans: 16
-  completed_plans: 11
-  percent: 25
+  completed_phases: 4
+  total_plans: 24
+  completed_plans: 18
+  percent: 35
 ---
 
 # Frenchly — Project State
@@ -22,7 +22,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Core value:** Get a first-time visitor to create an account so they never lose their progress — then keep them coming back through adaptive lessons and honest motivation features.
 **Current milestone:** v1.0 — Foundation & Core Product
-**Current focus:** Phase 04 — diagnostic-system
+**Current focus:** Phase 05 — practice-problem-engine
 
 ---
 
@@ -31,7 +31,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 **Milestone:** v1.0
 **Phases complete:** 2 / 12
 **Current plan:** 1
-**Last action:** Phase 3 complete. gsd-verifier 5/5 + human browser UAT all green. Fixed during UAT: hero hydration mismatch (05ff960, pre-existing) and explainer content not rendering in lesson view (608a6cd — added react-markdown/remark-gfm + LessonMarkdown, UI-SPEC alignment). Build + 77 tests green. Open follow-ups (non-blocking): phantom-sub-component test path uncovered; LevelCard isActive marker deferred to Phase 9.
+**Last action:** Phase 5 Plan 01 complete. TDD RED/GREEN: 24 practice tests green (13 grading + 11 schema). Full suite 16 suites / 145 tests green. Built: ProblemData discriminated union (5 types), Zod safe parser, pure grading functions (gradeFillin, gradeConjugationTable, gradeMatching), DB migration with problem_type column + 10 seed rows.
 
 ---
 
@@ -43,7 +43,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 | 2 | Authentication & Accounts | complete ✓ | 5/5 done (02-01a, 02-01b, 02-02, 02-03, 02-04 complete) |
 | 3 | Lesson Framework | complete ✓ | 3/3 done (03-01 ✓, 03-02 ✓, 03-03 ✓); UAT passed |
 | 4 | Diagnostic System | planned | 0/5 (04-01..05; W1: 01,02 · W2: 03,04 · W3: 05) |
-| 5 | Practice Problem Engine | not_started | — |
+| 5 | Practice Problem Engine | in_progress | 1/4 (05-01 ✓ — types/grading/schema/migration) |
 | 6 | AI Writing Checker | not_started | — |
 | 7 | French 1 Content | not_started | — |
 | 8 | French 2 Content | not_started | — |
@@ -84,5 +84,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** Phase 4 planned (5 plans, plan-checker PASS)
-**Next step:** `/gsd:execute-phase 4` — Diagnostic System (`/clear` first for fresh context)
+**Stopped at:** Phase 5 Plan 01 complete — Wave 1 foundation (types, grading, schema, migration)
+**Next step:** Execute `05-02-PLAN.md` — Practice card components (Wave 1)
