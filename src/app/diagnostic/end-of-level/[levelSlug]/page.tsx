@@ -195,6 +195,7 @@ export default async function EndOfLevelPage({
         <DiagnosticProgress current={answeredCount + 1} total={total} />
       </div>
       <DiagnosticQuestionCard
+        key={question.id}
         question={{
           id: question.id,
           type: question.type,
