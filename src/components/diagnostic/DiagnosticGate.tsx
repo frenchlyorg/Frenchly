@@ -9,6 +9,7 @@
  * UI-SPEC refs: §Component Inventory — DiagnosticGate; §Copywriting Contract.
  */
 import Link from 'next/link'
+import { skipPlacementDiagnostic } from '@/actions/diagnostic'
 
 interface DiagnosticGateProps {
   /** When true the student already has an unfinished diagnostic — show resume copy. */
@@ -37,6 +38,17 @@ export default function DiagnosticGate({ hasInProgress }: DiagnosticGateProps) {
           >
             {cta}
           </Link>
+
+          {!hasInProgress && (
+            <form action={skipPlacementDiagnostic} className="mt-4">
+              <button
+                type="submit"
+                className="font-label text-[14px] text-on-surface-variant hover:text-on-surface underline"
+              >
+                Skip — I&rsquo;ll start at French 1
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </main>

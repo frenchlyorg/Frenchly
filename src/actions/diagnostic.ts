@@ -102,6 +102,52 @@ export async function startPlacementDiagnostic(): Promise<void> {
 }
 
 /**
+ * Skip placement and start at French 1. Creates a completed placement attempt
+ * (so the gate clears) and sets the watermark to 1. Admin client required for
+ * the watermark write (authenticated role has no UPDATE grant on that column).
+ */
+export async function skipPlacementDiagnostic(): Promise<void> {
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  if (!user) redirect('/login')
+
+  // Block if already placed (D-P02 — one-time only).
+  const { data: existing } = await supabase
+    .from('diagnostic_attempts')
+    .select('id, status')
+    .eq('user_id', user.id)
+    .eq('diagnostic_type', 'placement')
+  if (existing?.some((a) => a.status === 'completed')) redirect('/dashboard')
+
+  const { data: french1 } = await supabase
+    .from('levels')
+    .select('id')
+    .eq('slug', 'french-1')
+    .single()
+  if (!french1) throw new Error('French 1 level not found')
+
+  // Insert a zero-score completed placement so the gate never shows again.
+  await supabase.from('diagnostic_attempts').insert({
+    user_id: user.id,
+    level_id: french1.id,
+    diagnostic_type: 'placement',
+    status: 'completed',
+    drawn_question_ids: [],
+    score: 0,
+    correct_count: 0,
+    total_count: 0,
+  })
+
+  // Set watermark to 1 (French 1 unlocked). Admin client required.
+  const admin = createAdminClient()
+  await admin.from('profiles').update({ unlocked_through_level_number: 1 }).eq('id', user.id)
+
+  redirect('/dashboard')
+}
+
+/**
  * Start (or resume) an end-of-level diagnostic for the given level (DIAG-02).
  * - Redirects unauthenticated callers to /login.
  * - Blocks a retry while a prior failed attempt's per-level cooldown is active
