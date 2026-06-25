@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { gradeConjugationTable, GradeResult } from '@/lib/practice/grading'
 import { ConjugationTableProblem } from '@/lib/practice/types'
 
@@ -76,35 +76,35 @@ export default function ConjugationTableCard({
       <div
         role="group"
         aria-label="Conjugation table"
-        className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-2"
+        className="grid grid-cols-2 gap-x-6 gap-y-1"
       >
-        {PRONOUNS.map(pronoun => (
-          <>
-            <span
-              key={`label-${pronoun}`}
-              className="font-label text-[13px] text-on-surface-variant self-center text-right min-w-[36px]"
-            >
-              {pronoun}
-            </span>
-            <div key={`cell-${pronoun}`} className="flex flex-col gap-1">
-              <input
-                aria-label={`${pronoun} form`}
-                value={cellValues[pronoun]}
-                onChange={e =>
-                  setCellValues(prev => ({ ...prev, [pronoun]: e.target.value }))
-                }
-                onKeyDown={e => handleKeyDown(e, pronoun)}
-                disabled={checked}
-                className={cellClassName(pronoun)}
-              />
-              {checked && cellResults?.[pronoun]?.correct === false && (
-                <p className="font-label text-[13px] text-error col-start-2">
-                  Answer: {problem.answers[pronoun as keyof typeof problem.answers]}
-                </p>
-              )}
-            </div>
-          </>
-        ))}
+        {(['je', 'tu', 'il'] as const).map((pronoun, i) => {
+          const rightPronoun = (['nous', 'vous', 'ils'] as const)[i]
+          return (
+            <React.Fragment key={pronoun}>
+              {/* Left cell */}
+              <div className="grid grid-cols-[36px_1fr] gap-x-3 gap-y-1">
+                <span className="font-label text-[13px] text-on-surface-variant self-center text-right">{pronoun}</span>
+                <div className="flex flex-col gap-1">
+                  <input aria-label={`${pronoun} form`} value={cellValues[pronoun]} onChange={e => setCellValues(prev => ({ ...prev, [pronoun]: e.target.value }))} onKeyDown={e => handleKeyDown(e, pronoun)} disabled={checked} className={cellClassName(pronoun)} />
+                  {checked && cellResults?.[pronoun]?.correct === false && (
+                    <p className="font-label text-[11px] text-error">Answer: {problem.answers[pronoun]}</p>
+                  )}
+                </div>
+              </div>
+              {/* Right cell */}
+              <div className="grid grid-cols-[44px_1fr] gap-x-3 gap-y-1">
+                <span className="font-label text-[13px] text-on-surface-variant self-center text-right">{rightPronoun}</span>
+                <div className="flex flex-col gap-1">
+                  <input aria-label={`${rightPronoun} form`} value={cellValues[rightPronoun]} onChange={e => setCellValues(prev => ({ ...prev, [rightPronoun]: e.target.value }))} onKeyDown={e => handleKeyDown(e, rightPronoun)} disabled={checked} className={cellClassName(rightPronoun)} />
+                  {checked && cellResults?.[rightPronoun]?.correct === false && (
+                    <p className="font-label text-[11px] text-error">Answer: {problem.answers[rightPronoun]}</p>
+                  )}
+                </div>
+              </div>
+            </React.Fragment>
+          )
+        })}
       </div>
 
       <button

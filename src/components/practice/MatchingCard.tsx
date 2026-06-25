@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { gradeMatching } from '@/lib/practice/grading'
 import { MatchingProblem } from '@/lib/practice/types'
 
@@ -27,10 +27,13 @@ export default function MatchingCard({
   isCompleted,
   onComplete,
 }: MatchingCardProps) {
-  // Pitfall 4 guard: shuffle right column ONCE at mount via lazy useState initializer — stable across re-renders
-  const [shuffledRight] = useState<string[]>(() =>
-    shuffleArray(problem.pairs.map(p => p.right))
+  // Hydration fix: initialize unshuffled (matches SSR), shuffle after mount on client only
+  const [shuffledRight, setShuffledRight] = useState<string[]>(
+    problem.pairs.map(p => p.right)
   )
+  useEffect(() => {
+    setShuffledRight(shuffleArray(problem.pairs.map(p => p.right)))
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const [selectedLeft, setSelectedLeft] = useState<string | null>(null)
 
@@ -156,44 +159,69 @@ export default function MatchingCard({
     <div className="bg-surface-container-low border border-outline-variant rounded-[16px] p-6 mt-4">
       <p className="font-body text-[18px] leading-8 text-on-surface mb-4">{problem.prompt}</p>
 
-      <div className="grid grid-cols-2 gap-4 mt-4">
-        {/* Left column */}
-        <div className="flex flex-col gap-2">
-          {problem.pairs.map(pair => (
-            <button
-              key={pair.left}
-              type="button"
-              aria-pressed={!!pairings[pair.left]}
-              aria-label={leftAriaLabel(pair.left)}
-              onClick={() => handleLeftClick(pair.left)}
-              disabled={checked}
-              className={leftItemClass(pair.left)}
-            >
-              {pair.left}
-            </button>
-          ))}
-        </div>
+      {/* Pair number index: left item → 1-based number */}
+      {(() => {
+        const pairIndex: Record<string, number> = {}
+        problem.pairs.forEach((pair, i) => {
+          if (pairings[pair.left] !== undefined) pairIndex[pair.left] = i + 1
+        })
+        const rightIndex: Record<string, number> = {}
+        Object.entries(pairings).forEach(([left, right]) => {
+          const n = pairIndex[left]
+          if (n !== undefined) rightIndex[right] = n
+        })
 
-        {/* Right column — shuffled */}
-        <div className="flex flex-col gap-2">
-          {shuffledRight.map(item => (
-            <button
-              key={item}
-              type="button"
-              aria-label={
-                Object.values(pairings).includes(item)
-                  ? `${item} — paired`
-                  : `${item} — available`
-              }
-              onClick={() => handleRightClick(item)}
-              disabled={checked}
-              className={rightItemClass(item)}
-            >
-              {item}
-            </button>
-          ))}
-        </div>
-      </div>
+        return (
+          <div className="grid grid-cols-2 gap-4 mt-4">
+            {/* Left column */}
+            <div className="flex flex-col gap-2">
+              {problem.pairs.map(pair => (
+                <button
+                  key={pair.left}
+                  type="button"
+                  aria-pressed={!!pairings[pair.left]}
+                  aria-label={leftAriaLabel(pair.left)}
+                  onClick={() => handleLeftClick(pair.left)}
+                  disabled={checked}
+                  className={`${leftItemClass(pair.left)} justify-between`}
+                >
+                  <span>{pair.left}</span>
+                  {pairIndex[pair.left] !== undefined && (
+                    <span className="ml-2 flex-shrink-0 w-5 h-5 rounded-full bg-primary/20 text-primary font-label text-[11px] flex items-center justify-center">
+                      {pairIndex[pair.left]}
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+
+            {/* Right column — shuffled */}
+            <div className="flex flex-col gap-2">
+              {shuffledRight.map(item => (
+                <button
+                  key={item}
+                  type="button"
+                  aria-label={
+                    Object.values(pairings).includes(item)
+                      ? `${item} — paired`
+                      : `${item} — available`
+                  }
+                  onClick={() => handleRightClick(item)}
+                  disabled={checked}
+                  className={`${rightItemClass(item)} justify-between`}
+                >
+                  <span>{item}</span>
+                  {rightIndex[item] !== undefined && (
+                    <span className="ml-2 flex-shrink-0 w-5 h-5 rounded-full bg-primary/20 text-primary font-label text-[11px] flex items-center justify-center">
+                      {rightIndex[item]}
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        )
+      })()}
 
       {/* Post-Check incorrect pair reveals */}
       {checked && matchResults && (

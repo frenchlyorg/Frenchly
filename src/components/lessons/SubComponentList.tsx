@@ -11,6 +11,7 @@
 import { useOptimistic, useTransition, useState } from 'react'
 import { markSubComponentComplete } from '@/app/lessons/actions'
 import SubComponentItem from './SubComponentItem'
+import type { ProblemData } from '@/lib/practice/types'
 
 interface SubComponentData {
   id: string
@@ -18,6 +19,8 @@ interface SubComponentData {
   kind: 'explainer' | 'practice' | 'writing'
   content: string | null
   position: number
+  // Pre-parsed server-side for practice kind; null for all other kinds
+  problemData?: ProblemData | null
 }
 
 interface SubComponentListProps {
@@ -111,6 +114,7 @@ export default function SubComponentList({
               content={sc.content}
               isCompleted={completedIds.has(sc.id)}
               onComplete={handleComplete}
+              problemData={sc.problemData}
             />
           </li>
         ))}

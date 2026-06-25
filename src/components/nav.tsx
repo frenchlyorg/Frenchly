@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 import { signOut } from "@/app/auth/actions";
 
@@ -12,6 +12,18 @@ interface NavProps {
 
 export function Nav({ username }: NavProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
+  const accountRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (accountRef.current && !accountRef.current.contains(e.target as Node)) {
+        setAccountOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <nav className="bg-surface border-b border-outline-variant sticky top-0 z-50">
@@ -38,17 +50,58 @@ export function Nav({ username }: NavProps) {
 
           {username ? (
             <>
-              <span className="text-on-surface-variant text-sm">
-                {username}
-              </span>
-              <form action={signOut}>
+              <Link
+                href="/dashboard"
+                className="text-on-surface-variant hover:text-on-surface text-sm transition-colors"
+              >
+                Dashboard
+              </Link>
+
+              {/* Account dropdown */}
+              <div className="relative" ref={accountRef}>
                 <button
-                  type="submit"
-                  className="text-on-surface-variant hover:text-on-surface text-sm transition-colors"
+                  onClick={() => setAccountOpen(!accountOpen)}
+                  className="flex items-center gap-1 text-on-surface-variant hover:text-on-surface text-sm transition-colors"
+                  aria-expanded={accountOpen}
+                  aria-haspopup="true"
                 >
-                  Log out
+                  My account
+                  <ChevronDown size={14} className={`transition-transform ${accountOpen ? "rotate-180" : ""}`} />
                 </button>
-              </form>
+
+                {accountOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-48 bg-surface border border-outline-variant rounded-[12px] shadow-md py-1 z-50">
+                    <div className="px-4 py-2 border-b border-outline-variant">
+                      <p className="text-xs text-on-surface-variant font-label truncate">{username}</p>
+                    </div>
+                    <Link
+                      href="/account"
+                      className="block px-4 py-2.5 text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors"
+                      onClick={() => setAccountOpen(false)}
+                    >
+                      Account settings
+                    </Link>
+                    <Link
+                      href="/dashboard"
+                      className="block px-4 py-2.5 text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors"
+                      onClick={() => setAccountOpen(false)}
+                    >
+                      My progress
+                    </Link>
+                    <div className="border-t border-outline-variant mt-1 pt-1">
+                      <form action={signOut}>
+                        <button
+                          type="submit"
+                          className="block w-full text-left px-4 py-2.5 text-sm text-error hover:bg-surface-container transition-colors"
+                          onClick={() => setAccountOpen(false)}
+                        >
+                          Log out
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                )}
+              </div>
             </>
           ) : (
             <Link
@@ -92,18 +145,39 @@ export function Nav({ username }: NavProps) {
 
           {username ? (
             <>
-              <span className="block px-6 py-3 text-on-surface-variant text-sm">
-                {username}
-              </span>
-              <form action={signOut}>
-                <button
-                  type="submit"
-                  className="block w-full text-left px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container text-sm"
+              <Link
+                href="/dashboard"
+                className="block px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container text-sm"
+                onClick={() => setIsOpen(false)}
+              >
+                Dashboard
+              </Link>
+              <div className="border-t border-outline-variant">
+                <p className="px-6 pt-3 pb-1 text-xs text-on-surface-variant font-label">{username}</p>
+                <Link
+                  href="/account"
+                  className="block px-6 py-2.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-container text-sm"
                   onClick={() => setIsOpen(false)}
                 >
-                  Log out
-                </button>
-              </form>
+                  Account settings
+                </Link>
+                <Link
+                  href="/dashboard"
+                  className="block px-6 py-2.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-container text-sm"
+                  onClick={() => setIsOpen(false)}
+                >
+                  My progress
+                </Link>
+                <form action={signOut}>
+                  <button
+                    type="submit"
+                    className="block w-full text-left px-6 py-2.5 text-error hover:bg-surface-container text-sm"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Log out
+                  </button>
+                </form>
+              </div>
             </>
           ) : (
             <Link
@@ -115,7 +189,7 @@ export function Nav({ username }: NavProps) {
             </Link>
           )}
 
-          <div className="px-4 py-3">
+          <div className="px-4 py-3 border-t border-outline-variant">
             <ThemeToggle />
           </div>
         </div>

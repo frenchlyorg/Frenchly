@@ -17,6 +17,8 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import SubComponentList from '@/components/lessons/SubComponentList'
 import Link from 'next/link'
+import { parseProblemContent } from '@/lib/practice/schema'
+import type { ProblemData } from '@/lib/practice/types'
 
 export const metadata = {
   title: 'Lesson — Frenchly',
@@ -30,6 +32,8 @@ interface SubComponentRow {
   kind: 'explainer' | 'practice' | 'writing'
   content: string | null
   position: number
+  // Parsed at server render time for practice kind; null for explainer/writing or invalid JSON
+  problemData?: ProblemData | null
 }
 
 interface LessonRow {
@@ -81,7 +85,12 @@ export default async function LessonPage({
     )
   }
 
-  const subComponents = lesson.sub_components ?? []
+  // Parse practice problem JSON server-side so client components receive typed ProblemData.
+  // parseProblemContent never throws — returns null for non-practice kinds or invalid JSON.
+  const subComponents = (lesson.sub_components ?? []).map((sc) => ({
+    ...sc,
+    problemData: sc.kind === 'practice' ? parseProblemContent(sc.content) : null,
+  }))
   const subComponentIds = subComponents.map((sc) => sc.id)
 
   // Query 2 (user data): own progress rows — separate query keeps RLS boundary explicit

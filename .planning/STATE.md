@@ -4,14 +4,14 @@ milestone: v1.0
 milestone_name: milestone
 current_plan: 1
 status: in_progress
-stopped_at: Phase 5 Plan 03 complete — ConjugationTableCard + MatchingCard + PracticeCardRouter (all 5 types wired)
-last_updated: "2026-06-24T03:52:18.891Z"
+stopped_at: Phase 5 complete — all 5 problem types smoke-tested and working
+last_updated: "2026-06-24T21:08:00.000Z"
 progress:
   total_phases: 12
-  completed_phases: 4
-  total_plans: 20
-  completed_plans: 19
-  percent: 33
+  completed_phases: 5
+  total_plans: 21
+  completed_plans: 21
+  percent: 42
 ---
 
 # Frenchly — Project State
@@ -22,14 +22,14 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Core value:** Get a first-time visitor to create an account so they never lose their progress — then keep them coming back through adaptive lessons and honest motivation features.
 **Current milestone:** v1.0 — Foundation & Core Product
-**Current focus:** Phase 05 — practice-problem-engine
+**Current focus:** Phase 06 — ai-writing-checker
 
 ---
 
 ## Current Status
 
 **Milestone:** v1.0
-**Phases complete:** 2 / 12
+**Phases complete:** 5 / 12
 **Current plan:** 1
 **Last action:** Phase 5 Plan 03 complete. Built ConjugationTableCard (6-cell grid, per-cell grading, auto-complete on Check) and MatchingCard (Fisher-Yates shuffle, click-to-pair, all-at-once Check). Patched PracticeCardRouter: null stubs for conjugation-table and matching replaced with real components — switch now exhaustive over all 5 ProblemData types. Full suite 16 suites / 145 tests green, zero TS errors.
 
@@ -42,8 +42,8 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 | 1 | Project Foundation | complete ✓ | 3/3 done |
 | 2 | Authentication & Accounts | complete ✓ | 5/5 done (02-01a, 02-01b, 02-02, 02-03, 02-04 complete) |
 | 3 | Lesson Framework | complete ✓ | 3/3 done (03-01 ✓, 03-02 ✓, 03-03 ✓); UAT passed |
-| 4 | Diagnostic System | planned | 0/5 (04-01..05; W1: 01,02 · W2: 03,04 · W3: 05) |
-| 5 | Practice Problem Engine | in_progress | 3/4 (05-01 ✓ types/grading · 05-02 ✓ MC/FillIn · 05-03 ✓ ConjugationTable/Matching) |
+| 4 | Diagnostic System | complete ✓ | 5/5 done |
+| 5 | Practice Problem Engine | complete ✓ | 4/4 done — smoke test passed 2026-06-24 |
 | 6 | AI Writing Checker | not_started | — |
 | 7 | French 1 Content | not_started | — |
 | 8 | French 2 Content | not_started | — |
@@ -84,5 +84,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** Phase 5 Plan 03 complete — ConjugationTableCard + MatchingCard + PracticeCardRouter (all 5 types wired)
-**Next step:** Execute `05-04-PLAN.md` — Wave 3 lesson integration (SubComponentItem + end-to-end wiring)
+**Stopped at:** Phase 5 complete — all 5 problem types smoke-tested and working
+**Next step:** `/gsd:discuss-phase 6` — AI Writing Checker (Haiku integration, caching, rate limits)

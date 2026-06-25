@@ -32,7 +32,7 @@ export default function FillInPracticeCard({
   isCompleted,
   onComplete,
 }: FillInPracticeCardProps) {
-  const [inputValue, setInputValue] = useState<string>('')
+  const [inputValue, setInputValue] = useState<string>(isCompleted ? problem.correctAnswer : '')
   // Pitfall 6 guard: initialize as correct when sub-component is already done
   const [gradeResult, setGradeResult] = useState<GradeResult | null>(
     isCompleted ? { correct: true } : null

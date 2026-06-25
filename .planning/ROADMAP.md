@@ -2,7 +2,7 @@
 
 **Milestone:** v1.0 — Foundation & Core Product
 **Target:** ~August 2026
-**Status:** 3 / 12 phases complete (Phase 4 next)
+**Status:** 5 / 12 phases complete (Phase 6 next)
 
 ---
 
@@ -14,7 +14,7 @@
 | 2 | Authentication & Accounts | Users can sign up, log in, log out, delete account | AUTH-01–05, SEC-01–04 | complete ✓ 2026-06-21 |
 | 3 | Lesson Framework | 3/3 | Complete   | 2026-06-22 |
 | 4 | Diagnostic System | 5/5 | Complete   | 2026-06-23 |
-| 5 | Practice Problem Engine | All four auto-graded problem types working | PROB-01–05 | not_started |
+| 5 | Practice Problem Engine | All four auto-graded problem types working | PROB-01–05 | complete ✓ 2026-06-24 |
 | 6 | AI Writing Checker | Haiku integration, caching, rate limits, graceful fallback | AI-01–05 | not_started |
 | 7 | French 1 Content | French 1 lessons + practice problems fully built | CONTENT-01, CONTENT-03 | not_started |
 | 8 | French 2 Content | French 2 lessons + practice problems fully built | CONTENT-02, CONTENT-03 | not_started |
@@ -140,6 +140,22 @@ Plans:
 **Goal:** All four auto-gradable problem types (multiple choice, fill-in-the-blank, conjugation, matching) work correctly and show immediate feedback. No AI is used for these — all checked by code.
 **Mode:** mvp
 **Requirements:** PROB-01, PROB-02, PROB-03, PROB-04, PROB-05
+**Plans:** 4 plans
+
+Plans:
+**Wave 1**
+
+- [x] 05-01-PLAN.md — DB migration (problem_type column) + TypeScript types + Zod schema + pure grading functions + Wave 0 tests
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [x] 05-02-PLAN.md — MCPracticeCard + FillInPracticeCard + PracticeCardRouter + SubComponentItem kind='practice' integration
+- [x] 05-03-PLAN.md — ConjugationTableCard + MatchingCard + PracticeCardRouter final wiring
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [x] 05-04-PLAN.md — Lesson page server-side parse + SubComponentList passthrough + live migration + end-to-end smoke test
+
 **Success Criteria:**
 
 1. Multiple choice: selecting correct answer shows green success; incorrect shows red with correct answer revealed

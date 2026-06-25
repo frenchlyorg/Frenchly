@@ -188,7 +188,7 @@ export default function SubComponentItem({
       {/* Explainer body — markdown content rendered below the toggle row,
           indented to align past the 48px button + 12px gap. Only explainers
           carry content in Phase 3; practice/writing are title-only placeholders. */}
-      {content && (
+      {content && kind !== 'practice' && (
         <div className="mt-3 sm:ml-[60px]">
           <LessonMarkdown markdown={content} />
         </div>
