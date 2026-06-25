@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: 1
+current_plan: 3
 status: in_progress
-stopped_at: Phase 6 planned — 4 plans ready
-last_updated: "2026-06-25T02:45:34.807Z"
+stopped_at: Phase 06 Plan 02 complete — WrittenProblem type + POST /api/check-writing route built
+last_updated: "2026-06-25T21:02:00Z"
 progress:
   total_phases: 12
   completed_phases: 5
-  total_plans: 20
-  completed_plans: 20
-  percent: 42
+  total_plans: 24
+  completed_plans: 24
+  percent: 46
 ---
 
 # Frenchly — Project State
@@ -30,8 +30,8 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Milestone:** v1.0
 **Phases complete:** 5 / 12
-**Current plan:** 1
-**Last action:** Phase 5 Plan 03 complete. Built ConjugationTableCard (6-cell grid, per-cell grading, auto-complete on Check) and MatchingCard (Fisher-Yates shuffle, click-to-pair, all-at-once Check). Patched PracticeCardRouter: null stubs for conjugation-table and matching replaced with real components — switch now exhaustive over all 5 ProblemData types. Full suite 16 suites / 145 tests green, zero TS errors.
+**Current plan:** 06-03
+**Last action:** Phase 06 Plan 02 complete. Added WrittenProblem type to ProblemData union (types.ts + schema.ts). Built POST /api/check-writing with auth, UTC rate-limit (10/day, returns 429), Anthropic Haiku 4.5 call with ephemeral prompt caching on 4096+ token system prompt, upsert with ignoreDuplicates, graceful fallback. Fixed jsdom test env for next/server globals. Full suite 150/153 passing.
 
 ---
 
@@ -44,7 +44,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 | 3 | Lesson Framework | complete ✓ | 3/3 done (03-01 ✓, 03-02 ✓, 03-03 ✓); UAT passed |
 | 4 | Diagnostic System | complete ✓ | 5/5 done |
 | 5 | Practice Problem Engine | complete ✓ | 4/4 done — smoke test passed 2026-06-24 |
-| 6 | AI Writing Checker | planned ✦ | 4 plans |
+| 6 | AI Writing Checker | in_progress ✦ | 2/4 done (06-01 ✓, 06-02 ✓) |
 | 7 | French 1 Content | not_started | — |
 | 8 | French 2 Content | not_started | — |
 | 9 | UX Polish & Performance | not_started | — |
@@ -84,5 +84,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** Phase 6 planned — 4 plans across 4 waves
-**Next step:** `/gsd:execute-phase 6` — AI Writing Checker
+**Stopped at:** Phase 06 Plan 02 complete — WrittenProblem type + POST /api/check-writing route built
+**Next step:** `/gsd:execute-phase 6` — Phase 06 Plan 03 (WrittenCard component)

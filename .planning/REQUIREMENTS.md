@@ -33,10 +33,10 @@
 
 ### AI Writing Checker
 
-- [ ] **AI-01**: Open-ended writing submissions receive one concise line of feedback via Claude Haiku 4.5
-- [ ] **AI-02**: Prompt caching is used for grading instructions (reduces per-call cost ~90%)
-- [ ] **AI-03**: Per-user rate limits are enforced to prevent cost abuse
-- [ ] **AI-04**: If the AI checker is unavailable, the lesson continues gracefully — no crash, clear message shown
+- [x] **AI-01**: Open-ended writing submissions receive one concise line of feedback via Claude Haiku 4.5
+- [x] **AI-02**: Prompt caching is used for grading instructions (reduces per-call cost ~90%)
+- [x] **AI-03**: Per-user rate limits are enforced to prevent cost abuse
+- [x] **AI-04**: If the AI checker is unavailable, the lesson continues gracefully — no crash, clear message shown
 - [ ] **AI-05**: Billing alerts are configured on the Anthropic API account
 
 ### Design & UX

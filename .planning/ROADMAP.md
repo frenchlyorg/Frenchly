@@ -15,7 +15,7 @@
 | 3 | Lesson Framework | 3/3 | Complete   | 2026-06-22 |
 | 4 | Diagnostic System | 5/5 | Complete   | 2026-06-23 |
 | 5 | Practice Problem Engine | All four auto-graded problem types working | PROB-01–05 | complete ✓ 2026-06-24 |
-| 6 | AI Writing Checker | Haiku integration, caching, rate limits, graceful fallback | AI-01–05 | not_started |
+| 6 | AI Writing Checker | 2/4 | In Progress|  |
 | 7 | French 1 Content | French 1 lessons + practice problems fully built | CONTENT-01, CONTENT-03 | not_started |
 | 8 | French 2 Content | French 2 lessons + practice problems fully built | CONTENT-02, CONTENT-03 | not_started |
 | 9 | UX Polish & Performance | Skeleton loaders, loading messages, mobile, a11y, school-device perf | UX-04–05, SEC-06–07 | not_started |
@@ -172,16 +172,16 @@ Plans:
 **Goal:** Students can submit open-ended French writing and receive one concise line of feedback via Claude Haiku 4.5. Prompt caching, per-user rate limits, and graceful fallback are all in place.
 **Mode:** mvp
 **Requirements:** AI-01, AI-02, AI-03, AI-04, AI-05
-**Plans:** 4 plans
+**Plans:** 2/4 plans executed
 
 Plans:
 **Wave 1**
 
-- [ ] 06-01-PLAN.md — Migration SQL (writing_submissions + RLS), ANTHROPIC_API_KEY env slot, Wave 0 test scaffolds (AI-01, AI-03, AI-04)
+- [x] 06-01-PLAN.md — Migration SQL (writing_submissions + RLS), ANTHROPIC_API_KEY env slot, Wave 0 test scaffolds (AI-01, AI-03, AI-04)
 
 **Wave 2** *(blocked on Wave 1)*
 
-- [ ] 06-02-PLAN.md — SDK install + db push [BLOCKING], WrittenProblem type + Zod schema, POST /api/check-writing route (auth, rate limit, Haiku call with prompt caching, DB write) (AI-01, AI-02, AI-03, AI-04)
+- [x] 06-02-PLAN.md — SDK install + db push [BLOCKING], WrittenProblem type + Zod schema, POST /api/check-writing route (auth, rate limit, Haiku call with prompt caching, DB write) (AI-01, AI-02, AI-03, AI-04)
 
 **Wave 3** *(blocked on Wave 2)*
 
