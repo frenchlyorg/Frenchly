@@ -288,6 +288,10 @@ Plans:
 5. A complete new-user flow works on production: sign up → diagnostic → French 1 lesson → save progress → log out → log in → progress restored
 6. No console errors or broken assets on production
 
+**Deployment Checklist:**
+
+- [ ] Set Anthropic billing alert at console.anthropic.com/settings/billing (AI-05 — deferred from Phase 6; manual Anthropic dashboard task)
+
 ---
 
 ## Milestone Backlog (Future)

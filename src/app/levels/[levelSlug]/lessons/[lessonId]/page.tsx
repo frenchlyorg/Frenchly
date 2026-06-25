@@ -32,8 +32,10 @@ interface SubComponentRow {
   kind: 'explainer' | 'practice' | 'writing'
   content: string | null
   position: number
-  // Parsed at server render time for practice kind; null for explainer/writing or invalid JSON
+  // Parsed at server render time for practice/writing kinds; null for explainer or invalid JSON
   problemData?: ProblemData | null
+  // Loaded from writing_submissions on revisit; null for non-writing kinds or first visit (D-09)
+  initialFeedback?: string | null
 }
 
 interface LessonRow {
@@ -85,13 +87,11 @@ export default async function LessonPage({
     )
   }
 
-  // Parse practice problem JSON server-side so client components receive typed ProblemData.
-  // parseProblemContent never throws — returns null for non-practice kinds or invalid JSON.
-  const subComponents = (lesson.sub_components ?? []).map((sc) => ({
-    ...sc,
-    problemData: sc.kind === 'practice' ? parseProblemContent(sc.content) : null,
-  }))
-  const subComponentIds = subComponents.map((sc) => sc.id)
+  // Parse practice/writing problem JSON server-side so client components receive typed ProblemData.
+  // parseProblemContent never throws — returns null for explainer kind or invalid JSON.
+  // feedbackMap built below (Query 3) — declared here to satisfy TS flow; overwritten after query.
+  const rawSubComponents = lesson.sub_components ?? []
+  const subComponentIds = rawSubComponents.map((sc) => sc.id)
 
   // Query 2 (user data): own progress rows — separate query keeps RLS boundary explicit
   // SELECT is scoped to user.id + enforced by RLS SELECT policy (T-03-13)
@@ -105,6 +105,31 @@ export default async function LessonPage({
       : { data: [] }
 
   const completedIds = (progressRows ?? []).map((r) => r.sub_component_id)
+
+  // Query 3 (writing feedback): load stored feedback for writing sub-components.
+  // Scoped to user.id server-side; RLS SELECT policy enforces at DB layer (T-06-13).
+  const writingIds = rawSubComponents
+    .filter((sc) => sc.kind === 'writing')
+    .map((sc) => sc.id)
+
+  const { data: writingRows } =
+    writingIds.length > 0
+      ? await supabase
+          .from('writing_submissions')
+          .select('sub_component_id, feedback_text')
+          .eq('user_id', user.id)
+          .in('sub_component_id', writingIds)
+      : { data: [] }
+
+  const feedbackMap: Record<string, string | null> = Object.fromEntries(
+    (writingRows ?? []).map((r) => [r.sub_component_id, r.feedback_text ?? null])
+  )
+
+  const subComponents = rawSubComponents.map((sc) => ({
+    ...sc,
+    problemData: (sc.kind === 'practice' || sc.kind === 'writing') ? parseProblemContent(sc.content) : null,
+    initialFeedback: sc.kind === 'writing' ? (feedbackMap[sc.id] ?? null) : null,
+  }))
 
   // Level name for back-link copy — derive from levelSlug (e.g. "french-1" → "French 1")
   const levelDisplayName = levelSlug

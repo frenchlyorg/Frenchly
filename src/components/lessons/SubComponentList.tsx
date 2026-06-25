@@ -19,8 +19,10 @@ interface SubComponentData {
   kind: 'explainer' | 'practice' | 'writing'
   content: string | null
   position: number
-  // Pre-parsed server-side for practice kind; null for all other kinds
+  // Pre-parsed server-side for practice/writing kinds; null for explainer or invalid JSON
   problemData?: ProblemData | null
+  // Loaded from writing_submissions on revisit; null for non-writing kinds or first visit (D-09)
+  initialFeedback?: string | null
 }
 
 interface SubComponentListProps {
@@ -115,6 +117,7 @@ export default function SubComponentList({
               isCompleted={completedIds.has(sc.id)}
               onComplete={handleComplete}
               problemData={sc.problemData}
+              initialFeedback={sc.initialFeedback}
             />
           </li>
         ))}
