@@ -137,4 +137,30 @@ describe('parseProblemContent', () => {
     })
     expect(parseProblemContent(raw)).toBeNull()
   })
+
+  // ---------------------------------------------------------------------------
+  // Wave 0 scaffold — tests are RED until implementation plans complete.
+  // 'written' type cases (AI-01): added in Phase 6 Plan 01
+  // ---------------------------------------------------------------------------
+
+  it('valid written JSON → returns { type: "written", prompt: string }', () => {
+    const raw = JSON.stringify({
+      type: 'written',
+      prompt: 'Describe your daily routine in 3–5 sentences.',
+    })
+    const result = parseProblemContent(raw)
+    expect(result).not.toBeNull()
+    expect(result!.type).toBe('written')
+    if (result?.type === 'written') {
+      expect(result.prompt).toBe('Describe your daily routine in 3–5 sentences.')
+    }
+  })
+
+  it('written JSON missing prompt field → null (Zod rejection)', () => {
+    const raw = JSON.stringify({
+      type: 'written',
+      // prompt intentionally omitted
+    })
+    expect(parseProblemContent(raw)).toBeNull()
+  })
 })
