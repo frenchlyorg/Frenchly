@@ -172,6 +172,25 @@ Plans:
 **Goal:** Students can submit open-ended French writing and receive one concise line of feedback via Claude Haiku 4.5. Prompt caching, per-user rate limits, and graceful fallback are all in place.
 **Mode:** mvp
 **Requirements:** AI-01, AI-02, AI-03, AI-04, AI-05
+**Plans:** 4 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 06-01-PLAN.md — Migration SQL (writing_submissions + RLS), ANTHROPIC_API_KEY env slot, Wave 0 test scaffolds (AI-01, AI-03, AI-04)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 06-02-PLAN.md — SDK install + db push [BLOCKING], WrittenProblem type + Zod schema, POST /api/check-writing route (auth, rate limit, Haiku call with prompt caching, DB write) (AI-01, AI-02, AI-03, AI-04)
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [ ] 06-03-PLAN.md — WrittenCard component (auto-resize textarea, word count, spinner, feedback display, graceful fallback), PracticeCardRouter 'written' case, SubComponentItem writing branch (AI-01, AI-03, AI-04)
+
+**Wave 4** *(blocked on Wave 3)*
+
+- [ ] 06-04-PLAN.md — Lesson page Query 3 (writing_submissions feedback load), initialFeedback prop thread to WrittenCard, end-to-end UAT checkpoint (AI-01, AI-02, AI-03, AI-04, AI-05)
+
 **Success Criteria:**
 
 1. Submitting open-ended French writing returns a one-line feedback response in < 3 seconds
