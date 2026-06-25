@@ -185,7 +185,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2)*
 
-- [ ] 06-03-PLAN.md — WrittenCard component (auto-resize textarea, word count, spinner, feedback display, graceful fallback), PracticeCardRouter 'written' case, SubComponentItem writing branch (AI-01, AI-03, AI-04)
+- [x] 06-03-PLAN.md — WrittenCard component (auto-resize textarea, word count, spinner, feedback display, graceful fallback), PracticeCardRouter 'written' case, SubComponentItem writing branch (AI-01, AI-03, AI-04)
 
 **Wave 4** *(blocked on Wave 3)*
 
