@@ -42,9 +42,15 @@ export type MatchingProblem = {
   pairs: Array<{ left: string; right: string }>   // 2–6 pairs
 }
 
+export type WrittenProblem = {
+  type: 'written'
+  prompt: string   // Writing task instruction displayed to the student
+}
+
 export type ProblemData =
   | MCProblem
   | FillInProblem
   | ConjugationTableProblem
   | ConjugationSingleProblem
   | MatchingProblem
+  | WrittenProblem

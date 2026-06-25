@@ -46,12 +46,18 @@ const MatchingSchema = z.object({
   pairs: z.array(z.object({ left: z.string(), right: z.string() })).min(2).max(6),
 })
 
+const WrittenSchema = z.object({
+  type: z.literal('written'),
+  prompt: z.string(),
+})
+
 export const ProblemDataSchema = z.discriminatedUnion('type', [
   MCSchema,
   FillInSchema,
   ConjTableSchema,
   ConjSingleSchema,
   MatchingSchema,
+  WrittenSchema,
 ])
 
 /**
