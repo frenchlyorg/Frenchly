@@ -73,11 +73,11 @@ describe('WrittenCard', () => {
     expect(textarea).toBeDisabled()
   })
 
-  it('on fetch returning 429, shows rate limit message', async () => {
+  it('on fetch returning rateLimited:true, shows rate limit message', async () => {
     ;(global.fetch as jest.Mock).mockResolvedValueOnce({
-      ok: false,
-      status: 429,
-      json: async () => ({ error: 'rate_limited' }),
+      ok: true,
+      status: 200,
+      json: async () => ({ feedback: "You've used all your writing checks for today — come back tomorrow!", rateLimited: true }),
     })
 
     render(<WrittenCard {...defaultProps} />)

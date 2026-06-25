@@ -70,11 +70,11 @@ export default function WrittenCard({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ subComponentId, text }),
       })
-      if (res.status === 429) {
-        // D-07: rate limit — 429 response from route (matches test contract from 06-02)
+      const data = await res.json()
+      if (data.rateLimited) {
+        // D-07: rate limit — route returns 200 + rateLimited:true, lessons never block
         setFeedback("You've used all your writing checks for today — come back tomorrow!")
       } else {
-        const data = await res.json()
         // D-05: set feedback from successful response
         setFeedback(data.feedback ?? "We couldn't check that right now — keep going!")
       }
