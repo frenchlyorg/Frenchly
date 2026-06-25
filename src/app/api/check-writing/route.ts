@@ -365,9 +365,24 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // If rate-limit check fails, allow through rather than blocking the lesson (D-06)
     console.error('[check-writing] rate-limit count error:', countError)
   } else if (count !== null && count >= 10) {
-    // Rate limit exceeded — return 429 so the client can show the appropriate message
+    // Rate limit exceeded — insert audit row then return 200 with friendly message
+    // D-07: lessons must never block; client reads rateLimited flag, not HTTP status
     // Anthropic is NOT called (T-06-06)
-    return NextResponse.json({ error: 'rate_limited' }, { status: 429 })
+    await supabase
+      .from('writing_submissions')
+      .upsert(
+        {
+          user_id: user.id,
+          sub_component_id: subComponentId,
+          feedback_text: null,
+          created_at: new Date().toISOString(),
+        },
+        { onConflict: 'user_id,sub_component_id', ignoreDuplicates: true }
+      )
+    return NextResponse.json({
+      feedback: "You've used all your writing checks for today — come back tomorrow!",
+      rateLimited: true,
+    })
   }
 
   // 4. Anthropic call — wrapped in try/catch for graceful fallback (AI-04, D-06)

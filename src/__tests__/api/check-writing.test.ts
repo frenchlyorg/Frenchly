@@ -90,17 +90,19 @@ describe('POST /api/check-writing', () => {
     expect(res.status).toBe(400)
   })
 
-  it('returns 429 when DB count returns 10 (AI-03: rate limit exceeded)', async () => {
+  it('returns 200 with rateLimited:true when DB count reaches 10 (AI-03: rate limit exceeded)', async () => {
     mockGetUser.mockResolvedValue({
       data: { user: { id: 'user-1' } },
       error: null,
     })
 
-    // DB count = 10 → rate limit should trigger before Anthropic call
+    // DB count = 10 → rate limit triggers before Anthropic call
+    // Second from() call is the audit upsert — mock resolves cleanly
     const chainMock = {
       select: jest.fn().mockReturnThis(),
       eq: jest.fn().mockReturnThis(),
       gte: jest.fn().mockResolvedValue({ count: 10, error: null }),
+      upsert: jest.fn().mockResolvedValue({ error: null }),
     }
     mockFrom.mockReturnValue(chainMock)
 
@@ -110,9 +112,9 @@ describe('POST /api/check-writing', () => {
     })
     const res = await POST(req)
 
-    expect(res.status).toBe(429)
+    expect(res.status).toBe(200)
     const body = await res.json()
-    expect(body).toMatchObject({ error: 'rate_limited' })
+    expect(body).toMatchObject({ rateLimited: true, feedback: expect.any(String) })
 
     // Anthropic must NOT be called when rate limited
     expect(mockMessagesCreate).not.toHaveBeenCalled()
