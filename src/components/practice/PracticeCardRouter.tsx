@@ -14,12 +14,14 @@ import MCPracticeCard from '@/components/practice/MCPracticeCard'
 import FillInPracticeCard from '@/components/practice/FillInPracticeCard'
 import ConjugationTableCard from '@/components/practice/ConjugationTableCard'
 import MatchingCard from '@/components/practice/MatchingCard'
+import WrittenCard from '@/components/practice/WrittenCard'
 import type { ProblemData } from '@/lib/practice/types'
 
 interface PracticeCardRouterProps {
   problemData: ProblemData
   subComponentId: string
   isCompleted: boolean
+  initialFeedback?: string | null
   onComplete: (id: string) => void
 }
 
@@ -27,6 +29,7 @@ export default function PracticeCardRouter({
   problemData,
   subComponentId,
   isCompleted,
+  initialFeedback,
   onComplete,
 }: PracticeCardRouterProps) {
   switch (problemData.type) {
@@ -77,6 +80,17 @@ export default function PracticeCardRouter({
           problem={problemData}
           id={subComponentId}
           isCompleted={isCompleted}
+          onComplete={onComplete}
+        />
+      )
+
+    case 'written':
+      return (
+        <WrittenCard
+          problem={problemData}
+          subComponentId={subComponentId}
+          isCompleted={isCompleted}
+          initialFeedback={initialFeedback}
           onComplete={onComplete}
         />
       )

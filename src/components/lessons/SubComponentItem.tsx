@@ -28,6 +28,7 @@ interface SubComponentItemProps {
 // Internal-only prop for practice problem data — does not change the external API
 interface SubComponentItemInternalProps extends SubComponentItemProps {
   problemData?: ProblemData | null
+  initialFeedback?: string | null
 }
 
 // Maps kind to display label (sentence case per CLAUDE.md)
@@ -52,12 +53,13 @@ export default function SubComponentItem({
   isCompleted,
   onComplete,
   problemData,
+  initialFeedback,
 }: SubComponentItemInternalProps) {
   return (
     <div className="py-2">
     <div className="flex items-center gap-3">
-      {kind === 'practice' ? (
-        /* CHANGE 1: Non-interactive spacer for practice kind — not clickable (T-05-04 / Pitfall 3).
+      {kind === 'practice' || kind === 'writing' ? (
+        /* Non-interactive spacer for practice and writing kinds — not clickable (T-05-04 / Pitfall 3).
            Completion is driven by PracticeCardRouter's onComplete callback, not manual click. */
         <div
           role="presentation"
@@ -179,7 +181,7 @@ export default function SubComponentItem({
         ].join(' ')}
         aria-hidden="true"
       >
-        {kind === 'practice'
+        {(kind === 'practice' || kind === 'writing')
           ? isCompleted ? 'Done' : 'In progress'
           : isCompleted ? 'Done' : 'Mark complete'}
       </span>
@@ -188,13 +190,13 @@ export default function SubComponentItem({
       {/* Explainer body — markdown content rendered below the toggle row,
           indented to align past the 48px button + 12px gap. Only explainers
           carry content in Phase 3; practice/writing are title-only placeholders. */}
-      {content && kind !== 'practice' && (
+      {content && kind !== 'practice' && kind !== 'writing' && (
         <div className="mt-3 sm:ml-[60px]">
           <LessonMarkdown markdown={content} />
         </div>
       )}
 
-      {/* CHANGE 3: Practice problem panel — renders PracticeCardRouter below title row.
+      {/* Practice problem panel — renders PracticeCardRouter below title row.
           Additional block, not replacing the content block above. */}
       {kind === 'practice' && (
         <div className="mt-4 sm:ml-[60px]" aria-label={`Practice problem: ${title}`}>
@@ -208,6 +210,25 @@ export default function SubComponentItem({
           ) : (
             <p className="font-body text-[16px] text-on-surface-variant">
               This practice problem isn&apos;t available yet.
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Writing exercise panel — mirrors practice panel, passes initialFeedback for revisit */}
+      {kind === 'writing' && (
+        <div className="mt-4 sm:ml-[60px]" aria-label={`Writing exercise: ${title}`}>
+          {problemData ? (
+            <PracticeCardRouter
+              problemData={problemData}
+              subComponentId={id}
+              isCompleted={isCompleted}
+              onComplete={onComplete}
+              initialFeedback={initialFeedback}
+            />
+          ) : (
+            <p className="font-body text-[16px] text-on-surface-variant">
+              This writing exercise isn&apos;t available yet.
             </p>
           )}
         </div>
