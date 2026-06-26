@@ -15,7 +15,7 @@
 | 3 | Lesson Framework | 3/3 | Complete   | 2026-06-22 |
 | 4 | Diagnostic System | 5/5 | Complete   | 2026-06-23 |
 | 5 | Practice Problem Engine | All four auto-graded problem types working | PROB-01–05 | complete ✓ 2026-06-24 |
-| 6 | AI Writing Checker | 2/4 | In Progress|  |
+| 6 | AI Writing Checker | 4/4 | Complete   | 2026-06-26 |
 | 7 | French 1 Content | French 1 lessons + practice problems fully built | CONTENT-01, CONTENT-03 | not_started |
 | 8 | French 2 Content | French 2 lessons + practice problems fully built | CONTENT-02, CONTENT-03 | not_started |
 | 9 | UX Polish & Performance | Skeleton loaders, loading messages, mobile, a11y, school-device perf | UX-04–05, SEC-06–07 | not_started |
@@ -172,7 +172,7 @@ Plans:
 **Goal:** Students can submit open-ended French writing and receive one concise line of feedback via Claude Haiku 4.5. Prompt caching, per-user rate limits, and graceful fallback are all in place.
 **Mode:** mvp
 **Requirements:** AI-01, AI-02, AI-03, AI-04, AI-05
-**Plans:** 2/4 plans executed
+**Plans:** 4/4 plans complete
 
 Plans:
 **Wave 1**
@@ -189,7 +189,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3)*
 
-- [ ] 06-04-PLAN.md — Lesson page Query 3 (writing_submissions feedback load), initialFeedback prop thread to WrittenCard, end-to-end UAT checkpoint (AI-01, AI-02, AI-03, AI-04, AI-05)
+- [x] 06-04-PLAN.md — Lesson page Query 3 (writing_submissions feedback load), initialFeedback prop thread to WrittenCard, end-to-end UAT checkpoint (AI-01, AI-02, AI-03, AI-04, AI-05)
 
 **Success Criteria:**
 
@@ -242,6 +242,9 @@ Plans:
 4. All pages pass WCAG AA contrast check (automated: axe or Lighthouse; manual: coral button #a03e40)
 5. All interactive elements are reachable and operable via keyboard alone
 6. Lighthouse performance score ≥ 85 on mobile (measured on a throttled connection)
+
+**Backlog items (to plan in this phase):**
+- Lesson layout redesign: group sub-components into 4 collapsible dropdowns by type (matching, MCQ, short answer, writing), each containing 5 problems. Add "Load 5 more" button per section to surface additional questions.
 
 ---
 
