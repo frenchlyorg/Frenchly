@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: 07-02
-status: Phase 07 in progress — awaiting human review gate (Task 2 checkpoint)
-stopped_at: 07-01 Task 1 complete; stopped at Task 2 checkpoint:human-verify
-last_updated: "2026-06-27T17:15:00.000Z"
+current_plan: 08-01
+status: Phase 07 complete — Phase 08 (French 2 Content) not started
+stopped_at: Phase 07 complete — all 6 French 1 lessons in DB, UAT passed (count=6)
+last_updated: "2026-06-27T19:35:00.000Z"
 progress:
   total_phases: 12
-  completed_phases: 6
+  completed_phases: 7
   total_plans: 26
-  completed_plans: 24
-  percent: 50
+  completed_plans: 26
+  percent: 58
 ---
 
 # Frenchly — Project State
@@ -22,7 +22,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Core value:** Get a first-time visitor to create an account so they never lose their progress — then keep them coming back through adaptive lessons and honest motivation features.
 **Current milestone:** v1.0 — Foundation & Core Product
-**Current focus:** Phase 07 — french-1-content
+**Current focus:** Phase 08 — french-2-content
 
 ---
 
@@ -30,8 +30,8 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Milestone:** v1.0
 **Phases complete:** 6 / 12
-**Current plan:** 07-02
-**Last action:** 07-01 Task 1 complete — Lesson 1 (Greetings) SQL migration created (275df28). Stopped at Task 2 checkpoint:human-verify (D-02 sample review gate). User must approve Lesson 1 content format before Wave 2 proceeds.
+**Current plan:** 08-01
+**Last action:** Phase 07 complete — all 6 French 1 lessons seeded in Supabase, UAT passed (lesson count=6, all sub-components have content). See 07-02-SUMMARY.md.
 
 ---
 
@@ -45,7 +45,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 | 4 | Diagnostic System | complete ✓ | 5/5 done |
 | 5 | Practice Problem Engine | complete ✓ | 4/4 done — smoke test passed 2026-06-24 |
 | 6 | AI Writing Checker | complete ✓ | 4/4 done |
-| 7 | French 1 Content | in_progress | 0/2 done (07-01 Wave 1 at checkpoint, 07-02 pending approval) |
+| 7 | French 1 Content | complete ✓ | 2/2 done (07-01 ✓, 07-02 ✓); UAT passed 2026-06-27 |
 | 8 | French 2 Content | not_started | — |
 | 9 | UX Polish & Performance | not_started | — |
 | 10 | Security & Quality | not_started | — |
@@ -84,5 +84,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** 07-01 Task 2 checkpoint:human-verify — review supabase/migrations/20260625_phase7_french1_content.sql and reply "approved" to unblock Wave 2
-**Next step:** Review the migration file, then reply "approved — proceed to Wave 2" (or describe changes needed)
+**Stopped at:** Phase 07 complete. Phase 08 (French 2 Content) not started.
+**Next step:** `/gsd:discuss-phase 8` or `/gsd:plan-phase 8` to begin French 2 content.

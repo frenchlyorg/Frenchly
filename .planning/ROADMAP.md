@@ -2,7 +2,7 @@
 
 **Milestone:** v1.0 — Foundation & Core Product
 **Target:** ~August 2026
-**Status:** 5 / 12 phases complete (Phase 6 next)
+**Status:** 7 / 12 phases complete (Phase 8 next)
 
 ---
 
@@ -16,7 +16,7 @@
 | 4 | Diagnostic System | 5/5 | Complete   | 2026-06-23 |
 | 5 | Practice Problem Engine | All four auto-graded problem types working | PROB-01–05 | complete ✓ 2026-06-24 |
 | 6 | AI Writing Checker | 4/4 | Complete   | 2026-06-26 |
-| 7 | French 1 Content | French 1 lessons + practice problems fully built | CONTENT-01, CONTENT-03 | not_started |
+| 7 | French 1 Content | French 1 lessons + practice problems fully built | CONTENT-01, CONTENT-03 | complete ✓ 2026-06-27 |
 | 8 | French 2 Content | French 2 lessons + practice problems fully built | CONTENT-02, CONTENT-03 | not_started |
 | 9 | UX Polish & Performance | Skeleton loaders, loading messages, mobile, a11y, school-device perf | UX-04–05, SEC-06–07 | not_started |
 | 10 | Security & Quality | Full security audit, error handling, test suite, dep scanning | SEC-05, SEC-08 | not_started |
@@ -212,11 +212,11 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 07-01-PLAN.md — Generate Lesson 1 (Greetings) SQL + sample review gate: user approves content format before Wave 2 proceeds
+- [x] 07-01-PLAN.md — Generate Lesson 1 (Greetings) SQL + sample review gate: user approves content format before Wave 2 proceeds
 
 **Wave 2** *(blocked on Wave 1 sample approval)*
 
-- [ ] 07-02-PLAN.md — Author and append Lessons 2–6 SQL, [BLOCKING] manual migration in Supabase SQL Editor, end-to-end UAT
+- [x] 07-02-PLAN.md — Author and append Lessons 2–6 SQL, [BLOCKING] manual migration in Supabase SQL Editor, end-to-end UAT
 
 **Success Criteria:**
 
