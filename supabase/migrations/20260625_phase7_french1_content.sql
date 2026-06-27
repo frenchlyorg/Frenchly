@@ -339,7 +339,7 @@ Indefinite articles are like the English "a," "an," or "some." They refer to non
     'Practice: choose the article',
     'practice',
     'mc',
-    '{"type":"mc","prompt":"Which indefinite article goes before \'crayon\' (pencil, masculine)?","options":["un","une","des","le"],"correctAnswer":"un"}',
+    $json${"type":"mc","prompt":"Which indefinite article goes before 'crayon' (pencil, masculine)?","options":["un","une","des","le"],"correctAnswer":"un"}$json$,
     2
   );
 
