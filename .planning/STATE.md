@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: 07-01
-status: Phase 07 planned — ready to execute
-stopped_at: Phase 7 plans created and verified
-last_updated: "2026-06-27T17:06:00.000Z"
+current_plan: 07-02
+status: Phase 07 in progress — awaiting human review gate (Task 2 checkpoint)
+stopped_at: 07-01 Task 1 complete; stopped at Task 2 checkpoint:human-verify
+last_updated: "2026-06-27T17:15:00.000Z"
 progress:
   total_phases: 12
   completed_phases: 6
@@ -29,9 +29,9 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Current Status
 
 **Milestone:** v1.0
-**Phases complete:** 5 / 12
-**Current plan:** 06-04
-**Last action:** Phase 07 planned. 2 plans created and plan-checker verified (0 blockers, 0 warnings). Wave 1: Lesson 1 SQL + sample review gate. Wave 2: Lessons 2–6 SQL + manual Supabase migration + UAT. All 4 problem types distributed across 6 lessons. CONTENT-01 and CONTENT-03 covered.
+**Phases complete:** 6 / 12
+**Current plan:** 07-02
+**Last action:** 07-01 Task 1 complete — Lesson 1 (Greetings) SQL migration created (275df28). Stopped at Task 2 checkpoint:human-verify (D-02 sample review gate). User must approve Lesson 1 content format before Wave 2 proceeds.
 
 ---
 
@@ -45,7 +45,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 | 4 | Diagnostic System | complete ✓ | 5/5 done |
 | 5 | Practice Problem Engine | complete ✓ | 4/4 done — smoke test passed 2026-06-24 |
 | 6 | AI Writing Checker | complete ✓ | 4/4 done |
-| 7 | French 1 Content | planned ○ | 0/2 done (07-01, 07-02 ready) |
+| 7 | French 1 Content | in_progress | 0/2 done (07-01 Wave 1 at checkpoint, 07-02 pending approval) |
 | 8 | French 2 Content | not_started | — |
 | 9 | UX Polish & Performance | not_started | — |
 | 10 | Security & Quality | not_started | — |
@@ -84,5 +84,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** Phase 7 plans created and verified
-**Next step:** `/clear` then `/gsd:execute-phase 7`
+**Stopped at:** 07-01 Task 2 checkpoint:human-verify — review supabase/migrations/20260625_phase7_french1_content.sql and reply "approved" to unblock Wave 2
+**Next step:** Review the migration file, then reply "approved — proceed to Wave 2" (or describe changes needed)
