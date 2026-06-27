@@ -122,7 +122,7 @@ BEGIN
 
   INSERT INTO public.lessons (level_id, slug, title, estimated_minutes, position)
   VALUES (v_french1_id, 'numbers-and-counting', 'Numbers and counting', 12, 3)
-  ON CONFLICT (slug) DO NOTHING
+  ON CONFLICT (level_id, slug) DO NOTHING
   RETURNING id INTO v_lesson3_id;
 
   IF v_lesson3_id IS NOT NULL THEN
@@ -184,7 +184,7 @@ Numbers in French follow predictable patterns. Pay attention to pronunciation.
 
   INSERT INTO public.lessons (level_id, slug, title, estimated_minutes, position)
   VALUES (v_french1_id, 'pronouns-and-etre', 'Subject pronouns and etre', 12, 4)
-  ON CONFLICT (slug) DO NOTHING
+  ON CONFLICT (level_id, slug) DO NOTHING
   RETURNING id INTO v_lesson4_id;
 
   IF v_lesson4_id IS NOT NULL THEN
@@ -242,7 +242,7 @@ Every French sentence needs a subject pronoun. The verb etre (to be) is essentia
 
   INSERT INTO public.lessons (level_id, slug, title, estimated_minutes, position)
   VALUES (v_french1_id, 'indefinite-articles', 'Indefinite articles: un, une, des', 12, 5)
-  ON CONFLICT (slug) DO NOTHING
+  ON CONFLICT (level_id, slug) DO NOTHING
   RETURNING id INTO v_lesson5_id;
 
   IF v_lesson5_id IS NOT NULL THEN
@@ -297,7 +297,7 @@ Indefinite articles work like the English "a," "an," or "some." They refer to no
 
   INSERT INTO public.lessons (level_id, slug, title, estimated_minutes, position)
   VALUES (v_french1_id, 'etre-adjectives', 'Etre + adjectives: basic descriptions', 12, 6)
-  ON CONFLICT (slug) DO NOTHING
+  ON CONFLICT (level_id, slug) DO NOTHING
   RETURNING id INTO v_lesson6_id;
 
   IF v_lesson6_id IS NOT NULL THEN
