@@ -44,7 +44,8 @@ export type MatchingProblem = {
 
 export type WrittenProblem = {
   type: 'written'
-  prompt: string   // Writing task instruction displayed to the student
+  prompt: string          // Writing task instruction displayed to the student
+  hints?: string          // Optional collapsible helpful phrases shown in a dropdown
 }
 
 export type ProblemData =

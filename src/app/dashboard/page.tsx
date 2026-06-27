@@ -61,7 +61,7 @@ export default async function DashboardPage() {
             Your lessons are coming soon.
           </p>
           <p className="font-body text-on-surface-variant text-sm">
-            Level 1 content launches in a future update.
+            French 1 content launches in a future update.
           </p>
         </div>
       </div>

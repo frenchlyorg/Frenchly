@@ -29,6 +29,7 @@ interface SubComponentItemProps {
 interface SubComponentItemInternalProps extends SubComponentItemProps {
   problemData?: ProblemData | null
   initialFeedback?: string | null
+  initialSubmissionText?: string | null
 }
 
 // Maps kind to display label (sentence case per CLAUDE.md)
@@ -54,6 +55,7 @@ export default function SubComponentItem({
   onComplete,
   problemData,
   initialFeedback,
+  initialSubmissionText,
 }: SubComponentItemInternalProps) {
   return (
     <div className="py-2">
@@ -225,6 +227,7 @@ export default function SubComponentItem({
               isCompleted={isCompleted}
               onComplete={onComplete}
               initialFeedback={initialFeedback}
+              initialSubmissionText={initialSubmissionText}
             />
           ) : (
             <p className="font-body text-[16px] text-on-surface-variant">

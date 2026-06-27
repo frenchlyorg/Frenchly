@@ -23,6 +23,7 @@ interface SubComponentData {
   problemData?: ProblemData | null
   // Loaded from writing_submissions on revisit; null for non-writing kinds or first visit (D-09)
   initialFeedback?: string | null
+  initialSubmissionText?: string | null
 }
 
 interface SubComponentListProps {
@@ -118,6 +119,7 @@ export default function SubComponentList({
               onComplete={handleComplete}
               problemData={sc.problemData}
               initialFeedback={sc.initialFeedback}
+              initialSubmissionText={sc.initialSubmissionText}
             />
           </li>
         ))}

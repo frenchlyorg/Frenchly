@@ -49,6 +49,7 @@ const MatchingSchema = z.object({
 const WrittenSchema = z.object({
   type: z.literal('written'),
   prompt: z.string(),
+  hints: z.string().optional(),
 })
 
 export const ProblemDataSchema = z.discriminatedUnion('type', [

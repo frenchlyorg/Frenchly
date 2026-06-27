@@ -22,6 +22,7 @@ interface PracticeCardRouterProps {
   subComponentId: string
   isCompleted: boolean
   initialFeedback?: string | null
+  initialSubmissionText?: string | null
   onComplete: (id: string) => void
 }
 
@@ -30,6 +31,7 @@ export default function PracticeCardRouter({
   subComponentId,
   isCompleted,
   initialFeedback,
+  initialSubmissionText,
   onComplete,
 }: PracticeCardRouterProps) {
   switch (problemData.type) {
@@ -91,6 +93,7 @@ export default function PracticeCardRouter({
           subComponentId={subComponentId}
           isCompleted={isCompleted}
           initialFeedback={initialFeedback}
+          initialSubmissionText={initialSubmissionText}
           onComplete={onComplete}
         />
       )
