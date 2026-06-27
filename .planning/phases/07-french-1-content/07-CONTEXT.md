@@ -1,12 +1,12 @@
 # Phase 7: French 1 Content — Context
 
-**Gathered:** 2026-06-25
+**Gathered:** 2026-06-27 (updated from 2026-06-25)
 **Status:** Ready for planning
 
 <domain>
 ## Phase Boundary
 
-Build and seed the complete French 1 curriculum: 6 lessons covering the standard French 1 grammar sequence, each with 3–4 sub-components (explainer + practice + writing). All content delivered via SQL migration file, run directly in Supabase dashboard.
+Build and seed the complete French 1 curriculum: 6 lessons covering the standard French 1 grammar sequence, each with 4 sub-components (1 explainer + 2 practice + 1 writing). All content delivered via SQL migration file, run directly in Supabase dashboard.
 
 </domain>
 
@@ -23,7 +23,8 @@ Build and seed the complete French 1 curriculum: 6 lessons covering the standard
   5. Indefinite articles: un, une, des (new)
   6. Être + adjectives — basic descriptions (new)
 - **Expand existing 2 lessons** (do NOT delete/reinsert — UPDATE by title match to preserve sub_component_progress rows)
-- **3–4 sub-components per lesson:** 1 explainer + 1–2 practice problems + 1 writing prompt
+- **4 sub-components per lesson:** 1 explainer + 2 practice problems + 1 writing prompt
+- **Problem type variety across French 1, not forced per lesson** — all 4 auto-graded types (MC, fill-in, conjugation, matching) must appear somewhere across the 6 lessons; no single lesson is required to contain all types
 
 ### D-02: Content authorship
 - **Claude generates all content** from the topic
@@ -32,13 +33,13 @@ Build and seed the complete French 1 curriculum: 6 lessons covering the standard
 - **Explainer style: short and direct** — 3–5 sentence intro + table or bullet list; no long prose
 
 ### D-03: Problem type selection
-- **Flexible by topic** — choose the problem type that best matches the grammar being taught:
-  - Greetings → matching pairs (formal/informal, time-of-day)
-  - Articles → MC (choose the correct article)
-  - Numbers → fill-in or matching
-  - Pronouns + être → conjugation-table or fill-in
-  - Indefinite articles → MC
-  - Être + adjectives → fill-in or conjugation-single
+- **Flexible by topic** — choose the 2 practice types that best match the grammar being taught:
+  - Greetings → matching pairs + MC (formal/informal, time-of-day)
+  - Articles → MC + fill-in (choose the correct article)
+  - Numbers → fill-in + matching
+  - Pronouns + être → conjugation-table + fill-in
+  - Indefinite articles → MC + fill-in
+  - Être + adjectives → fill-in + conjugation-single
 - **Writing prompt in every lesson** — always the last sub-component; prompt is contextually relevant to the lesson topic
 - **Hints field populated** on every writing sub-component (collapsible helpful phrases the student can reference)
 
@@ -51,7 +52,7 @@ Build and seed the complete French 1 curriculum: 6 lessons covering the standard
 
 ### Claude's Discretion
 - Exact French sentences in MC options, fill-in blanks, and matching pairs
-- Time estimate (estimated_minutes) per lesson — infer from 3–4 sub-components at ~3 min each
+- Time estimate (estimated_minutes) per lesson — infer from 4 sub-components at ~3 min each (~12 min per lesson)
 - Exact wording of writing prompts and hints — follow the approved sample template
 - Position values for new sub-components (increment from highest existing position)
 
@@ -74,7 +75,7 @@ Build and seed the complete French 1 curriculum: 6 lessons covering the standard
 
 ### Requirements
 - `REQUIREMENTS.md` §CONTENT-01, CONTENT-03 — "French 1 lessons fully built out" + "each lesson has a mix of problem types"
-- `ROADMAP.md` Phase 7 — success criteria: completable end-to-end, time estimates within 20% of actual, at least one of each problem type across French 1
+- `ROADMAP.md` Phase 7 — success criteria: completable end-to-end, time estimates within 20% of actual, all 4 problem types represented across French 1
 
 </canonical_refs>
 
@@ -89,7 +90,7 @@ Build and seed the complete French 1 curriculum: 6 lessons covering the standard
 ### Established Patterns
 - Content JSON is stored in `sub_components.content` as a JSON string matching ProblemData discriminated union
 - All sub-component kinds already handled: explainer (markdown), practice (JSON), writing (JSON with `type:'written'`)
-- Writing sub-components need `{ "type": "written", "prompt": "...", "hints": "..." }` JSON
+- Writing sub-components need `{ "type": "written", "prompt": "...", "hints": "..." }` JSON — hints is a plain string, newline-separated phrases rendered with `whitespace-pre-line` in WrittenCard
 - Practice sub-components need type-specific JSON per `src/lib/practice/types.ts`
 - SQL escaping: use `$$...$$` dollar-quoting for string literals with apostrophes (see phase3 migration pattern)
 
@@ -104,8 +105,9 @@ Build and seed the complete French 1 curriculum: 6 lessons covering the standard
 ## Specific Ideas
 
 - Sample lesson review gate is critical: planner generates one full lesson (SQL + rendered preview description) so user can see the format before all 6 lessons are written
-- Hints on writing sub-components should be 3–5 short French phrases relevant to the lesson topic, formatted as one phrase per line
+- Hints on writing sub-components should be 3–5 short French phrases relevant to the lesson topic, one phrase per line (newline-separated in the JSON string)
 - Explainer markdown should use `##` heading + short intro paragraph + table or bullet list — no nested headers
+- Type distribution across 6 lessons (from D-03): MC appears in Greetings + Articles + Indefinite articles; fill-in appears in Articles + Numbers + Pronouns + Indefinite articles + Être+adj; conjugation appears in Pronouns + Être+adj; matching appears in Greetings + Numbers — all 4 types covered
 
 </specifics>
 
@@ -119,4 +121,4 @@ Build and seed the complete French 1 curriculum: 6 lessons covering the standard
 ---
 
 *Phase: 7-French-1-Content*
-*Context gathered: 2026-06-25*
+*Context gathered: 2026-06-27*
