@@ -36,6 +36,7 @@ interface SubComponentRow {
   problemData?: ProblemData | null
   // Loaded from writing_submissions on revisit; null for non-writing kinds or first visit (D-09)
   initialFeedback?: string | null
+  initialSubmissionText?: string | null
 }
 
 interface LessonRow {
@@ -116,19 +117,24 @@ export default async function LessonPage({
     writingIds.length > 0
       ? await supabase
           .from('writing_submissions')
-          .select('sub_component_id, feedback_text')
+          .select('sub_component_id, feedback_text, submission_text')
           .eq('user_id', user.id)
           .in('sub_component_id', writingIds)
+          .order('created_at', { ascending: false })  // WR-03: most-recent row wins when building maps
       : { data: [] }
 
   const feedbackMap: Record<string, string | null> = Object.fromEntries(
     (writingRows ?? []).map((r) => [r.sub_component_id, r.feedback_text ?? null])
+  )
+  const submissionTextMap: Record<string, string | null> = Object.fromEntries(
+    (writingRows ?? []).map((r) => [r.sub_component_id, r.submission_text ?? null])
   )
 
   const subComponents = rawSubComponents.map((sc) => ({
     ...sc,
     problemData: (sc.kind === 'practice' || sc.kind === 'writing') ? parseProblemContent(sc.content) : null,
     initialFeedback: sc.kind === 'writing' ? (feedbackMap[sc.id] ?? null) : null,
+    initialSubmissionText: sc.kind === 'writing' ? (submissionTextMap[sc.id] ?? null) : null,
   }))
 
   // Level name for back-link copy — derive from levelSlug (e.g. "french-1" → "French 1")

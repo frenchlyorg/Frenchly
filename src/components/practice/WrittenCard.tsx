@@ -15,7 +15,8 @@
  * Error handling:
  *   - HTTP 429 → rate-limit message (D-07)
  *   - fetch throw → fallback message (D-06)
- *   - Both paths call onComplete + markSubComponentComplete in finally (D-05)
+ *   - Both paths call onComplete in finally; SubComponentList.handleComplete
+ *     then calls markSubComponentComplete (D-05, CR-04 fix).
  *
  * Design rules:
  *   - Feedback box: bg-surface-container + border-outline-variant only.
@@ -23,7 +24,6 @@
  */
 
 import { useCallback, useRef, useState } from 'react'
-import { markSubComponentComplete } from '@/app/lessons/actions'
 import type { WrittenProblem } from '@/lib/practice/types'
 
 interface WrittenCardProps {
@@ -31,6 +31,7 @@ interface WrittenCardProps {
   subComponentId: string
   isCompleted: boolean
   initialFeedback?: string | null
+  initialSubmissionText?: string | null
   onComplete: (id: string) => void
 }
 
@@ -39,10 +40,13 @@ export default function WrittenCard({
   subComponentId,
   isCompleted,
   initialFeedback = null,
+  initialSubmissionText = null,
   onComplete,
 }: WrittenCardProps) {
-  const [text, setText] = useState<string>('')
-  const [feedback, setFeedback] = useState<string | null>(initialFeedback ?? null)
+  const [text, setText] = useState<string>(initialSubmissionText ?? '')
+  const [feedback, setFeedback] = useState<string | null>(
+    initialFeedback ?? (isCompleted ? "We couldn't check that right now — keep going!" : null)
+  )
   const [loading, setLoading] = useState<boolean>(false)
   const [done, setDone] = useState<boolean>(isCompleted)
 
@@ -82,12 +86,15 @@ export default function WrittenCard({
       // D-06: network error fallback
       setFeedback("We couldn't check that right now — keep going!")
     } finally {
-      // D-05: onComplete + markSubComponentComplete called AFTER setFeedback (feedback state
-      // is set in try/catch before finally executes — T-06-12 mitigation)
+      // D-05: onComplete called AFTER setFeedback (feedback state is set in try/catch
+      // before finally executes — T-06-12 mitigation).
+      // CR-04/CR-05 fix: removed direct markSubComponentComplete call — onComplete
+      // already triggers SubComponentList.handleComplete which calls markSubComponentComplete.
+      // The direct call was firing it twice per submission and left an unhandled rejection
+      // risk since finally blocks are not covered by the surrounding try/catch.
       setLoading(false)
       setDone(true)
       onComplete(subComponentId)
-      await markSubComponentComplete(subComponentId)
     }
   }, [text, loading, done, subComponentId, onComplete])
 
@@ -98,6 +105,18 @@ export default function WrittenCard({
       {/* Problem prompt */}
       <p className="font-body text-[18px] leading-8 text-on-surface mb-4">{problem.prompt}</p>
 
+      {/* Optional hints dropdown */}
+      {problem.hints && (
+        <details className="mb-4 rounded-lg border border-outline-variant bg-surface-container">
+          <summary className="cursor-pointer px-4 py-2 font-label text-[13px] text-on-surface-variant select-none">
+            Helpful phrases
+          </summary>
+          <p className="px-4 pb-3 pt-1 font-body text-[15px] text-on-surface whitespace-pre-line">
+            {problem.hints}
+          </p>
+        </details>
+      )}
+
       {/* Auto-resizing textarea — D-01 */}
       <textarea
         ref={textareaRef}
@@ -105,7 +124,9 @@ export default function WrittenCard({
         onChange={handleChange}
         disabled={loading || done}
         placeholder="Your writing"
+        autoComplete="off"
         rows={1}
+        style={{ caretColor: 'var(--color-primary)' }}
         className={[
           'w-full rounded px-3 py-2 font-body text-[16px]',
           'bg-surface-container-low text-on-surface border outline-none',
