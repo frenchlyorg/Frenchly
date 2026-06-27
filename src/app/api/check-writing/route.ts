@@ -351,9 +351,42 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   const { subComponentId, text } = parsed.data
 
+  // 2b. Authorization: verify sub_component_id exists and is accessible to this user.
+  // RLS on lessons/sub_components ensures students can only see their own content.
+  // This prevents arbitrary UUID enumeration by authenticated users (T-06-05 / CLAUDE.md).
+  const { data: scRow, error: scError } = await supabase
+    .from('sub_components')
+    .select('id')
+    .eq('id', subComponentId)
+    .single()
+
+  if (scError || !scRow) {
+    return NextResponse.json({ error: 'Sub-component not found' }, { status: 404 })
+  }
+
   // 3. Rate limit: count submissions for this user today (UTC calendar day, D-10/D-11)
   const today = new Date()
   today.setUTCHours(0, 0, 0, 0)
+
+  // CR-02 burst guard: reject a second request within 2 seconds for the same
+  // (user_id, sub_component_id) pair to mitigate obvious concurrent double-taps.
+  // Full fix requires a DB-side atomic counter or advisory lock — this is best-effort.
+  const twoSecondsAgo = new Date(Date.now() - 2000).toISOString()
+  const { data: recentRow } = await supabase
+    .from('writing_submissions')
+    .select('id')
+    .eq('user_id', user.id)
+    .eq('sub_component_id', subComponentId)
+    .gte('created_at', twoSecondsAgo)
+    .limit(1)
+    .maybeSingle()
+
+  if (recentRow) {
+    return NextResponse.json(
+      { error: 'Duplicate request — please wait before resubmitting' },
+      { status: 429 }
+    )
+  }
 
   const { count, error: countError } = await supabase
     .from('writing_submissions')
@@ -365,22 +398,29 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // If rate-limit check fails, allow through rather than blocking the lesson (D-06)
     console.error('[check-writing] rate-limit count error:', countError)
   } else if (count !== null && count >= 10) {
-    // Rate limit exceeded — insert audit row then return 200 with friendly message
-    // D-07: lessons must never block; client reads rateLimited flag, not HTTP status
-    // Anthropic is NOT called (T-06-06)
+    // Rate limit exceeded — return 200 with friendly message (D-07: lessons must never block).
+    // Anthropic is NOT called (T-06-06).
+    // CR-03/WR-01 fix: we do NOT write a null audit row here — doing so would insert a
+    // (user_id, sub_component_id) row with feedback_text:null that blocks all future
+    // legitimate submissions (the happy-path upsert uses ignoreDuplicates:true and would
+    // silently do nothing on the next attempt). Instead, store the rate-limit message in
+    // feedback_text so revisit state (WR-02) shows the correct message rather than the
+    // generic error fallback.
+    const rateLimitMsg = "You've used all your writing checks for today — come back tomorrow!"
     await supabase
       .from('writing_submissions')
       .upsert(
         {
           user_id: user.id,
           sub_component_id: subComponentId,
-          feedback_text: null,
+          submission_text: text,
+          feedback_text: rateLimitMsg,
           created_at: new Date().toISOString(),
         },
         { onConflict: 'user_id,sub_component_id', ignoreDuplicates: true }
       )
     return NextResponse.json({
-      feedback: "You've used all your writing checks for today — come back tomorrow!",
+      feedback: rateLimitMsg,
       rateLimited: true,
     })
   }
@@ -401,8 +441,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       messages: [{ role: 'user', content: text }],
     })
 
-    // Log cache stats for monitoring (AI-02 cache hit verification)
-    console.log('[check-writing] cache stats:', response.usage)
+    // Log cache stats for monitoring (AI-02 cache hit verification) — dev only
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('[check-writing] cache stats:', response.usage)
+    }
 
     const firstBlock = response.content[0]
     feedbackText = firstBlock?.type === 'text' ? firstBlock.text : null
