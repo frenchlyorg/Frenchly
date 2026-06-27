@@ -207,6 +207,17 @@ Plans:
 **Goal:** All French 1 lessons are created with real grammar content and at least one of each problem type per lesson. The full French 1 level is completable end-to-end.
 **Mode:** mvp
 **Requirements:** CONTENT-01, CONTENT-03
+**Plans:** 2 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 07-01-PLAN.md — Generate Lesson 1 (Greetings) SQL + sample review gate: user approves content format before Wave 2 proceeds
+
+**Wave 2** *(blocked on Wave 1 sample approval)*
+
+- [ ] 07-02-PLAN.md — Author and append Lessons 2–6 SQL, [BLOCKING] manual migration in Supabase SQL Editor, end-to-end UAT
+
 **Success Criteria:**
 
 1. French 1 has all planned lessons seeded with real French grammar content
