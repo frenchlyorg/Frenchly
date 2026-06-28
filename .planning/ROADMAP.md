@@ -257,6 +257,21 @@ Plans:
 **Backlog items (to plan in this phase):**
 - Lesson layout redesign: group sub-components into 4 collapsible dropdowns by type (matching, MCQ, short answer, writing), each containing 5 problems. Add "Load 5 more" button per section to surface additional questions.
 
+**Plans:** 3 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 09-01-PLAN.md — Five loading.tsx skeleton files + activeLessonId guillemet marker wired on level page
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 09-02-PLAN.md — Accordion layout refactor (SubComponentItem + SubComponentList) + post-lesson loading bar + levelSlug prop thread
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [ ] 09-03-PLAN.md — Pre-audit automated checks + Lighthouse WCAG AA / performance ≥ 85 mobile human checkpoint
+
 ---
 
 ### Phase 10: Security & Quality
