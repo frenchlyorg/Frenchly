@@ -46,7 +46,7 @@ Seed all French 2 lessons with real grammar content via SQL migration. 10 lesson
 ### D-03: Content delivery
 - **No sample review gate** — Phase 7 established and proven the format; all 10 lessons generated in one plan/execute wave
 - **Single plan (08-01):** Generate full SQL migration for all 10 lessons, run manually in Supabase SQL Editor
-- **SQL migration file:** `supabase/migrations/20260627_phase8_french2_content.sql`
+- **SQL migration file:** `supabase/migrations/20260628_phase8_french2_content.sql`
 - **Migration strategy:** All-INSERT (no UPDATEs needed — no existing French 2 lessons)
 - **Idempotent:** `ON CONFLICT (level_id, slug) DO NOTHING` on all lesson INSERTs; sub-component INSERTs inside `IF lesson_id IS NOT NULL THEN` guard
 - **Manual migration** in Supabase SQL Editor (CLI not installed)
