@@ -19,7 +19,7 @@
 | 7 | French 1 Content | French 1 lessons + practice problems fully built | CONTENT-01, CONTENT-03 | complete ✓ 2026-06-27 |
 | 8 | French 2 Content | French 2 lessons + practice problems fully built | CONTENT-02, CONTENT-03 | not_started |
 | 9 | UX Polish & Performance | Skeleton loaders, loading messages, mobile, a11y, school-device perf | UX-04–05, SEC-06–07 | not_started |
-| 10 | Security & Quality | Full security audit, error handling, test suite, dep scanning | SEC-05, SEC-08 | not_started |
+| 10 | Security & Quality | Full security audit, error handling, test suite, dep scanning | SEC-05, SEC-08 | planned (3 plans) |
 | 11 | Pages & Navigation | Home, Mission, Dashboard, Account Settings, Contact | PAGE-01–07 | not_started |
 | 12 | Deployment & Launch | Vercel deploy, domain, Supabase Pro, email service, billing alerts | INFRA-01–04 | not_started |
 
@@ -285,6 +285,18 @@ Plans:
 3. Manual audit confirms no raw SQL string building anywhere in the codebase
 4. All API route handlers return appropriate error responses (not 500 crashes) when given malformed input
 5. If Supabase is unavailable, the UI shows a graceful error state — not a broken blank page
+
+**Plans:** 3 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 10-01-PLAN.md — Shared ErrorCard component + Dependabot npm config (SEC-08) + API input-validation & SQL audit (D-09/D-10/D-11)
+- [ ] 10-03-PLAN.md — Verify SEC-05 three-path test suite (login, save-progress, diagnostic-unlock) + watermark-advance assertion
+
+**Wave 2** *(blocked on 10-01 — consumes ErrorCard)*
+
+- [ ] 10-02-PLAN.md — error.tsx + global-error.tsx + branded not-found.tsx; wire inline level/lesson not-found pages to notFound() (D-01–D-05)
 
 ---
 
