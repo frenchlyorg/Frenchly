@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { signUp } from "@/app/auth/actions";
+import Spinner from "@/components/ui/Spinner";
 
 interface FieldError {
   field: "email" | "username" | "password" | "general" | null;
@@ -164,7 +165,13 @@ export function SignupForm() {
         disabled={pending}
         className="w-full min-h-[44px] bg-primary text-on-primary font-label text-sm rounded px-6 py-3 hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
       >
-        {pending ? "Creating account…" : "Create account"}
+        {pending ? (
+          <span className="inline-flex items-center gap-2">
+            <Spinner /> Creating account…
+          </span>
+        ) : (
+          "Create account"
+        )}
       </button>
     </form>
   );

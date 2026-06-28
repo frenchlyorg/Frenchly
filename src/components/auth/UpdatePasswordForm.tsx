@@ -7,6 +7,7 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Eye, EyeOff } from "lucide-react";
+import Spinner from "@/components/ui/Spinner";
 
 interface FieldError {
   field: "new" | "confirm" | "general";
@@ -186,7 +187,13 @@ export function UpdatePasswordForm() {
         disabled={pending}
         className="px-5 py-2 bg-primary text-on-primary rounded font-label text-sm disabled:opacity-50 hover:opacity-90 transition-opacity"
       >
-        {pending ? "Updating…" : "Update password"}
+        {pending ? (
+          <span className="inline-flex items-center gap-2">
+            <Spinner /> Updating…
+          </span>
+        ) : (
+          "Update password"
+        )}
       </button>
     </form>
   );

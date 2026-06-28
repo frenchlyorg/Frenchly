@@ -6,6 +6,7 @@
 
 import { useState, useRef } from "react";
 import { deleteAccount } from "@/app/auth/actions";
+import Spinner from "@/components/ui/Spinner";
 
 export function DeleteAccountForm() {
   const [confirmation, setConfirmation] = useState("");
@@ -74,7 +75,13 @@ export function DeleteAccountForm() {
         aria-disabled={!isConfirmed || pending}
         className="border border-error text-error font-label text-sm px-4 py-2 rounded bg-transparent transition-opacity disabled:opacity-40 enabled:hover:bg-error enabled:hover:text-on-error"
       >
-        {pending ? "Deleting…" : "Delete my account"}
+        {pending ? (
+          <span className="inline-flex items-center gap-2">
+            <Spinner /> Deleting…
+          </span>
+        ) : (
+          "Delete my account"
+        )}
       </button>
     </form>
   );

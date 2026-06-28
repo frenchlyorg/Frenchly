@@ -8,8 +8,8 @@
  *
  * UI-SPEC refs: §Component Inventory — DiagnosticGate; §Copywriting Contract.
  */
-import Link from 'next/link'
 import { skipPlacementDiagnostic } from '@/actions/diagnostic'
+import LinkButton from '@/components/ui/LinkButton'
 
 interface DiagnosticGateProps {
   /** When true the student already has an unfinished diagnostic — show resume copy. */
@@ -32,12 +32,13 @@ export default function DiagnosticGate({ hasInProgress }: DiagnosticGateProps) {
 
           <p className="mt-4 font-body text-[16px] leading-7 text-on-surface-variant">{body}</p>
 
-          <Link
+          <LinkButton
             href="/diagnostic/placement"
-            className="mt-8 inline-block min-h-[44px] rounded-[8px] bg-primary px-6 py-3 font-label font-semibold text-white hover:bg-primary/90"
+            className="mt-8 inline-flex items-center justify-center min-h-[44px] rounded-[8px] bg-primary px-6 py-3 font-label font-semibold text-white hover:bg-primary/90 disabled:opacity-70 disabled:cursor-wait"
+            ariaLabel={cta}
           >
             {cta}
-          </Link>
+          </LinkButton>
 
           {!hasInProgress && (
             <form action={skipPlacementDiagnostic} className="mt-4">

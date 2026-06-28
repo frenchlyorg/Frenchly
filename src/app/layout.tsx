@@ -67,6 +67,12 @@ export default async function RootLayout({
         >
           <Nav username={username} />
           <main>{children}</main>
+          <footer className="border-t border-outline-variant mt-auto">
+            <div className="max-w-[1040px] mx-auto px-5 md:px-6 py-6 flex items-center justify-between">
+              <span className="font-heading text-sm text-on-surface-variant">Frenchly</span>
+              <span className="font-body text-sm text-on-surface-variant">© 2026</span>
+            </div>
+          </footer>
         </ThemeProvider>
       </body>
     </html>

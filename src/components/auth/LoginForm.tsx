@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { signIn } from "@/app/auth/actions";
+import Spinner from "@/components/ui/Spinner";
 
 interface FieldError {
   field: "email" | "password" | "general" | null;
@@ -145,7 +146,13 @@ export function LoginForm() {
         disabled={pending}
         className="w-full min-h-[44px] bg-primary text-on-primary font-label text-sm rounded px-6 py-3 hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
       >
-        {pending ? "Logging in…" : "Log in to Frenchly"}
+        {pending ? (
+          <span className="inline-flex items-center gap-2">
+            <Spinner /> Logging in…
+          </span>
+        ) : (
+          "Log in to Frenchly"
+        )}
       </button>
     </form>
   );
