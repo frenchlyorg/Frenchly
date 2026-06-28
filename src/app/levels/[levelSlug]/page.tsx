@@ -140,6 +140,17 @@ export default async function LevelPage({
     .eq('user_id', user.id)
     .in('sub_component_id', allSubComponentIds.length > 0 ? allSubComponentIds : ['__none__'])
   const completedSet = new Set((progressRows ?? []).map((r) => r.sub_component_id))
+
+  // D-GM-01: first lesson (by position) with any incomplete sub-component
+  const activeLessonId = (() => {
+    if (isLocked) return null
+    for (const lesson of lessons) {
+      const lessonSubIds = (lesson.sub_components ?? []).map((s) => s.id)
+      if (lessonSubIds.some((id) => !completedSet.has(id))) return lesson.id
+    }
+    return null
+  })()
+
   const allSubComponentsComplete = deriveAllLessonsComplete(allSubComponentIds, completedSet)
   const showEndOfLevelCta = !isLocked && allSubComponentsComplete
   const startEndOfLevel = startEndOfLevelDiagnostic.bind(null, { levelId: level.id })
@@ -187,7 +198,7 @@ export default async function LevelPage({
                 estimatedMinutes={lesson.estimated_minutes}
                 partsCount={lesson.sub_components?.length ?? 0}
                 isLocked={isLocked}
-                isActive={false}
+                isActive={lesson.id === activeLessonId}
               />
             ))}
           </div>
