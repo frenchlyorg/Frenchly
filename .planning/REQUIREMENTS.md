@@ -44,13 +44,13 @@
 - [ ] **UX-01**: Light mode uses warm bone/cream surfaces with coral primary — all warm palette
 - [ ] **UX-02**: Dark mode uses warm charcoal backgrounds with orange lead accent — all warm palette
 - [ ] **UX-03**: Users can toggle between light and dark mode; preference is saved
-- [ ] **UX-04**: Skeleton loaders display while pages and lesson content are loading
-- [ ] **UX-05**: Post-lesson loading bar shows with a short encouraging message (≤8 words) as the next lesson loads
-- [ ] **UX-06**: Guillemet (« ») motif is used as the active-lesson marker and decorative frame in key sections
+- [x] **UX-04**: Skeleton loaders display while pages and lesson content are loading
+- [x] **UX-05**: Post-lesson loading bar shows with a short encouraging message (≤8 words) as the next lesson loads
+- [x] **UX-06**: Guillemet (« ») motif is used as the active-lesson marker and decorative frame in key sections
 - [ ] **UX-07**: Layout is responsive: desktop (1040px container), lesson content (720px max-width), mobile (20px side margins)
 - [ ] **UX-08**: Fonts loaded: Literata (headings/logo), Be Vietnam Pro (body), Work Sans (labels)
 - [ ] **UX-09**: All UI copy is sentence case
-- [ ] **UX-10**: Green (tertiary color) is used exclusively for correct-answer/success feedback; nowhere else
+- [x] **UX-10**: Green (tertiary color) is used exclusively for correct-answer/success feedback; nowhere else
 
 ### Content — v1
 
@@ -76,7 +76,7 @@
 - [ ] **SEC-04**: Rate limiting on authentication attempts (prevents brute-force attacks)
 - [ ] **SEC-05**: Basic automated test suite covers the three highest-stakes paths: login, save-progress, diagnostic unlock
 - [ ] **SEC-06**: All pages meet WCAG AA contrast ratios (verify coral button fill #a03e40 with tool)
-- [ ] **SEC-07**: Keyboard navigation and screen-reader-friendly markup throughout
+- [x] **SEC-07**: Keyboard navigation and screen-reader-friendly markup throughout
 - [ ] **SEC-08**: Dependency scanning enabled (GitHub Dependabot or equivalent)
 
 ### Hosting & Deployment

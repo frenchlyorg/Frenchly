@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: 09-01
-status: Phase 09 in progress — 09-01 complete (skeleton loaders + guillemet active marker)
-stopped_at: 09-01 complete. Five loading.tsx skeletons created; activeLessonId wired to LevelCard.isActive. Build clean.
-last_updated: "2026-06-28T15:00:00.000Z"
+current_plan: 09-02
+status: Phase 09 in progress — 09-02 complete (accordion lesson layout + post-lesson loading bar)
+stopped_at: 09-02 complete. Accordion layout on SubComponentItem. PostLessonBar with 1.5s coral fill + navigation. levelSlug threaded from lesson page.
+last_updated: "2026-06-28T14:20:10Z"
 progress:
   total_phases: 12
   completed_phases: 8
   total_plans: 30
-  completed_plans: 29
-  percent: 70
+  completed_plans: 30
+  percent: 69
 ---
 
 # Frenchly — Project State
@@ -31,7 +31,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 **Milestone:** v1.0
 **Phases complete:** 8 / 12
 **Current plan:** 09-01
-**Last action:** 09-01 complete — five loading.tsx skeleton loaders (level, lesson, dashboard, placement, end-of-level diagnostics) + activeLessonId IIFE wired to LevelCard.isActive on level page. Build clean. See 09-01-SUMMARY.md.
+**Last action:** 09-02 complete — accordion shell on SubComponentItem (header button + collapsible max-height region), PostLessonBar (fixed coral fill 1.5s + router.push), accordion state + auto-advance in SubComponentList, levelSlug threaded from lesson page. Build clean. 18 test suites pass. See 09-02-SUMMARY.md.
 
 ---
 
@@ -47,7 +47,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 | 6 | AI Writing Checker | complete ✓ | 4/4 done |
 | 7 | French 1 Content | complete ✓ | 2/2 done (07-01 ✓, 07-02 ✓); UAT passed 2026-06-27 |
 | 8 | French 2 Content | complete ✓ | 1/1 done (08-01 ✓); UAT passed 2026-06-28 |
-| 9 | UX Polish & Performance | in_progress | 09-01 ✓ |
+| 9 | UX Polish & Performance | in_progress | 09-01 ✓, 09-02 ✓ |
 | 10 | Security & Quality | not_started | — |
 | 11 | Pages & Navigation | not_started | — |
 | 12 | Deployment & Launch | not_started | — |
@@ -84,5 +84,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** 09-01 complete. Skeleton loaders on all 5 routes. Guillemet active marker live on level page.
-**Next step:** Continue Phase 9 — run `/gsd:execute-phase 9` for 09-02 (post-lesson loading bar + accordion).
+**Stopped at:** 09-02 complete. Accordion layout live. PostLessonBar wired. levelSlug threaded.
+**Next step:** Continue Phase 9 — run `/gsd:execute-phase 9` for 09-03 (WCAG AA audit + Lighthouse performance pass).
