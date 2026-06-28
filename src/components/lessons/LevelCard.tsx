@@ -65,11 +65,12 @@ export default function LevelCard({
             isLocked ? 'text-on-surface-variant' : 'text-on-surface',
           ].join(' ')}
         >
-          {/* Guillemet active-lesson marker (CLAUDE.md: guillemet motif for active lessons) */}
+          {/* Active-lesson marker — coral dot (bg-primary token, warm palette) */}
           {isActive && !isLocked && (
-            <span className="font-heading text-primary mr-1" aria-hidden="true">
-              «
-            </span>
+            <span
+              className="inline-block h-2 w-2 rounded-full bg-primary mr-2 align-middle"
+              aria-hidden="true"
+            />
           )}
           {title}
         </h3>
