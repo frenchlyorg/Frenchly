@@ -84,5 +84,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** 09-02 complete. Accordion layout live. PostLessonBar wired. levelSlug threaded.
-**Next step:** Continue Phase 9 — run `/gsd:execute-phase 9` for 09-03 (WCAG AA audit + Lighthouse performance pass).
+**Stopped at:** Phase 10 context gathered (10-CONTEXT.md). Phase 9 complete. Decisions locked: full-page error card, branded 404, Dependabot grouped-weekly/manual, malformed-input 400s.
+**Next step:** `/clear` then `/gsd:plan-phase 10` to plan Security & Quality.
