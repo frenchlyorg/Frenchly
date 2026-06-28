@@ -125,40 +125,23 @@ export default function SubComponentItem({
             ].join(' ')}
             aria-hidden="true"
           >
-            {isCompleted ? (
-              /* Filled checkmark when done */
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M4 10l4.5 4.5L16 6"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            ) : (
-              /* Dash/outline indicator when incomplete */
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M6 10h8"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-            )}
+            {/* Checkmark — faint outline when incomplete, filled coral when done */}
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              aria-hidden="true"
+              className={isCompleted ? '' : 'opacity-40'}
+            >
+              <path
+                d="M4 10l4.5 4.5L16 6"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </div>
         )}
 
@@ -221,7 +204,7 @@ export default function SubComponentItem({
         {/* Explainer "Mark complete" button — lives INSIDE content region, NOT in header button.
             Prevents nested interactive elements (RESEARCH §Pitfall 4, §Open Questions #2). */}
         {kind === 'explainer' && (
-          <div className="mt-4 sm:ml-[60px]">
+          <div className="mt-4 pb-6 sm:ml-[60px]">
             <button
               type="button"
               onClick={() => onComplete(id)}
@@ -234,44 +217,26 @@ export default function SubComponentItem({
                 'border-2 transition-colors',
                 isCompleted
                   ? 'bg-primary border-primary text-on-primary cursor-default'
-                  : 'bg-transparent border-outline text-on-surface hover:border-primary focus:outline-none focus:border-primary focus:border-[3px]',
+                  : 'bg-transparent border-outline text-on-surface-variant hover:border-primary hover:text-primary focus:outline-none focus:border-primary focus:border-[3px]',
                 'disabled:cursor-default',
               ].join(' ')}
             >
-              {isCompleted ? (
-                /* Filled checkmark when done */
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M4 10l4.5 4.5L16 6"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              ) : (
-                /* Dash/outline indicator when incomplete */
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M6 10h8"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              )}
+              {/* Checkmark — outline when incomplete (tick to complete), filled coral when done */}
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M4 10l4.5 4.5L16 6"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </button>
           </div>
         )}

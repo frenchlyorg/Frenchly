@@ -26,6 +26,8 @@ interface LevelCardProps {
   estimatedMinutes: number
   /** Number of sub-components (parts). */
   partsCount: number
+  /** How many sub-components the student has completed. */
+  completedCount: number
   /** When true, the card is non-interactive and shows a lock badge. */
   isLocked: boolean
   /**
@@ -41,9 +43,12 @@ export default function LevelCard({
   title,
   estimatedMinutes,
   partsCount,
+  completedCount,
   isLocked,
   isActive,
 }: LevelCardProps) {
+  const isComplete = partsCount > 0 && completedCount >= partsCount
+  const progressPct = partsCount > 0 ? (completedCount / partsCount) * 100 : 0
   const cardInner = (
     <div
       className={[
@@ -92,10 +97,29 @@ export default function LevelCard({
         </span>
       </div>
 
+      {/* Progress bar — thin coral fill, completed/total parts (unlocked cards only) */}
+      {!isLocked && partsCount > 0 && (
+        <div className="mt-4">
+          <div
+            role="progressbar"
+            aria-valuenow={completedCount}
+            aria-valuemin={0}
+            aria-valuemax={partsCount}
+            aria-label={`${completedCount} of ${partsCount} parts complete`}
+            className="h-1 w-full rounded-full bg-surface-container-high overflow-hidden"
+          >
+            <div
+              className="h-full rounded-full bg-primary transition-all duration-300"
+              style={{ width: `${progressPct}%` }}
+            />
+          </div>
+        </div>
+      )}
+
       {/* CTA — only shown on unlocked cards */}
       {!isLocked && (
-        <p className="mt-4 font-label text-[13px] text-primary">
-          {isActive ? 'Continue' : 'Start lesson'}
+        <p className="mt-3 font-label text-[13px] text-primary">
+          {isComplete ? 'Completed' : isActive ? 'Continue' : 'Start lesson'}
         </p>
       )}
     </div>

@@ -197,6 +197,9 @@ export default async function LevelPage({
                 title={lesson.title}
                 estimatedMinutes={lesson.estimated_minutes}
                 partsCount={lesson.sub_components?.length ?? 0}
+                completedCount={
+                  (lesson.sub_components ?? []).filter((s) => completedSet.has(s.id)).length
+                }
                 isLocked={isLocked}
                 isActive={lesson.id === activeLessonId}
               />

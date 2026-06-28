@@ -24,7 +24,6 @@ export default function Home() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="bg-surface-container rounded-lg p-8 border border-outline-variant">
-            <p className="font-heading text-2xl text-primary mb-4">«</p>
             <h3 className="font-heading text-xl font-medium text-on-surface mb-3">
               Adaptive from day one
             </h3>
@@ -33,7 +32,6 @@ export default function Home() {
             </p>
           </div>
           <div className="bg-surface-container rounded-lg p-8 border border-outline-variant">
-            <p className="font-heading text-2xl text-primary mb-4">«</p>
             <h3 className="font-heading text-xl font-medium text-on-surface mb-3">
               Grammar that sticks
             </h3>
@@ -42,7 +40,6 @@ export default function Home() {
             </p>
           </div>
           <div className="bg-surface-container rounded-lg p-8 border border-outline-variant">
-            <p className="font-heading text-2xl text-primary mb-4">«</p>
             <h3 className="font-heading text-xl font-medium text-on-surface mb-3">
               One focused session
             </h3>
@@ -56,7 +53,6 @@ export default function Home() {
       {/* Mission teaser */}
       <section className="bg-surface-container-low py-20">
         <div className="max-w-[720px] mx-auto px-5 md:px-6 text-center">
-          <p className="font-heading text-4xl text-primary mb-6">«»</p>
           <h2 className="font-heading text-2xl font-semibold text-on-surface mb-6">
             Built for students who deserve better tools
           </h2>
@@ -70,14 +66,6 @@ export default function Home() {
           </a>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="border-t border-outline-variant py-8">
-        <div className="max-w-[1040px] mx-auto px-5 md:px-6 flex justify-between items-center">
-          <span className="font-heading text-sm text-on-surface-variant">Frenchly</span>
-          <span className="font-label text-xs text-on-surface-variant">© 2026</span>
-        </div>
-      </footer>
     </div>
   );
 }
