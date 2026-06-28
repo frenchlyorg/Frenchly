@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: 09-02
-status: Phase 09 in progress — 09-02 complete (accordion lesson layout + post-lesson loading bar)
-stopped_at: 09-02 complete. Accordion layout on SubComponentItem. PostLessonBar with 1.5s coral fill + navigation. levelSlug threaded from lesson page.
-last_updated: "2026-06-28T14:20:10Z"
+current_plan: 09-03
+status: Phase 09 complete — UX polish & performance (Lighthouse 91 perf / 98 a11y / CLS 0)
+stopped_at: Phase 9 done. 09-01/02/03 complete. Lighthouse passed. Plus session UX polish (spinners, footer, email reset, level-card progress bars, home-page cleanup).
+last_updated: "2026-06-28T20:00:00Z"
 progress:
   total_phases: 12
-  completed_phases: 8
-  total_plans: 30
-  completed_plans: 30
-  percent: 69
+  completed_phases: 9
+  total_plans: 31
+  completed_plans: 31
+  percent: 75
 ---
 
 # Frenchly — Project State
@@ -29,9 +29,9 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Current Status
 
 **Milestone:** v1.0
-**Phases complete:** 8 / 12
-**Current plan:** 09-01
-**Last action:** 09-02 complete — accordion shell on SubComponentItem (header button + collapsible max-height region), PostLessonBar (fixed coral fill 1.5s + router.push), accordion state + auto-advance in SubComponentList, levelSlug threaded from lesson page. Build clean. 18 test suites pass. See 09-02-SUMMARY.md.
+**Phases complete:** 9 / 12
+**Current plan:** 09-03
+**Last action:** Phase 9 complete. 09-03 Lighthouse audit passed (mobile level page): Performance 91, Accessibility 98, CLS 0, LCP 3.3s (framework default, not Phase 9). Plus session UX polish: action-button spinners, global footer, email password-reset flow (/forgot-password), active-lesson dot (replaced « guillemet), level-card progress bars + "Completed" state, explainer dash→check, home-page guillemet/footer cleanup. See 09-03-SUMMARY.md.
 
 ---
 
@@ -47,7 +47,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 | 6 | AI Writing Checker | complete ✓ | 4/4 done |
 | 7 | French 1 Content | complete ✓ | 2/2 done (07-01 ✓, 07-02 ✓); UAT passed 2026-06-27 |
 | 8 | French 2 Content | complete ✓ | 1/1 done (08-01 ✓); UAT passed 2026-06-28 |
-| 9 | UX Polish & Performance | in_progress | 09-01 ✓, 09-02 ✓ |
+| 9 | UX Polish & Performance | complete ✓ | 3/3 done (09-01 ✓, 09-02 ✓, 09-03 ✓); Lighthouse passed 2026-06-28 |
 | 10 | Security & Quality | not_started | — |
 | 11 | Pages & Navigation | not_started | — |
 | 12 | Deployment & Launch | not_started | — |
