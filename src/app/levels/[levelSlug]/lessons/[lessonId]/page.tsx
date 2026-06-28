@@ -170,6 +170,7 @@ export default async function LessonPage({
         <SubComponentList
           subComponents={subComponents}
           initialCompletedIds={completedIds}
+          levelSlug={levelSlug}
         />
       </div>
     </main>

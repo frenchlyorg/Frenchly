@@ -1,14 +1,21 @@
 'use client'
 
 /**
- * SubComponentList — optimistic lesson progress list.
+ * SubComponentList — optimistic lesson progress list with accordion layout.
  *
- * UI-SPEC refs: §Component Inventory — SubComponentList; §Interaction Contracts — mark complete toggle.
+ * UI-SPEC refs: §Component Inventory — SubComponentList, PostLessonBar, AccordionShell;
+ *               §Interaction Contracts — D-AC, D-PL; §Color — Post-lesson Loading Bar, Accordion.
  * Pattern: useOptimistic + startTransition (RESEARCH Pattern 3; Pitfall 1 — setter MUST be inside startTransition).
- * revalidatePath in the Server Action syncs ground-truth after transition (Pitfall 2 guard).
+ * Phase 9: openId state drives one-open-at-a-time accordion (D-AC-06).
+ *          PostLessonBar fires when allDone becomes true (D-PL-01).
+ *          levelSlug prop required for router.push navigation (RESEARCH §Pitfall 5).
+ * Pitfall guards: RAF before setBarWidth(100) for CSS transition (RESEARCH §Pitfall 2);
+ *                 navigatedRef prevents double-fire in StrictMode (RESEARCH §Pitfall 3);
+ *                 openId is useState — NOT derived — to prevent reset on optimistic update (§Pitfall 6).
  */
 
-import { useOptimistic, useTransition, useState } from 'react'
+import { useOptimistic, useTransition, useState, useEffect, useRef, useMemo } from 'react'
+import { useRouter } from 'next/navigation'
 import { markSubComponentComplete } from '@/app/lessons/actions'
 import SubComponentItem from './SubComponentItem'
 import type { ProblemData } from '@/lib/practice/types'
@@ -29,11 +36,13 @@ interface SubComponentData {
 interface SubComponentListProps {
   subComponents: SubComponentData[]
   initialCompletedIds: string[]
+  levelSlug: string
 }
 
 export default function SubComponentList({
   subComponents,
   initialCompletedIds,
+  levelSlug,
 }: SubComponentListProps) {
   const [, startTransition] = useTransition()
   const [saveError, setSaveError] = useState<string | null>(null)
@@ -44,11 +53,72 @@ export default function SubComponentList({
     (current: Set<string>, id: string) => new Set([...current, id])
   )
 
+  // Accordion open state — must be useState (NOT derived) to prevent reset on optimistic update
+  // (RESEARCH §Pitfall 6). Initialised with first sub-component open (D-AC-02).
+  const [openId, setOpenId] = useState<string | null>(
+    subComponents.length > 0 ? subComponents[0].id : null
+  )
+
+  // Post-lesson bar state
+  const router = useRouter()
+  const [barWidth, setBarWidth] = useState(0)
+  const navigatedRef = useRef(false)
+
+  // Stable random message — chosen once on mount, does not change during fill animation (D-PL-04)
+  const message = useMemo(() => {
+    const pool = [
+      'Well done! Loading your next lesson.',
+      'Nice job! Returning to your lessons.',
+      'Lesson complete. Keep up the momentum.',
+      'Très bien! Back to your level.',
+      'Great work. Heading to your next lesson.',
+    ]
+    return pool[Math.floor(Math.random() * pool.length)]
+  }, [])
+
+  const total = subComponents.length
+  const completedCount = subComponents.filter((sc) => completedIds.has(sc.id)).length
+  const allDone = total > 0 && completedCount === total
+
+  // Post-lesson bar effect — fires when allDone becomes true (D-PL-01 through D-PL-07)
+  useEffect(() => {
+    if (!allDone) return
+    if (navigatedRef.current) return // StrictMode double-fire guard (RESEARCH §Pitfall 3)
+
+    // RAF defers setBarWidth(100) by one frame so CSS transition fires from 0→100
+    // (RESEARCH §Pitfall 2 — without RAF, browser renders 0→100 synchronously = no animation)
+    const rafId = requestAnimationFrame(() => {
+      setBarWidth(100)
+    })
+
+    const timerId = setTimeout(() => {
+      if (navigatedRef.current) return
+      navigatedRef.current = true
+      router.push(`/levels/${levelSlug}`)
+    }, 1500)
+
+    return () => {
+      cancelAnimationFrame(rafId)
+      clearTimeout(timerId)
+    }
+  }, [allDone, levelSlug, router])
+
   function handleComplete(id: string) {
     // Already complete → idempotent no-op (T-03-12 double-tap guard in UI layer)
     if (completedIds.has(id)) return
 
     setSaveError(null)
+
+    // Derive next incomplete item BEFORE the optimistic update (RESEARCH §Pitfall 6 — must be
+    // synchronous, outside startTransition, so openId doesn't reset on re-render).
+    const sorted = [...subComponents].sort((a, b) => a.position - b.position)
+    const currentIndex = sorted.findIndex((sc) => sc.id === id)
+    const nextIncomplete = sorted
+      .slice(currentIndex + 1)
+      .find((sc) => !completedIds.has(sc.id) && sc.id !== id)
+
+    // Auto-advance: open next incomplete item, or close all (post-lesson bar will appear) (D-AC-03)
+    setOpenId(nextIncomplete?.id ?? null)
 
     // CRITICAL: setOptimisticCompleted MUST be inside startTransition (Pitfall 1)
     startTransition(async () => {
@@ -62,10 +132,6 @@ export default function SubComponentList({
     })
   }
 
-  const total = subComponents.length
-  const completedCount = subComponents.filter((sc) => completedIds.has(sc.id)).length
-  const allDone = total > 0 && completedCount === total
-
   // Empty list copy (UI-SPEC §Copywriting Contract)
   if (total === 0) {
     return (
@@ -77,6 +143,32 @@ export default function SubComponentList({
 
   return (
     <div>
+      {/* Post-lesson loading bar — fixed top-0, 4px coral fill, fills over 1500ms then navigates
+          (D-PL-02 through D-PL-07). Replaces the old static "Lesson complete" card (D-PL-07). */}
+      {allDone && (
+        <div
+          className="fixed top-0 left-0 right-0 z-50"
+          role="progressbar"
+          aria-valuenow={barWidth}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="Loading next lesson"
+        >
+          {/* Track — warm bone tone, full viewport width */}
+          <div className="h-1 w-full bg-surface-container-high">
+            {/* Fill — coral primary, CSS width transition (D-PL-06) */}
+            <div
+              className="h-full bg-primary transition-all duration-[1500ms] ease-in-out motion-reduce:transition-none"
+              style={{ width: `${barWidth}%` }}
+            />
+          </div>
+          {/* Message — sentence case, font-label, on-surface-variant (D-PL-04, D-PL-05) */}
+          <p className="mt-2 text-center font-label text-[13px] text-on-surface-variant">
+            {message}
+          </p>
+        </div>
+      )}
+
       {/* Progress bar — thin 4px bar, primary fill, no circular rings (DESIGN.md) */}
       <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
@@ -106,7 +198,7 @@ export default function SubComponentList({
         </p>
       )}
 
-      {/* Sub-component list — gap-8px between items (UI-SPEC §Spacing sm=8px) */}
+      {/* Sub-component list — accordion, gap-8px between items (UI-SPEC §Spacing sm=8px) */}
       <ul className="flex flex-col gap-2" aria-label="Lesson parts">
         {subComponents.map((sc) => (
           <li key={sc.id} className="border-b border-outline-variant last:border-b-0">
@@ -120,22 +212,12 @@ export default function SubComponentList({
               problemData={sc.problemData}
               initialFeedback={sc.initialFeedback}
               initialSubmissionText={sc.initialSubmissionText}
+              isOpen={openId === sc.id}
+              onToggle={() => setOpenId(openId === sc.id ? null : sc.id)}
             />
           </li>
         ))}
       </ul>
-
-      {/* Lesson complete state — shown when all sub-components done (UI-SPEC §Copywriting) */}
-      {allDone && (
-        <div className="mt-8 p-6 rounded-[16px] bg-surface-container-low border border-outline-variant">
-          <h2 className="font-heading text-[24px] font-semibold text-on-surface mb-2">
-            Lesson complete
-          </h2>
-          <p className="font-body text-[16px] text-on-surface-variant">
-            Head back to French 1 to choose your next lesson.
-          </p>
-        </div>
-      )}
     </div>
   )
 }
