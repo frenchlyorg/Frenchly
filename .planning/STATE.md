@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: 08-01
-status: Phase 08 complete — French 2 content seeded (10 lessons, 40 sub-components)
-stopped_at: Phase 08 complete. Next phase is Phase 09 (UX Polish & Performance).
-last_updated: "2026-06-28T00:15:00.000Z"
+current_plan: 09-01
+status: Phase 09 in progress — 09-01 complete (skeleton loaders + guillemet active marker)
+stopped_at: 09-01 complete. Five loading.tsx skeletons created; activeLessonId wired to LevelCard.isActive. Build clean.
+last_updated: "2026-06-28T15:00:00.000Z"
 progress:
   total_phases: 12
   completed_phases: 8
-  total_plans: 27
-  completed_plans: 27
-  percent: 67
+  total_plans: 30
+  completed_plans: 29
+  percent: 70
 ---
 
 # Frenchly — Project State
@@ -30,8 +30,8 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Milestone:** v1.0
 **Phases complete:** 8 / 12
-**Current plan:** 08-01
-**Last action:** Phase 08 complete — all 10 French 2 lessons seeded in Supabase, UAT passed (lesson_count=10, sub_component_count=40, all 5 problem types present, writing_with_hints=10). See 08-01-SUMMARY.md.
+**Current plan:** 09-01
+**Last action:** 09-01 complete — five loading.tsx skeleton loaders (level, lesson, dashboard, placement, end-of-level diagnostics) + activeLessonId IIFE wired to LevelCard.isActive on level page. Build clean. See 09-01-SUMMARY.md.
 
 ---
 
@@ -47,7 +47,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 | 6 | AI Writing Checker | complete ✓ | 4/4 done |
 | 7 | French 1 Content | complete ✓ | 2/2 done (07-01 ✓, 07-02 ✓); UAT passed 2026-06-27 |
 | 8 | French 2 Content | complete ✓ | 1/1 done (08-01 ✓); UAT passed 2026-06-28 |
-| 9 | UX Polish & Performance | not_started | — |
+| 9 | UX Polish & Performance | in_progress | 09-01 ✓ |
 | 10 | Security & Quality | not_started | — |
 | 11 | Pages & Navigation | not_started | — |
 | 12 | Deployment & Launch | not_started | — |
@@ -84,5 +84,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** Phase 08 complete. French 2 has 10 lessons fully seeded and UAT verified.
-**Next step:** `/gsd:discuss-phase 9` or `/gsd:plan-phase 9` to begin UX Polish & Performance.
+**Stopped at:** 09-01 complete. Skeleton loaders on all 5 routes. Guillemet active marker live on level page.
+**Next step:** Continue Phase 9 — run `/gsd:execute-phase 9` for 09-02 (post-lesson loading bar + accordion).
