@@ -1,0 +1,54 @@
+'use client'
+
+/**
+ * ErrorCard — shared warm full-page error/404 card primitive.
+ *
+ * Consumed by src/app/error.tsx, global-error.tsx, and not-found.tsx.
+ * Mirrors the DiagnosticGate warm-card layout exactly (CONTEXT.md canonical ref).
+ *
+ * Action is a discriminated union:
+ *   - { label, onClick } → reset button (client error boundary)
+ *   - { label, href }    → navigation link via LinkButton (not-found / 404)
+ *
+ * Design tokens: bg-background, bg-surface-container-low, text-on-surface,
+ * text-on-surface-variant, bg-primary — all from DESIGN.md (no ad-hoc hex, no green).
+ */
+import LinkButton from '@/components/ui/LinkButton'
+
+interface ErrorCardProps {
+  heading: string
+  body: string
+  action:
+    | { label: string; onClick: () => void; href?: never }
+    | { label: string; href: string; onClick?: never }
+}
+
+const buttonClass =
+  'mt-8 inline-flex items-center justify-center min-h-[44px] rounded-[8px] bg-primary px-6 py-3 font-label font-semibold text-white hover:bg-primary/90 disabled:opacity-70 disabled:cursor-wait'
+
+export default function ErrorCard({ heading, body, action }: ErrorCardProps) {
+  return (
+    <main className="min-h-screen w-full overflow-x-hidden bg-background">
+      <div className="mx-auto max-w-[480px] px-5 py-20">
+        <div className="rounded-[16px] bg-surface-container-low p-8 text-center">
+          <h1 className="font-heading text-[28px] font-semibold text-on-surface">{heading}</h1>
+          <p className="mt-4 font-body text-[16px] leading-7 text-on-surface-variant">{body}</p>
+          {action.href ? (
+            <LinkButton href={action.href} ariaLabel={action.label} className={buttonClass}>
+              {action.label}
+            </LinkButton>
+          ) : (
+            <button
+              type="button"
+              onClick={action.onClick}
+              aria-label={action.label}
+              className={buttonClass}
+            >
+              {action.label}
+            </button>
+          )}
+        </div>
+      </div>
+    </main>
+  )
+}
