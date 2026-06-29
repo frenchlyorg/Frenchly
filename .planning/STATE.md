@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: 09-03
-status: Phase 09 complete — UX polish & performance (Lighthouse 91 perf / 98 a11y / CLS 0)
-stopped_at: Phase 9 done. 09-01/02/03 complete. Lighthouse passed. Plus session UX polish (spinners, footer, email reset, level-card progress bars, home-page cleanup).
-last_updated: "2026-06-28T20:00:00Z"
+current_plan: 10-02
+status: Phase 10 executing — Wave 1 complete (10-01 ✓, 10-03 ✓); Wave 2 ready (10-02 error boundaries + 404)
+stopped_at: Phase 10 Wave 1 merged. ErrorCard built, Dependabot configured, API hardened (10-01); SEC-05 test suite verified green 156/156 (10-03). Wave 2: 10-02 error.tsx/global-error.tsx/not-found.tsx with human checkpoint.
+last_updated: "2026-06-28T21:30:00Z"
 progress:
   total_phases: 12
   completed_phases: 9
-  total_plans: 31
-  completed_plans: 31
-  percent: 75
+  total_plans: 34
+  completed_plans: 33
+  percent: 83
 ---
 
 # Frenchly — Project State
@@ -30,8 +30,8 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Milestone:** v1.0
 **Phases complete:** 9 / 12
-**Current plan:** 09-03
-**Last action:** Phase 9 complete. 09-03 Lighthouse audit passed (mobile level page): Performance 91, Accessibility 98, CLS 0, LCP 3.3s (framework default, not Phase 9). Plus session UX polish: action-button spinners, global footer, email password-reset flow (/forgot-password), active-lesson dot (replaced « guillemet), level-card progress bars + "Completed" state, explainer dash→check, home-page guillemet/footer cleanup. See 09-03-SUMMARY.md.
+**Current plan:** 10-02
+**Last action:** Phase 10 Wave 1 complete. 10-01: ErrorCard component (discriminated-union action prop), Dependabot weekly-grouped npm config (SEC-08), check-writing API hardened (stripped Zod field-detail leak → friendly 400). 10-03: SEC-05 verified — all 3 paths green, watermark-advance assertion confirmed at diagnostic/actions.test.ts lines 158-160 and 249-251. 156 tests passing. Wave 2: 10-02 next.
 
 ---
 
@@ -48,7 +48,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 | 7 | French 1 Content | complete ✓ | 2/2 done (07-01 ✓, 07-02 ✓); UAT passed 2026-06-27 |
 | 8 | French 2 Content | complete ✓ | 1/1 done (08-01 ✓); UAT passed 2026-06-28 |
 | 9 | UX Polish & Performance | complete ✓ | 3/3 done (09-01 ✓, 09-02 ✓, 09-03 ✓); Lighthouse passed 2026-06-28 |
-| 10 | Security & Quality | not_started | — |
+| 10 | Security & Quality | in_progress | 2/3 done (10-01 ✓, 10-03 ✓; 10-02 pending) |
 | 11 | Pages & Navigation | not_started | — |
 | 12 | Deployment & Launch | not_started | — |
 
@@ -84,5 +84,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** Phase 10 context gathered (10-CONTEXT.md). Phase 9 complete. Decisions locked: full-page error card, branded 404, Dependabot grouped-weekly/manual, malformed-input 400s.
-**Next step:** `/clear` then `/gsd:plan-phase 10` to plan Security & Quality.
+**Stopped at:** Phase 10 Wave 1 merged. 10-01 (ErrorCard + Dependabot + API hardening) and 10-03 (SEC-05 test verification) complete. Tests green 156/156. Wave 2 ready: 10-02 builds error.tsx / global-error.tsx / not-found.tsx — has a human checkpoint (visual verify 404 + error card).
+**Next step:** Execute 10-02 (Wave 2).

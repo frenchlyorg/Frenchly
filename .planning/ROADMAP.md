@@ -291,8 +291,8 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 10-01-PLAN.md — Shared ErrorCard component + Dependabot npm config (SEC-08) + API input-validation & SQL audit (D-09/D-10/D-11)
-- [ ] 10-03-PLAN.md — Verify SEC-05 three-path test suite (login, save-progress, diagnostic-unlock) + watermark-advance assertion
+- [x] 10-01-PLAN.md — Shared ErrorCard component + Dependabot npm config (SEC-08) + API input-validation & SQL audit (D-09/D-10/D-11)
+- [x] 10-03-PLAN.md — Verify SEC-05 three-path test suite (login, save-progress, diagnostic-unlock) + watermark-advance assertion
 
 **Wave 2** *(blocked on 10-01 — consumes ErrorCard)*
 
