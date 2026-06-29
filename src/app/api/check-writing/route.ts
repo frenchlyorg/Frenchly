@@ -343,8 +343,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   const parsed = RequestSchema.safeParse(rawBody)
   if (!parsed.success) {
+    // D-09/D-11: return a single friendly message — never leak Zod field details
     return NextResponse.json(
-      { error: 'Invalid request body', details: parsed.error.flatten() },
+      { error: "That didn't look right — try again." },
       { status: 400 }
     )
   }
