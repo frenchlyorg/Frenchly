@@ -47,6 +47,12 @@ export function Nav({ username }: NavProps) {
           >
             Mission
           </Link>
+          <Link
+            href="/contact"
+            className="text-on-surface-variant hover:text-on-surface text-sm transition-colors"
+          >
+            Contact
+          </Link>
 
           {username ? (
             <>
@@ -141,6 +147,13 @@ export function Nav({ username }: NavProps) {
             onClick={() => setIsOpen(false)}
           >
             Mission
+          </Link>
+          <Link
+            href="/contact"
+            className="block px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container text-sm"
+            onClick={() => setIsOpen(false)}
+          >
+            Contact
           </Link>
 
           {username ? (
