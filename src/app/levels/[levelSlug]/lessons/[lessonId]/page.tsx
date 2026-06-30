@@ -13,7 +13,7 @@
  * CLAUDE.md: lesson content max-width = 720px (NOT 1040px).
  */
 
-import { redirect } from 'next/navigation'
+import { redirect, notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import SubComponentList from '@/components/lessons/SubComponentList'
 import Link from 'next/link'
@@ -77,16 +77,8 @@ export default async function LessonPage({
     .order('position', { referencedTable: 'sub_components' })
     .single<LessonRow>()
 
-  // Unknown lesson id → not-found state
-  if (!lesson) {
-    return (
-      <main className="min-h-screen bg-background">
-        <div className="max-w-[720px] mx-auto px-5 md:px-6 py-12">
-          <p className="font-body text-on-surface-variant">Lesson not found.</p>
-        </div>
-      </main>
-    )
-  }
+  // Unknown lesson id → branded 404
+  if (!lesson) notFound()
 
   // Parse practice/writing problem JSON server-side so client components receive typed ProblemData.
   // parseProblemContent never throws — returns null for explainer kind or invalid JSON.

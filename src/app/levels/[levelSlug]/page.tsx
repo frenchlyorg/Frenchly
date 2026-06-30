@@ -11,7 +11,7 @@
  * UI-SPEC refs: §Layout Contracts — Level Page; §Copywriting Contract.
  * Container: max-w-[1040px] (dashboard container width, DESIGN.md + CLAUDE.md).
  */
-import { redirect } from 'next/navigation'
+import { redirect, notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { deriveIsLevelLocked } from '@/lib/lessons/locking'
 import { deriveAllLessonsComplete } from '@/lib/diagnostics/gating'
@@ -118,16 +118,8 @@ export default async function LevelPage({
       })
     : false
 
-  // Unknown slug → not-found state
-  if (!level) {
-    return (
-      <main className="min-h-screen bg-background">
-        <div className="max-w-[1040px] mx-auto px-5 md:px-6 py-20">
-          <p className="font-body text-on-surface-variant">Level not found.</p>
-        </div>
-      </main>
-    )
-  }
+  // Unknown slug → branded 404
+  if (!level) notFound()
 
   const lessons = level.lessons ?? []
 
