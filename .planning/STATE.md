@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: 11-01
-status: Phase 11 planned — 2 plans verified PASSED by plan-checker. Ready to execute.
-stopped_at: Phase 11 plans created and verified (11-01, 11-02). 2 parallel Wave 1 plans. Checker PASSED all 12 dimensions. Research, VALIDATION.md, PATTERNS.md all committed.
-last_updated: "2026-06-30T22:55:00.000Z"
+current_plan: 12-discuss
+status: Phase 11 complete — Pages & Navigation executed and verified. Ready for Phase 12 (Deployment & Launch).
+stopped_at: "Phase 11 executed. 11-01: home CTA enabled (/signup), /contact page created, Contact nav link (desktop + mobile). 11-02: dashboard placeholder replaced with Supabase-backed level card, bg-primary progress bar (ARIA), Continue CTA. tsc clean, 156/156 tests passing."
+last_updated: "2026-06-30T23:02:00.000Z"
 progress:
   total_phases: 12
-  completed_phases: 10
-  total_plans: 35
-  completed_plans: 33
-  percent: 83
+  completed_phases: 11
+  total_plans: 37
+  completed_plans: 35
+  percent: 92
 ---
 
 # Frenchly — Project State
@@ -22,16 +22,16 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Core value:** Get a first-time visitor to create an account so they never lose their progress — then keep them coming back through adaptive lessons and honest motivation features.
 **Current milestone:** v1.0 — Foundation & Core Product
-**Current focus:** Phase 08 — french-2-content
+**Current focus:** Phase 12 — Deployment & Launch
 
 ---
 
 ## Current Status
 
 **Milestone:** v1.0
-**Phases complete:** 9 / 12
+**Phases complete:** 11 / 12
 **Current plan:** 11-discuss
-**Last action:** Phase 10 (Security & Quality) complete and verified PASS. 10-01: ErrorCard component, Dependabot config (SEC-08), check-writing API hardened. 10-02: error.tsx/global-error.tsx/not-found.tsx with branded ErrorCard, level/lesson pages wired to notFound() — human checkpoint approved via screenshot verification. 10-03: SEC-05 three-path test suite verified green. All 5 phase success criteria confirmed in 10-VERIFICATION.md. 156/156 tests passing, tsc clean.
+**Last action:** Phase 11 (Pages & Navigation) complete. 11-01: home CTA enabled (Link→/signup, DisabledCTA removed), static /contact page created (mailto:frenchlyorg@gmail.com), Contact nav link added desktop + mobile outside auth conditional. 11-02: dashboard placeholder replaced with real Supabase data — level card, bg-primary progress bar (ARIA), Continue CTA to first incomplete lesson. 156/156 tests, tsc clean.
 
 ---
 
@@ -49,7 +49,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 | 8 | French 2 Content | complete ✓ | 1/1 done (08-01 ✓); UAT passed 2026-06-28 |
 | 9 | UX Polish & Performance | complete ✓ | 3/3 done (09-01 ✓, 09-02 ✓, 09-03 ✓); Lighthouse passed 2026-06-28 |
 | 10 | Security & Quality | complete ✓ | 3/3 done (10-01 ✓, 10-02 ✓, 10-03 ✓); verified PASS 2026-06-30 |
-| 11 | Pages & Navigation | planned | 2 plans ready (11-01 ✓, 11-02 ✓) |
+| 11 | Pages & Navigation | complete ✓ | 2/2 done (11-01 ✓, 11-02 ✓) |
 | 12 | Deployment & Launch | not_started | — |
 
 ---
@@ -84,5 +84,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** Phase 11 fully planned. 2 Wave 1 plans (11-01: home CTA + contact page + nav link; 11-02: dashboard real data). Plan-checker PASSED. Ready to execute.
-**Next step:** `/gsd:execute-phase 11` — Pages & Navigation.
+**Stopped at:** Phase 11 complete. All deliverables shipped, 156/156 tests green.
+**Next step:** `/gsd:discuss-phase 12` — Deployment & Launch (Vercel deploy, frenchly.org DNS, production env setup).
