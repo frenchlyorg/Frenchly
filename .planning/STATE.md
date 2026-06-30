@@ -2,7 +2,7 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: 12-discuss
+current_plan: 12-01
 status: Phase 11 complete — Pages & Navigation executed and verified. Ready for Phase 12 (Deployment & Launch).
 stopped_at: "Phase 11 executed. 11-01: home CTA enabled (/signup), /contact page created, Contact nav link (desktop + mobile). 11-02: dashboard placeholder replaced with Supabase-backed level card, bg-primary progress bar (ARIA), Continue CTA. tsc clean, 156/156 tests passing."
 last_updated: "2026-06-30T23:02:00.000Z"
@@ -84,5 +84,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** Phase 12 context gathered. Decisions locked: Resend SMTP (noreply@frenchly.org), branded-minimal email templates, configure-before-DNS deploy order, same Supabase project to Pro, Vercel-only monitoring.
-**Next step:** `/gsd:plan-phase 12` — Deployment & Launch.
+**Stopped at:** Phase 12 planned. 12-01-PLAN.md created — 12-step deployment runbook (Supabase Pro → env vars → Resend → IONOS DNS → SMTP → Auth URLs → email confirm → templates → smoke test → DNS verify → prod smoke test → billing alerts). Plan checker PASS.
+**Next step:** `/gsd:execute-phase 12` — run the deployment runbook.
