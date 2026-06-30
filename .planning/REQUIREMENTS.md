@@ -60,13 +60,13 @@
 
 ### Pages & Navigation
 
-- [ ] **PAGE-01**: Home page communicates the product clearly with a prominent "create account" call to action
-- [ ] **PAGE-02**: Mission page explains the why behind the project
+- [x] **PAGE-01**: Home page communicates the product clearly with a prominent "create account" call to action
+- [x] **PAGE-02**: Mission page explains the why behind the project
 - [ ] **PAGE-03**: French 1 level page (adaptive, diagnostic-gated)
 - [ ] **PAGE-04**: French 2 level page (lesson-heavy, diagnostic-gated)
 - [ ] **PAGE-05**: User dashboard showing progress, current level, and recent activity
 - [ ] **PAGE-06**: Account settings page (profile, password change, account deletion)
-- [ ] **PAGE-07**: Contact/support page using frenchlyorg@gmail.com
+- [x] **PAGE-07**: Contact/support page using frenchlyorg@gmail.com
 
 ### Security & Quality
 

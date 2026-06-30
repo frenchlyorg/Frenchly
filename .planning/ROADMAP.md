@@ -20,7 +20,7 @@
 | 8 | French 2 Content | French 2 lessons + practice problems fully built | CONTENT-02, CONTENT-03 | not_started |
 | 9 | UX Polish & Performance | Skeleton loaders, loading messages, mobile, a11y, school-device perf | UX-04–05, SEC-06–07 | not_started |
 | 10 | Security & Quality | Full security audit, error handling, test suite, dep scanning | SEC-05, SEC-08 | planned (3 plans) |
-| 11 | Pages & Navigation | Home, Mission, Dashboard, Account Settings, Contact | PAGE-01–07 | not_started |
+| 11 | Pages & Navigation | 2/2 | Complete   | 2026-06-30 |
 | 12 | Deployment & Launch | Vercel deploy, domain, Supabase Pro, email service, billing alerts | INFRA-01–04 | not_started |
 
 ---
@@ -314,11 +314,11 @@ Plans:
 6. All pages are linked in a consistent navigation header and/or footer
 7. A logged-out visitor cannot access dashboard or lesson pages (redirect to home/login)
 
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
-- [ ] 11-01-PLAN.md — Enable home CTA (/signup), build static Contact page, add Contact nav link
-- [ ] 11-02-PLAN.md — Wire dashboard with real Supabase progress (level card, progress bar, Continue CTA)
+- [x] 11-01-PLAN.md — Enable home CTA (/signup), build static Contact page, add Contact nav link
+- [x] 11-02-PLAN.md — Wire dashboard with real Supabase progress (level card, progress bar, Continue CTA)
 
 ---
 
