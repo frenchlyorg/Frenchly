@@ -84,5 +84,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** Phase 11 complete. All deliverables shipped, 156/156 tests green.
-**Next step:** `/gsd:discuss-phase 12` — Deployment & Launch (Vercel deploy, frenchly.org DNS, production env setup).
+**Stopped at:** Phase 12 context gathered. Decisions locked: Resend SMTP (noreply@frenchly.org), branded-minimal email templates, configure-before-DNS deploy order, same Supabase project to Pro, Vercel-only monitoring.
+**Next step:** `/gsd:plan-phase 12` — Deployment & Launch.
