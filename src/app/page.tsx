@@ -1,4 +1,5 @@
-import { HeroBackground, DisabledCTA } from "@/components/hero";
+import Link from "next/link";
+import { HeroBackground } from "@/components/hero";
 
 export default function Home() {
   return (
@@ -13,7 +14,12 @@ export default function Home() {
           <p className="font-body text-lg text-on-surface-variant mb-8 max-w-[560px] leading-relaxed">
             Adaptive lessons for high school students who want to speak, not just pass.
           </p>
-          <DisabledCTA />
+          <Link
+            href="/signup"
+            className="px-6 py-3 bg-primary text-on-primary rounded font-label text-sm hover:bg-primary/90 transition-colors"
+          >
+            Create account
+          </Link>
         </div>
       </section>
 

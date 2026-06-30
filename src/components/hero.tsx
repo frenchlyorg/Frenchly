@@ -106,19 +106,3 @@ export function HeroBackground() {
     </div>
   );
 }
-
-export function DisabledCTA() {
-  return (
-    <div className="relative group inline-block">
-      <button
-        disabled
-        className="px-6 py-3 bg-primary text-on-primary rounded font-label text-sm opacity-60 cursor-not-allowed"
-      >
-        Create account
-      </button>
-      <span className="absolute -top-9 left-1/2 -translate-x-1/2 bg-on-surface text-surface text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-        Coming soon
-      </span>
-    </div>
-  );
-}
