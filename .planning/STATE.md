@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 current_plan: 11-discuss
-status: Phase 10 complete — all 3 plans done, verified PASS (10-VERIFICATION.md). Ready for Phase 11 (Pages & Navigation).
-stopped_at: Phase 10 fully verified. error.tsx/global-error.tsx/not-found.tsx checkpoint approved (screenshots confirmed warm palette, no green, working links). Regression gate clean (tsc + 156/156 tests). All 5 phase success criteria PASS.
-last_updated: "2026-06-30T16:12:00-04:00"
+status: Phase 11 discuss-phase complete — 11-CONTEXT.md written (commit 1e59d88). Ready to plan.
+stopped_at: 4 gray areas resolved in discussion — home CTA (/signup link), dashboard real data (level card + progress bar + lesson list), contact page (static mailto), nav (add Contact link). All decisions in 11-CONTEXT.md.
+last_updated: "2026-06-30T20:50:00.000Z"
 progress:
   total_phases: 12
   completed_phases: 10
-  total_plans: 34
-  completed_plans: 34
-  percent: 92
+  total_plans: 33
+  completed_plans: 33
+  percent: 83
 ---
 
 # Frenchly — Project State
@@ -84,5 +84,5 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 ## Session Continuity
 
 **To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** Phase 10 (Security & Quality) complete — all 3 plans done, verified PASS. Tests green 156/156, tsc clean.
-**Next step:** `/gsd:discuss-phase 11` — Pages & Navigation.
+**Stopped at:** Phase 11 discuss-phase complete. 4 decisions locked in 11-CONTEXT.md: home CTA → /signup, dashboard → real level/progress/lesson data, contact → static mailto page, nav → add Contact link.
+**Next step:** `/gsd:plan-phase 11` — Pages & Navigation.
