@@ -314,6 +314,12 @@ Plans:
 6. All pages are linked in a consistent navigation header and/or footer
 7. A logged-out visitor cannot access dashboard or lesson pages (redirect to home/login)
 
+**Plans:** 2 plans
+
+Plans:
+- [ ] 11-01-PLAN.md — Enable home CTA (/signup), build static Contact page, add Contact nav link
+- [ ] 11-02-PLAN.md — Wire dashboard with real Supabase progress (level card, progress bar, Continue CTA)
+
 ---
 
 ### Phase 12: Deployment & Launch
