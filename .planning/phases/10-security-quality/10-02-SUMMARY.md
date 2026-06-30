@@ -1,9 +1,9 @@
 ---
 plan: 10-02
 phase: 10-security-quality
-status: checkpoint
-completed_tasks: 2/3
-checkpoint_task: 3 (human-verify)
+status: complete
+completed_tasks: 3/3
+checkpoint_task: 3 (human-verify) — approved
 ---
 
 # Plan 10-02 Summary — Error Boundaries + Branded 404
@@ -27,5 +27,11 @@ checkpoint_task: 3 (human-verify)
 - `npx tsc --noEmit` — clean for all modified files
 - `npm run build` — completed without error; `/_not-found` route emitted
 
-## Awaiting Human Checkpoint
-See verification instructions below.
+## Human Checkpoint — Approved
+
+Verified in `next dev` via browser screenshots:
+- `/this-does-not-exist` → branded 404 (cream bg, coral button, no green)
+- `/levels/nonexistent-slug` → branded 404, same card
+- "Back to dashboard" link → routes to `/dashboard` correctly
+
+Production-only paths (`error.tsx`, `global-error.tsx`) not re-verified visually this session — covered by `npm run build` passing in Task 1/2 build verification.

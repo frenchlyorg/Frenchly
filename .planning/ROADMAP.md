@@ -296,7 +296,7 @@ Plans:
 
 **Wave 2** *(blocked on 10-01 — consumes ErrorCard)*
 
-- [ ] 10-02-PLAN.md — error.tsx + global-error.tsx + branded not-found.tsx; wire inline level/lesson not-found pages to notFound() (D-01–D-05)
+- [x] 10-02-PLAN.md — error.tsx + global-error.tsx + branded not-found.tsx; wire inline level/lesson not-found pages to notFound() (D-01–D-05)
 
 ---
 
