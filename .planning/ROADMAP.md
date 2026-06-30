@@ -326,6 +326,12 @@ Plans:
 
 **Goal:** Frenchly is live at frenchly.org with Supabase Pro active, email service configured, all billing alerts set, and the product ready for real students.
 **Requirements:** INFRA-01, INFRA-02, INFRA-03, INFRA-04
+**Plans:** 1 plan
+
+Plans:
+
+- [ ] 12-01-PLAN.md — Complete deployment runbook: Supabase Pro, Vercel env vars, Resend SMTP, IONOS DNS, Auth config, email templates, smoke tests, billing alerts
+
 **Success Criteria:**
 
 1. frenchly.org loads the production app over HTTPS (Vercel auto-TLS)
