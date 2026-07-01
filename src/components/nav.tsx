@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, Megaphone } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 import { signOut } from "@/app/auth/actions";
 
@@ -10,15 +10,38 @@ interface NavProps {
   username: string | null;
 }
 
+const ANNOUNCEMENTS = [
+  {
+    date: "Jul 2, 2026",
+    title: "v1 (BETA) deployed",
+    body: "Frenchly is live on frenchly.org. French 1 and French 2 are available.",
+  },
+  {
+    date: "Jun 27, 2026",
+    title: "Domain secured",
+    body: "frenchly.org purchased and registered.",
+  },
+  {
+    date: "Jun 20, 2026",
+    title: "Frenchly founded",
+    body: "The first conversation that started it all — a minimalist French-learning platform for high school students.",
+  },
+];
+
 export function Nav({ username }: NavProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
+  const [announcementsOpen, setAnnouncementsOpen] = useState(false);
   const accountRef = useRef<HTMLDivElement>(null);
+  const announcementsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (accountRef.current && !accountRef.current.contains(e.target as Node)) {
         setAccountOpen(false);
+      }
+      if (announcementsRef.current && !announcementsRef.current.contains(e.target as Node)) {
+        setAnnouncementsOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -118,6 +141,33 @@ export function Nav({ username }: NavProps) {
             </Link>
           )}
 
+          {/* Announcements */}
+          <div className="relative" ref={announcementsRef}>
+            <button
+              onClick={() => setAnnouncementsOpen(!announcementsOpen)}
+              aria-label="Announcements"
+              aria-expanded={announcementsOpen}
+              className="p-1.5 rounded text-on-surface-variant hover:text-on-surface transition-colors"
+            >
+              <Megaphone size={15} />
+            </button>
+
+            {announcementsOpen && (
+              <div className="absolute right-0 top-full mt-2 w-72 bg-surface border border-outline-variant rounded-[12px] shadow-md z-50">
+                <p className="px-4 py-2.5 text-xs font-label font-semibold text-on-surface-variant border-b border-outline-variant">
+                  Announcements
+                </p>
+                {ANNOUNCEMENTS.map((a) => (
+                  <div key={a.date} className="px-4 py-3 border-b border-outline-variant last:border-0">
+                    <p className="text-[11px] font-label text-on-surface-variant">{a.date}</p>
+                    <p className="text-sm font-label text-on-surface mt-0.5">{a.title}</p>
+                    <p className="text-xs font-body text-on-surface-variant mt-1 leading-relaxed">{a.body}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
           <ThemeToggle />
         </div>
 
@@ -201,6 +251,21 @@ export function Nav({ username }: NavProps) {
               Log in
             </Link>
           )}
+
+          {/* Announcements section — mobile */}
+          <div className="border-t border-outline-variant px-6 py-3">
+            <p className="flex items-center gap-1.5 text-xs font-label font-semibold text-on-surface-variant mb-2">
+              <Megaphone size={13} />
+              Announcements
+            </p>
+            {ANNOUNCEMENTS.map((a) => (
+              <div key={a.date} className="py-2 border-b border-outline-variant last:border-0">
+                <p className="text-[11px] font-label text-on-surface-variant">{a.date}</p>
+                <p className="text-sm font-label text-on-surface mt-0.5">{a.title}</p>
+                <p className="text-xs font-body text-on-surface-variant mt-0.5 leading-relaxed">{a.body}</p>
+              </div>
+            ))}
+          </div>
 
           <div className="px-4 py-3 border-t border-outline-variant">
             <ThemeToggle />
