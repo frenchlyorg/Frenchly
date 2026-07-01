@@ -13,6 +13,7 @@
  */
 import { redirect, notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { minDelay } from '@/lib/min-delay'
 import { deriveIsLevelLocked } from '@/lib/lessons/locking'
 import { deriveAllLessonsComplete } from '@/lib/diagnostics/gating'
 import { startEndOfLevelDiagnostic } from '@/actions/diagnostic'
@@ -61,6 +62,7 @@ export default async function LevelPage({
 
   // Defense-in-depth auth guard (T-03-06 — proxy already guards, double-check here)
   const supabase = await createClient()
+  const delayPromise = minDelay(300)
   const {
     data: { user },
   } = await supabase.auth.getUser()
@@ -87,6 +89,7 @@ export default async function LevelPage({
       .eq('diagnostic_type', 'placement')
       .eq('status', 'in_progress')
       .maybeSingle()
+    await delayPromise
     return <DiagnosticGate hasInProgress={!!inProgress} />
   }
 
@@ -147,6 +150,7 @@ export default async function LevelPage({
   const showEndOfLevelCta = !isLocked && allSubComponentsComplete
   const startEndOfLevel = startEndOfLevelDiagnostic.bind(null, { levelId: level.id })
 
+  await delayPromise
   return (
     <main className="min-h-screen bg-background">
       <div className="max-w-[1040px] mx-auto px-5 md:px-6 py-20">

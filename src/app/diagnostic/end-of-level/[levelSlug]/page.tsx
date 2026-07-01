@@ -14,6 +14,7 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { minDelay } from '@/lib/min-delay'
 import { startEndOfLevelDiagnostic } from '@/actions/diagnostic'
 import DiagnosticProgress from '@/components/diagnostic/DiagnosticProgress'
 import DiagnosticQuestionCard from '@/components/diagnostic/DiagnosticQuestionCard'
@@ -58,6 +59,7 @@ export default async function EndOfLevelPage({
   const { levelSlug } = await params
 
   const supabase = await createClient()
+  const delayPromise = minDelay(300)
   const {
     data: { user },
   } = await supabase.auth.getUser()
@@ -90,6 +92,7 @@ export default async function EndOfLevelPage({
 
   // ─── No attempt → start CTA ────────────────────────────────────────────────
   if (!attempt) {
+    await delayPromise
     return shell(
       <div className="mx-auto max-w-[480px] text-center">
         <h1 className="font-heading text-[28px] font-semibold text-on-surface">
@@ -112,6 +115,7 @@ export default async function EndOfLevelPage({
 
   // ─── Passed → unlock screen ────────────────────────────────────────────────
   if (attempt.status === 'completed') {
+    await delayPromise
     const { data: nextLevel } = await supabase
       .from('levels')
       .select('slug')
@@ -156,6 +160,7 @@ export default async function EndOfLevelPage({
         .map((l) => ({ id: l.id, title: l.title, levelSlug: level.slug }))
     }
 
+    await delayPromise
     return shell(
       <DiagnosticResultFail
         correctCount={attempt.correct_count ?? 0}
@@ -189,6 +194,7 @@ export default async function EndOfLevelPage({
   const total = drawnIds.length
   const answeredCount = answeredSet.size
 
+  await delayPromise
   return shell(
     <>
       <div className="mb-8">

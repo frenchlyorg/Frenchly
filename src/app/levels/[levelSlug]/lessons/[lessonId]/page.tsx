@@ -15,6 +15,7 @@
 
 import { redirect, notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { minDelay } from '@/lib/min-delay'
 import SubComponentList from '@/components/lessons/SubComponentList'
 import Link from 'next/link'
 import { parseProblemContent } from '@/lib/practice/schema'
@@ -59,6 +60,7 @@ export default async function LessonPage({
 
   // Auth guard — derive user server-side; never accept user_id from client (T-03-13)
   const supabase = await createClient()
+  const delayPromise = minDelay(300)
   const {
     data: { user },
   } = await supabase.auth.getUser()
@@ -135,6 +137,7 @@ export default async function LessonPage({
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ')
 
+  await delayPromise;
   return (
     <main className="min-h-screen bg-background">
       {/* Lesson content column — max-w-720px per CLAUDE.md + DESIGN.md */}

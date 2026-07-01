@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import DiagnosticGate from "@/components/diagnostic/DiagnosticGate";
+import { minDelay } from "@/lib/min-delay";
 
 export const metadata = {
   title: "Dashboard — Frenchly",
@@ -10,6 +11,7 @@ export const metadata = {
 export default async function DashboardPage() {
   // Defense-in-depth: proxy already guards this route, but double-check here (T-02-10)
   const supabase = await createClient();
+  const delayPromise = minDelay(300);
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -37,6 +39,7 @@ export default async function DashboardPage() {
       .eq("diagnostic_type", "placement")
       .eq("status", "in_progress")
       .maybeSingle();
+    await delayPromise;
     return <DiagnosticGate hasInProgress={!!inProgress} />;
   }
 
@@ -87,6 +90,7 @@ export default async function DashboardPage() {
     ? `/levels/${level.slug}`
     : null;
 
+  await delayPromise;
   return (
     <main className="min-h-screen bg-background">
       <div className="max-w-[1040px] mx-auto px-5 md:px-6 py-20">

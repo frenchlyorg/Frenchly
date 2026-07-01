@@ -13,6 +13,7 @@
  */
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { minDelay } from '@/lib/min-delay'
 import { derivePlacement } from '@/lib/diagnostics/scoring'
 import { startPlacementDiagnostic } from '@/actions/diagnostic'
 import DiagnosticProgress from '@/components/diagnostic/DiagnosticProgress'
@@ -46,6 +47,7 @@ export default async function PlacementPage({
   const { result } = await searchParams
 
   const supabase = await createClient()
+  const delayPromise = minDelay(300)
   const {
     data: { user },
   } = await supabase.auth.getUser()
@@ -65,6 +67,7 @@ export default async function PlacementPage({
   if (attempt?.status === 'completed') {
     if (result !== '1') redirect('/dashboard') // D-P02 one-time guard
     const placement = derivePlacement(Number(attempt.score ?? 0))
+    await delayPromise
     return (
       <main className="min-h-screen bg-background">
         <div className="mx-auto max-w-[720px] px-5 py-20">
@@ -76,6 +79,7 @@ export default async function PlacementPage({
 
   // ─── No attempt yet → start state ──────────────────────────────────────────
   if (!attempt) {
+    await delayPromise
     return (
       <main className="min-h-screen bg-background">
         <div className="mx-auto max-w-[720px] px-5 py-20">
@@ -125,6 +129,7 @@ export default async function PlacementPage({
   const total = drawnIds.length
   const answeredCount = answeredSet.size
 
+  await delayPromise
   return (
     <main className="min-h-screen bg-background">
       <div className="mx-auto max-w-[720px] px-5 py-20">
