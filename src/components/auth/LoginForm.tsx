@@ -21,6 +21,7 @@ export function LoginForm() {
   const [error, setError] = useState<FieldError | null>(null);
   const [pending, setPending] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState("");
 
   async function handleSubmit(formData: FormData) {
     setPending(true);
@@ -28,6 +29,7 @@ export function LoginForm() {
     const result = await signIn(formData);
     if (result?.error) {
       setError({ field: result.error, message: result.message });
+      setPassword("");
     }
     setPending(false);
   }
@@ -114,6 +116,8 @@ export function LoginForm() {
             type={showPassword ? "text" : "password"}
             autoComplete="current-password"
             required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             aria-describedby={
               error?.field === "password" ? "login-password-error" : undefined
             }

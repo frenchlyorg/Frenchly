@@ -14,6 +14,7 @@ export function SignupForm() {
   const [error, setError] = useState<FieldError | null>(null);
   const [pending, setPending] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState("");
 
   async function handleSubmit(formData: FormData) {
     setPending(true);
@@ -21,6 +22,7 @@ export function SignupForm() {
     const result = await signUp(formData);
     if (result?.error) {
       setError({ field: result.error, message: result.message });
+      setPassword("");
     }
     setPending(false);
   }
@@ -124,6 +126,8 @@ export function SignupForm() {
             type={showPassword ? "text" : "password"}
             autoComplete="new-password"
             required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             aria-describedby={
               error?.field === "password"
                 ? "signup-password-error"
