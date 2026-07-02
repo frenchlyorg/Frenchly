@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: 12-01
-status: Phase 11 complete — Pages & Navigation executed and verified. Ready for Phase 12 (Deployment & Launch).
-stopped_at: "Phase 11 executed. 11-01: home CTA enabled (/signup), /contact page created, Contact nav link (desktop + mobile). 11-02: dashboard placeholder replaced with Supabase-backed level card, bg-primary progress bar (ARIA), Continue CTA. tsc clean, 156/156 tests passing."
-last_updated: "2026-06-30T23:02:00.000Z"
+current_plan: complete
+status: ALL 12 PHASES COMPLETE — Frenchly v1 (BETA) live at frenchly.org since 2026-07-02.
+stopped_at: "Phase 12 complete. Deployed to Vercel (main branch), frenchly.org DNS live, Supabase auth URLs configured, Resend email pending domain verification, smoke test passed (Steps 9-11), billing alerts set (Supabase $25, Anthropic $10/mo)."
+last_updated: "2026-07-01T21:31:00.000Z"
 progress:
   total_phases: 12
-  completed_phases: 11
+  completed_phases: 12
   total_plans: 37
-  completed_plans: 35
-  percent: 92
+  completed_plans: 37
+  percent: 100
 ---
 
 # Frenchly — Project State
@@ -50,7 +50,7 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 | 9 | UX Polish & Performance | complete ✓ | 3/3 done (09-01 ✓, 09-02 ✓, 09-03 ✓); Lighthouse passed 2026-06-28 |
 | 10 | Security & Quality | complete ✓ | 3/3 done (10-01 ✓, 10-02 ✓, 10-03 ✓); verified PASS 2026-06-30 |
 | 11 | Pages & Navigation | complete ✓ | 2/2 done (11-01 ✓, 11-02 ✓) |
-| 12 | Deployment & Launch | not_started | — |
+| 12 | Deployment & Launch | complete ✓ | 1/1 done — frenchly.org live 2026-07-02 |
 
 ---
 
@@ -83,6 +83,6 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 ## Session Continuity
 
-**To resume:** Run `/gsd:resume-work` or `/gsd:progress`
-**Stopped at:** Phase 12 planned. 12-01-PLAN.md created — 12-step deployment runbook (Supabase Pro → env vars → Resend → IONOS DNS → SMTP → Auth URLs → email confirm → templates → smoke test → DNS verify → prod smoke test → billing alerts). Plan checker PASS.
-**Next step:** `/gsd:execute-phase 12` — run the deployment runbook.
+**Status:** v1 MILESTONE COMPLETE — all 12 phases done, frenchly.org live.
+**Stopped at:** Phase 12 complete. Billing alerts set. Beta testers onboarding.
+**Next step:** Monitor beta feedback, then plan v2 roadmap when ready.
