@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X, ChevronDown, Megaphone } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 import { signOut } from "@/app/auth/actions";
@@ -52,8 +53,8 @@ export function Nav({ username }: NavProps) {
     <nav className="bg-surface border-b border-outline-variant sticky top-0 z-50">
       <div className="max-w-[1040px] mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="font-heading text-xl font-semibold text-primary">
-          Frenchly
+        <Link href="/" aria-label="Frenchly home" className="flex items-center justify-center h-9 w-9">
+          <Image src="/logo.png" alt="Frenchly" width={36} height={36} className="object-contain" priority />
         </Link>
 
         {/* Desktop links */}
