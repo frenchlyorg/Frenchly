@@ -39,6 +39,7 @@ export default function FillInInput({
     <div>
       <input
         type="text"
+        name="answer"
         value={value}
         disabled={disabled}
         onChange={(e) => onChange(e.target.value)}

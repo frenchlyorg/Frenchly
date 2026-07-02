@@ -86,7 +86,7 @@ export default function ConjugationTableCard({
               <div className="grid grid-cols-[36px_1fr] gap-x-3 gap-y-1">
                 <span className="font-label text-[13px] text-on-surface-variant self-center text-right">{pronoun}</span>
                 <div className="flex flex-col gap-1">
-                  <input aria-label={`${pronoun} form`} value={cellValues[pronoun]} onChange={e => setCellValues(prev => ({ ...prev, [pronoun]: e.target.value }))} onKeyDown={e => handleKeyDown(e, pronoun)} disabled={checked} className={cellClassName(pronoun)} />
+                  <input name={pronoun} aria-label={`${pronoun} form`} value={cellValues[pronoun]} onChange={e => setCellValues(prev => ({ ...prev, [pronoun]: e.target.value }))} onKeyDown={e => handleKeyDown(e, pronoun)} disabled={checked} className={cellClassName(pronoun)} />
                   {checked && cellResults?.[pronoun]?.correct === false && (
                     <p className="font-label text-[11px] text-error">Answer: {problem.answers[pronoun]}</p>
                   )}
@@ -96,7 +96,7 @@ export default function ConjugationTableCard({
               <div className="grid grid-cols-[44px_1fr] gap-x-3 gap-y-1">
                 <span className="font-label text-[13px] text-on-surface-variant self-center text-right">{rightPronoun}</span>
                 <div className="flex flex-col gap-1">
-                  <input aria-label={`${rightPronoun} form`} value={cellValues[rightPronoun]} onChange={e => setCellValues(prev => ({ ...prev, [rightPronoun]: e.target.value }))} onKeyDown={e => handleKeyDown(e, rightPronoun)} disabled={checked} className={cellClassName(rightPronoun)} />
+                  <input name={rightPronoun} aria-label={`${rightPronoun} form`} value={cellValues[rightPronoun]} onChange={e => setCellValues(prev => ({ ...prev, [rightPronoun]: e.target.value }))} onKeyDown={e => handleKeyDown(e, rightPronoun)} disabled={checked} className={cellClassName(rightPronoun)} />
                   {checked && cellResults?.[rightPronoun]?.correct === false && (
                     <p className="font-label text-[11px] text-error">Answer: {problem.answers[rightPronoun]}</p>
                   )}

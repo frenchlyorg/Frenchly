@@ -120,6 +120,7 @@ export default function WrittenCard({
       {/* Auto-resizing textarea — D-01 */}
       <textarea
         ref={textareaRef}
+        name="submission"
         value={text}
         onChange={handleChange}
         disabled={loading || done}
