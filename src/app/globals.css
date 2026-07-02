@@ -81,7 +81,7 @@ body {
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-outline) var(--color-surface-container);
+  scrollbar-color: #c0392b transparent;
 }
 
 /* Webkit (Chrome, Edge, Safari) */
@@ -90,13 +90,15 @@ body {
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-surface-container);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-outline);
+  background: #c0392b;
   border-radius: 9999px;
-  border: 2px solid var(--color-surface-container);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary);
+  background: #e74c3c;
+}
+::-webkit-scrollbar-button {
+  display: none;
 }
