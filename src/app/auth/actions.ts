@@ -112,7 +112,7 @@ export async function signUp(
     ) {
       return {
         error: 'email',
-        message: "Hmm, that email's taken — already a Frenchly member?",
+        message: "Hmm, that email's taken, already a Frenchly member?",
       }
     }
 
