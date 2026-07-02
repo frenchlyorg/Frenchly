@@ -49,17 +49,6 @@ export function HeroBackground() {
       >
         {/* Decorative French-themed SVG icons */}
         <svg
-          style={{ position: "absolute", top: "12%", left: "8%", opacity: 0.5 }}
-          width="72"
-          height="72"
-          viewBox="0 0 72 72"
-          fill="none"
-        >
-          <circle cx="36" cy="36" r="34" stroke="var(--color-primary-container)" strokeWidth="2" />
-          <text x="50%" y="55%" dominantBaseline="middle" textAnchor="middle" fill="var(--color-primary-container)" fontSize="28" fontFamily="serif">«»</text>
-        </svg>
-
-        <svg
           style={{ position: "absolute", top: "20%", right: "12%", opacity: 0.5 }}
           width="60"
           height="60"

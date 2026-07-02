@@ -58,7 +58,7 @@ export default async function RootLayout({
       suppressHydrationWarning
       className={`${literata.variable} ${beVietnamPro.variable} ${workSans.variable}`}
     >
-      <body className="font-body">
+      <body className="font-body overflow-x-hidden">
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
