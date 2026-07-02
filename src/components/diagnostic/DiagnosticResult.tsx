@@ -24,7 +24,7 @@ export default function DiagnosticResult({ levelName }: DiagnosticResultProps) {
       </h1>
 
       <p className="mt-4 font-body text-[18px] leading-8 text-on-surface">
-        Great start — we&rsquo;ll begin you in {levelName}. You can dive into your first lesson now.
+        Great start, we&rsquo;ll begin you in {levelName}. You can dive into your first lesson now.
       </p>
 
       <Link
