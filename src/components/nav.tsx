@@ -122,7 +122,6 @@ export function Nav({ username }: NavProps) {
                         <button
                           type="submit"
                           className="block w-full text-left px-4 py-2.5 text-sm text-error hover:bg-surface-container transition-colors"
-                          onClick={() => setAccountOpen(false)}
                         >
                           Log out
                         </button>
@@ -235,7 +234,6 @@ export function Nav({ username }: NavProps) {
                   <button
                     type="submit"
                     className="block w-full text-left px-6 py-2.5 text-error hover:bg-surface-container text-sm"
-                    onClick={() => setIsOpen(false)}
                   >
                     Log out
                   </button>
