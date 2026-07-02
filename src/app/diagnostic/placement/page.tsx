@@ -88,7 +88,7 @@ export default async function PlacementPage({
           </h1>
           <p className="mt-4 font-body text-[18px] leading-8 text-on-surface">
             Answer a short set of questions so we can place you in the right level. There&rsquo;s
-            no pass or fail — just answer what you can.
+            no pass or fail, just answer what you can.
           </p>
           <form action={startPlacementDiagnostic} className="mt-8">
             <button
