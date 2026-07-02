@@ -17,6 +17,7 @@ import { minDelay } from '@/lib/min-delay'
 import { derivePlacement } from '@/lib/diagnostics/scoring'
 import { startPlacementDiagnostic } from '@/actions/diagnostic'
 import DiagnosticProgress from '@/components/diagnostic/DiagnosticProgress'
+import PendingButton from '@/components/ui/PendingButton'
 import DiagnosticQuestionCard from '@/components/diagnostic/DiagnosticQuestionCard'
 import DiagnosticResult from '@/components/diagnostic/DiagnosticResult'
 
@@ -47,7 +48,7 @@ export default async function PlacementPage({
   const { result } = await searchParams
 
   const supabase = await createClient()
-  const delayPromise = minDelay(300)
+  const delayPromise = minDelay()
   const {
     data: { user },
   } = await supabase.auth.getUser()
@@ -91,12 +92,9 @@ export default async function PlacementPage({
             no pass or fail, just answer what you can.
           </p>
           <form action={startPlacementDiagnostic} className="mt-8">
-            <button
-              type="submit"
-              className="min-h-[44px] rounded-[8px] bg-primary px-6 py-3 font-label font-semibold text-white hover:bg-primary/90"
-            >
+            <PendingButton className="min-h-[44px] rounded-[8px] bg-primary px-6 py-3 font-label font-semibold text-white hover:bg-primary/90 disabled:opacity-60">
               Start placement
-            </button>
+            </PendingButton>
           </form>
         </div>
       </main>

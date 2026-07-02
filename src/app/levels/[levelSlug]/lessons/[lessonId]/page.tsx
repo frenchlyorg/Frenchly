@@ -60,7 +60,7 @@ export default async function LessonPage({
 
   // Auth guard — derive user server-side; never accept user_id from client (T-03-13)
   const supabase = await createClient()
-  const delayPromise = minDelay(300)
+  const delayPromise = minDelay()
   const {
     data: { user },
   } = await supabase.auth.getUser()

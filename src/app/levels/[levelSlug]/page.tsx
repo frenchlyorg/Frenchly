@@ -62,7 +62,7 @@ export default async function LevelPage({
 
   // Defense-in-depth auth guard (T-03-06 — proxy already guards, double-check here)
   const supabase = await createClient()
-  const delayPromise = minDelay(300)
+  const delayPromise = minDelay()
   const {
     data: { user },
   } = await supabase.auth.getUser()

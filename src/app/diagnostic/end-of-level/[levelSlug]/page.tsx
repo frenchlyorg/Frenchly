@@ -59,7 +59,7 @@ export default async function EndOfLevelPage({
   const { levelSlug } = await params
 
   const supabase = await createClient()
-  const delayPromise = minDelay(300)
+  const delayPromise = minDelay()
   const {
     data: { user },
   } = await supabase.auth.getUser()

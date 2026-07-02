@@ -11,7 +11,7 @@ export const metadata = {
 export default async function DashboardPage() {
   // Defense-in-depth: proxy already guards this route, but double-check here (T-02-10)
   const supabase = await createClient();
-  const delayPromise = minDelay(300);
+  const delayPromise = minDelay();
   const {
     data: { user },
   } = await supabase.auth.getUser();
