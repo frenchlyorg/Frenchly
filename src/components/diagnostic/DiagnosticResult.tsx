@@ -20,13 +20,7 @@ export default function DiagnosticResult({ levelName }: DiagnosticResultProps) {
       <p className="font-label text-[13px] text-on-surface-variant">You&rsquo;re all set</p>
 
       <h1 className="mt-3 font-heading text-[28px] font-semibold text-on-surface">
-        <span className="text-primary" aria-hidden="true">
-          «{' '}
-        </span>
         {levelName}
-        <span className="text-primary" aria-hidden="true">
-          {' '}»
-        </span>
       </h1>
 
       <p className="mt-4 font-body text-[18px] leading-8 text-on-surface">
