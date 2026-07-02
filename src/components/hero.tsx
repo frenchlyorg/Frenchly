@@ -49,13 +49,24 @@ export function HeroBackground() {
       >
         {/* Decorative French-themed SVG icons */}
         <svg
+          style={{ position: "absolute", top: "12%", left: "8%", opacity: 0.5 }}
+          width="50"
+          height="50"
+          viewBox="0 0 50 50"
+          fill="none"
+        >
+          <circle cx="25" cy="25" r="23" stroke="var(--color-primary-container)" strokeWidth="2" />
+          <text x="50%" y="55%" dominantBaseline="middle" textAnchor="middle" fill="var(--color-primary-container)" fontSize="18" fontFamily="serif">à</text>
+        </svg>
+
+        <svg
           style={{ position: "absolute", top: "20%", right: "12%", opacity: 0.5 }}
           width="60"
           height="60"
           viewBox="0 0 60 60"
           fill="none"
         >
-          <rect x="4" y="4" width="52" height="52" rx="8" stroke="var(--color-primary-container)" strokeWidth="2" />
+          <circle cx="30" cy="30" r="26" stroke="var(--color-primary-container)" strokeWidth="2" />
           <text x="50%" y="55%" dominantBaseline="middle" textAnchor="middle" fill="var(--color-primary-container)" fontSize="22" fontFamily="serif">é</text>
         </svg>
 
@@ -77,19 +88,8 @@ export function HeroBackground() {
           viewBox="0 0 64 64"
           fill="none"
         >
-          <rect x="4" y="4" width="56" height="56" rx="4" stroke="var(--color-primary-container)" strokeWidth="2" />
+          <circle cx="32" cy="32" r="28" stroke="var(--color-primary-container)" strokeWidth="2" />
           <text x="50%" y="55%" dominantBaseline="middle" textAnchor="middle" fill="var(--color-primary-container)" fontSize="24" fontFamily="serif">ç</text>
-        </svg>
-
-        <svg
-          style={{ position: "absolute", bottom: "15%", right: "8%", opacity: 0.5 }}
-          width="50"
-          height="50"
-          viewBox="0 0 50 50"
-          fill="none"
-        >
-          <circle cx="25" cy="25" r="23" stroke="var(--color-primary-container)" strokeWidth="2" />
-          <text x="50%" y="55%" dominantBaseline="middle" textAnchor="middle" fill="var(--color-primary-container)" fontSize="18" fontFamily="serif">à</text>
         </svg>
       </div>
     </div>
